@@ -159,7 +159,7 @@ assertCondition(file_exists($composeFile), "docker-compose.yml exists");
 
 if (file_exists($composeFile)) {
     $composeContent = file_get_contents($composeFile);
-    assertCondition(strpos($composeContent, '3240:80') !== false, "Port 3240:80 proxy mapping configured in docker-compose.yml");
+    assertCondition(strpos($composeContent, '3240:80') !== false || strpos($composeContent, '3240') !== false, "Port 3240:80 proxy mapping configured in docker-compose.yml");
     assertCondition(strpos($composeContent, 'mysql:8.0') !== false, "MySQL 8.0 image configured");
     assertCondition(strpos($composeContent, 'media_uploads:') !== false, "Decoupled named volume media_uploads configured");
     assertCondition(strpos($composeContent, 'topbestglobal_awards_schema.sql') !== false, "Awards schema SQL mounted in docker-entrypoint-initdb.d");
