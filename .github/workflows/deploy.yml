@@ -1,0 +1,79 @@
+name: Deploy TOP BEST GLOBAL to VPS
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: PHP Syntax Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: mbstring, intl, mysqli, curl, json
+
+      - name: Validate PHP Syntax
+        run: |
+          echo "Checking PHP syntax across controllers and models..."
+          find app/Controllers app/Models app/Libraries -name "*.php" -exec php -l {} +
+
+  deploy:
+    name: Auto Deploy to VPS
+    needs: lint
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Deploy to VPS via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          port: ${{ secrets.VPS_PORT || 22 }}
+          script_stop: true
+          script: |
+            TARGET_DIR="${{ secrets.VPS_TARGET_DIR || '/var/www/topbestglobal' }}"
+            echo "==> Deploying TOP BEST GLOBAL to: $TARGET_DIR"
+
+            # 1. Create or navigate to project directory
+            if [ ! -d "$TARGET_DIR" ]; then
+              echo "Directory does not exist. Cloning repository..."
+              mkdir -p "$(dirname "$TARGET_DIR")"
+              git clone https://github.com/${{ github.repository }}.git "$TARGET_DIR"
+            fi
+
+            cd "$TARGET_DIR"
+
+            # 2. Pull latest code from main branch
+            echo "==> Pulling latest changes from main branch..."
+            git fetch --all
+            git reset --hard origin/main
+
+            # 3. Ensure .env exists
+            if [ ! -f .env ]; then
+              echo "Creating .env from .env.example..."
+              cp .env.example .env
+            fi
+
+            # 4. Set directory permissions for writable and uploads
+            echo "==> Setting folder permissions..."
+            chmod -R 777 writable uploads 2>/dev/null || true
+
+            # 5. Build and restart Docker containers
+            echo "==> Rebuilding and starting Docker containers..."
+            docker compose down 2>/dev/null || true
+            docker compose up -d --build
+
+            # 6. Output status
+            echo "==> Container Status:"
+            docker compose ps
+            echo "==> Deployment to VPS finished successfully!"

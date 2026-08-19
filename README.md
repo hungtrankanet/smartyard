@@ -12,14 +12,27 @@ Hệ thống nền tảng số hóa E-Carrier, quản lý chuỗi cung ứng log
 
 ---
 
-## 🚀 Hướng Dẫn Triển Khai Nhanh Trên VPS (Deployment Guide)
+## 🚀 CI/CD Tự Động Triển Khai (GitHub Actions -> VPS)
+Dự án đã tích hợp sẵn GitHub Actions workflow tại [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). Mỗi khi bạn `git push` lên nhánh `main`, GitHub sẽ tự động kiểm tra cú pháp và kết nối SSH tới VPS để tự động pull code và khởi động lại Docker!
+
+### 🔑 Cấu hình Secrets trên GitHub:
+Vào **GitHub Repository** &rarr; **Settings** &rarr; **Secrets and variables** &rarr; **Actions** &rarr; **New repository secret**:
+1. `VPS_HOST`: Địa chỉ IP hoặc Domain VPS (VD: `103.x.x.x`).
+2. `VPS_USERNAME`: Tên người dùng SSH (VD: `root` hoặc `ubuntu`).
+3. `VPS_SSH_KEY` (hoặc `VPS_PASSWORD`): Khóa SSH Private Key hoặc mật khẩu VPS.
+4. `VPS_PORT`: Cổng SSH (mặc định `22`).
+5. `VPS_TARGET_DIR`: Thư mục lưu dự án trên VPS (mặc định `/var/www/topbestglobal`).
+
+---
+
+## 🛠️ Hướng Dẫn Triển Khai Thủ Công Trên VPS (Manual Setup)
 
 ### 1. Chuẩn Bị Trên VPS
 Yêu cầu: VPS Linux (Ubuntu 20.04/22.04 LTS hoặc Debian), đã cài đặt **Docker** & **Docker Compose** và **Git**.
 
 ```bash
 # Clone repository về VPS
-git clone https://github.com/your-username/topbestglobal.git /var/www/topbestglobal
+git clone https://github.com/hungtrankanet/topbestglobal.git /var/www/topbestglobal
 cd /var/www/topbestglobal
 
 # Cấu hình file môi trường từ template
