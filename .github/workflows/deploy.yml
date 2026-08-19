@@ -9,6 +9,9 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   lint-and-gatekeeper:
     name: Code Quality & 500-Line Gatekeeper Check
@@ -70,23 +73,31 @@ jobs:
           script_stop: true
           script: |
             TARGET_DIR="${{ secrets.SERVER_TARGET_DIR || secrets.VPS_TARGET_DIR || '/var/www/topbestglobal' }}"
+            REPO_AUTH_URL="https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+
             echo "==> Deploying TOP BEST GLOBAL to: $TARGET_DIR"
 
-            if [ ! -d "$TARGET_DIR" ]; then
+            if [ ! -d "$TARGET_DIR/.git" ]; then
+              echo "==> Fresh cloning repository with auth token..."
+              rm -rf "$TARGET_DIR"
               mkdir -p "$(dirname "$TARGET_DIR")"
-              git clone https://github.com/${{ github.repository }}.git "$TARGET_DIR"
+              git clone "$REPO_AUTH_URL" "$TARGET_DIR"
             fi
 
             cd "$TARGET_DIR"
+            echo "==> Updating remote origin URL and pulling latest code..."
+            git remote set-url origin "$REPO_AUTH_URL"
             git fetch --all
             git reset --hard origin/main
 
             if [ ! -f .env ]; then
+              echo "==> Initializing .env configuration..."
               cp .env.example .env
             fi
 
             chmod -R 777 writable uploads 2>/dev/null || true
 
+            echo "==> Building and starting Docker containers..."
             docker compose down 2>/dev/null || true
             docker compose up -d --build
 
