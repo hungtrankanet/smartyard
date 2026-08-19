@@ -73,13 +73,18 @@ sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
 
 ---
 
-## 🗄️ Khởi Tạo Cơ Sở Dữ Liệu (Database Initialization)
-1. Truy cập phpMyAdmin tại cổng `8001` hoặc kết nối MySQL CLI.
-2. Import file database khởi tạo:
-   - `install/sql/install_varient.sql` (Schema và dữ liệu nền tảng).
-   - `migrate_members.sql` (Cấu trúc B2B Member Portal & Business Verification).
-3. Reset hoặc thiết lập tài khoản Admin đầu tiên bằng lệnh:
-   `GET http://<YOUR_DOMAIN_OR_IP>:3210/resetAdminCredentials?key=topbestglobal_secret_reset_2026`
+## 🗄️ Khởi Tạo Cơ Sở Dữ Liệu Tự Động (Auto Database Initialization)
+Khi chạy `docker compose up -d`, Docker MySQL Container sẽ **tự động nạp toàn bộ cấu trúc & tài khoản quản trị**:
+1. `install/sql/install_varient.sql` (Cơ sở dữ liệu cốt lõi).
+2. `migrate_members.sql` (Cấu trúc B2B Member Portal & Business Verification).
+3. `init_db.sql` (Kích hoạt Theme TOP BEST GLOBAL & tạo tài khoản Super Admin).
+
+### 🔑 Thông Tin Đăng Nhập Mặc Định:
+- **Đường dẫn đăng nhập Admin**: `http://<YOUR_DOMAIN_OR_IP>:3210/admin/login`
+- **Email**: `admin@topbestglobal.com` (hoặc `admin@gmail.com`)
+- **Mật khẩu**: `TopBestGlobal@2026`
+
+*(Nếu cần reset mật khẩu nhanh từ xa, truy cập: `http://<YOUR_DOMAIN_OR_IP>:3210/resetAdminCredentials?key=topbestglobal_secret_reset_2026`)*
 
 ---
 
