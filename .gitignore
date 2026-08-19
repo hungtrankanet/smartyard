@@ -1,0 +1,68 @@
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Environment & Credentials
+.env
+!.env.example
+
+# IDE & Editor Configs
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Agent & Scratch Data
+.agents/
+scratch/
+
+# CodeIgniter 4 Writable Directory
+/writable/cache/*
+!/writable/cache/index.html
+!/writable/cache/.gitkeep
+/writable/logs/*
+!/writable/logs/index.html
+!/writable/logs/.gitkeep
+/writable/session/*
+!/writable/session/index.html
+!/writable/session/.gitkeep
+/writable/debugbar/*
+!/writable/debugbar/index.html
+!/writable/debugbar/.gitkeep
+/writable/uploads/*
+!/writable/uploads/index.html
+!/writable/uploads/.gitkeep
+
+# User Uploaded Media (Separate storage for scaling/cloud media)
+/uploads/blocks/*
+!/uploads/blocks/index.html
+!/uploads/blocks/.gitkeep
+/uploads/files/*
+!/uploads/files/index.html
+!/uploads/files/.gitkeep
+/uploads/gallery/*
+!/uploads/gallery/index.html
+!/uploads/gallery/.gitkeep
+/uploads/images/*
+!/uploads/images/index.html
+!/uploads/images/.gitkeep
+/uploads/receipts/*
+!/uploads/receipts/index.html
+!/uploads/receipts/.gitkeep
+/uploads/tmp/*
+!/uploads/tmp/index.html
+!/uploads/tmp/.gitkeep
+
+# Composer & Vendor
+/vendor/
+
+# Test output
+/tests/_output/*

@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  # Web server running PHP 8.1 with Apache
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: topbestglobal_web
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www/html
+    environment:
+      - APACHE_RUN_USER=www-data
+      - APACHE_RUN_GROUP=www-data
+    depends_on:
+      - db
+    networks:
+      - topbestglobal_net
+
+  # Database server running MySQL 8.0
+  db:
+    image: mysql:8.0
+    container_name: topbestglobal_db
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: topbestglobal_db
+      MYSQL_USER: topbestglobal_user
+      MYSQL_PASSWORD: topbestglobal_password
+      MYSQL_ROOT_PASSWORD: root_password
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - topbestglobal_net
+
+  # phpMyAdmin for visual database management
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: topbestglobal_pma
+    ports:
+      - "8001:80"
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=db
+      - PMA_USER=topbestglobal_user
+      - PMA_PASSWORD=topbestglobal_password
+    depends_on:
+      - db
+    networks:
+      - topbestglobal_net
+
+volumes:
+  db_data:
+
+networks:
+  topbestglobal_net:
+    driver: bridge
