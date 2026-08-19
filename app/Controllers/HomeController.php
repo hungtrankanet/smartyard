@@ -46,12 +46,12 @@ class HomeController extends BaseController
         $isEn = ($this->activeLang->short_form ?? 'vi') == 'en';
         $latestPosts = $this->postModel->getLatestPosts($this->activeLang->id ?? 1, 6, 0);
         $data = [
-            'title'       => $isEn ? 'Digital Logistics & Global Freight Solutions' : 'Nền Tảng Vận Tải & Logistics Số Hóa Hàng Đầu',
+            'title'       => $isEn ? 'National Honors & Awards Portal | Season 2026' : 'Cổng Thông Tin & Bảng Vàng Vinh Danh Quốc Gia',
             'description' => $isEn 
-                ? 'TOP BEST GLOBAL Corporation - Premier digital logistics and multi-modal freight platform connecting 500+ enterprises. Full-service Air Freight, Sea Freight (FCL/LCL), Inland Transport and Customs Clearance.'
-                : 'TOP BEST GLOBAL Corporation - Nền tảng logistics số hóa & vận tải đa phương thức hàng đầu Việt Nam. Kết nối 500+ doanh nghiệp xuất nhập khẩu với dịch vụ Vận tải biển FCL/LCL, Hàng không, Vận tải bộ và Thông quan hải quan.',
-            'keywords'    => 'vận tải quốc tế, logistics việt nam, cước vận tải biển, vận tải hàng không, khai báo hải quan, fcl, lcl, xuất nhập khẩu, top best global, topbestglobal, b2b logistics, freight forwarding',
-            'homeTitle'   => $this->settings->home_title ?? 'TOP BEST GLOBAL Corporation',
+                ? 'TOP BEST GLOBAL - Vietnam premier national digital platform for news, events, public & expert voting, and honoring outstanding brands, enterprises, and visionary leaders across 16+ key sectors.'
+                : 'TOP BEST GLOBAL - Cổng thông tin, tin tức sự kiện, bảng vàng vinh danh và trao giải thưởng danh giá hàng đầu Việt Nam cho các tổ chức, thương hiệu và nhà lãnh đạo xuất sắc trên 16+ lĩnh vực.',
+            'keywords'    => 'top best global, bảng vàng vinh danh, giải thưởng quốc gia, bình chọn thương hiệu, đề cử doanh nghiệp, cúp vàng thương hiệu, gala vinh danh 2026',
+            'homeTitle'   => $this->settings->home_title ?? 'TOP BEST GLOBAL National Honors Portal',
             'latestPosts' => $latestPosts,
             'recentPosts' => $latestPosts
         ];
@@ -74,9 +74,9 @@ class HomeController extends BaseController
         $pageModel = new PageModel();
         $page = $pageModel->getPageByLang('about', $this->activeLang->id);
         $data = [
-            'title'       => !empty($page->title) ? $page->title : ($isEn ? 'About Us - TOP BEST GLOBAL Corporation' : 'Giới Thiệu Về TOP BEST GLOBAL Corporation'),
-            'description' => !empty($page->description) ? $page->description : ($isEn ? 'Learn about TOP BEST GLOBAL Corporation, our vision, executive advisory board, and modern digital supply chain solutions.' : 'Tìm hiểu về TOP BEST GLOBAL Corporation - Tầm nhìn, sứ mệnh, ban cố vấn cấp cao và giải pháp chuỗi cung ứng logistics số hóa toàn diện.'),
-            'keywords'    => !empty($page->keywords) ? $page->keywords : 'giới thiệu top best global, ban cố vấn logistics, đối tác vận tải, tầm nhìn sứ mệnh topbestglobal, giải pháp chuỗi cung ứng',
+            'title'       => !empty($page->title) ? $page->title : ($isEn ? 'About Vietnam National Honors Portal | TOP BEST GLOBAL' : 'Giới Thiệu Cổng Vinh Danh Quốc Gia TOP BEST GLOBAL'),
+            'description' => !empty($page->description) ? $page->description : ($isEn ? 'Learn about TOP BEST GLOBAL National Honors Council, 70/30 scoring rubric, and 4-stage award evaluation process.' : 'Tìm hiểu về Cổng thông tin & Bảng vàng vinh danh quốc gia TOP BEST GLOBAL, quy chế chấm điểm 70/30 và quy trình xét duyệt 4 vòng.'),
+            'keywords'    => !empty($page->keywords) ? $page->keywords : 'giới thiệu top best global, hội đồng cố vấn, quy chế 70 30, bảng vàng vinh danh, giải thưởng quốc gia',
             'page'        => $page,
             'userSession' => getUserSession(),
         ];
@@ -91,9 +91,9 @@ class HomeController extends BaseController
         $pageModel = new PageModel();
         $page = $pageModel->getPageByLang('services', $this->activeLang->id);
         $data = [
-            'title'       => !empty($page->title) ? $page->title : ($isEn ? 'Comprehensive Logistics Services | Sea, Air, Inland & Customs' : 'Dịch Vụ Logistics Toàn Diện: Đường Biển, Hàng Không, Nội Địa & Hải Quan'),
-            'description' => !empty($page->description) ? $page->description : ($isEn ? 'Full-suite logistics services: Air freight, Sea freight FCL/LCL, Inland container trucking, Bonded warehousing, and expert Customs clearance.' : 'Giải pháp logistics tích hợp: Vận chuyển hàng không quốc tế, Vận tải đường biển FCL/LCL, Xe kéo container nội địa, Kho bãi CFS và Dịch vụ thủ tục hải quan trọn gói.'),
-            'keywords'    => !empty($page->keywords) ? $page->keywords : 'dịch vụ logistics, air freight, sea freight, inland freight, khai báo hải quan, vận tải container fcl lcl, kho bãi logistics',
+            'title'       => !empty($page->title) ? $page->title : ($isEn ? '16+ National Award Categories | TOP BEST GLOBAL' : '16+ Hạng Mục Giải Thưởng Vinh Danh Quốc Gia'),
+            'description' => !empty($page->description) ? $page->description : ($isEn ? 'Explore 16+ national award categories, evaluation rubrics, and online nomination dossiers for TOP BEST GLOBAL 2026.' : 'Chi tiết 16+ hạng mục giải thưởng vinh danh quốc gia, tiêu chuẩn đánh giá và nộp hồ sơ đề cử mùa giải 2026.'),
+            'keywords'    => !empty($page->keywords) ? $page->keywords : 'hạng mục giải thưởng, đề cử doanh nghiệp, cúp vàng thương hiệu, tiêu chí chấm điểm, top best global',
             'page'        => $page,
             'userSession' => getUserSession(),
         ];
@@ -108,9 +108,9 @@ class HomeController extends BaseController
         $pageModel = new PageModel();
         $page = $pageModel->getPageByLang('members', $this->activeLang->id);
         $data = [
-            'title'       => !empty($page->title) ? $page->title : ($isEn ? 'Partner Network - Global Logistics & Enterprise Alliance' : 'Mạng Lưới Đối Tác - Danh Bạ Doanh Nghiệp Logistics & Xuất Nhập Khẩu'),
-            'description' => !empty($page->description) ? $page->description : ($isEn ? 'Explore verified partner directory and enterprise network in TOP BEST GLOBAL ecosystem. Connect directly with manufacturers and forwarders.' : 'Khám phá danh bạ doanh nghiệp đối tác đã xác minh trên hệ sinh thái TOP BEST GLOBAL. Kết nối trực tiếp với 500+ nhà sản xuất, chủ hàng và đơn vị giao nhận uy tín.'),
-            'keywords'    => !empty($page->keywords) ? $page->keywords : 'danh bạ đối tác, kết nối doanh nghiệp xuất nhập khẩu, đối tác logistics uy tín, mạng lưới b2b logistics',
+            'title'       => !empty($page->title) ? $page->title : ($isEn ? 'Hall of Fame - Honored Brands & Leaders Directory' : 'Bảng Vàng Vinh Danh - Danh Bạ Thương Hiệu & Lãnh Đạo Tiêu Biểu'),
+            'description' => !empty($page->description) ? $page->description : ($isEn ? 'Explore verified national honorees and enterprises in TOP BEST GLOBAL Hall of Fame. Verify digital certificates.' : 'Khám phá danh bạ thương hiệu và doanh nghiệp tiêu biểu được vinh danh trên Bảng Vàng TOP BEST GLOBAL. Tra cứu chứng nhận số.'),
+            'keywords'    => !empty($page->keywords) ? $page->keywords : 'bảng vàng vinh danh, danh bạ thương hiệu xuất sắc, cúp vàng quốc gia, tra cứu chứng nhận số',
             'page'        => $page,
             'userSession' => getUserSession(),
         ];
@@ -162,9 +162,9 @@ class HomeController extends BaseController
         $pageModel = new PageModel();
         $page = $pageModel->getPageByLang('events', $this->activeLang->id);
         $data = [
-            'title'       => !empty($page->title) ? $page->title : ($isEn ? 'Events & Trade Promotion Seminars | TOP BEST GLOBAL' : 'Sự Kiện & Hội Thảo Xúc Tiến Thương Mại Chuỗi Cung Ứng'),
-            'description' => !empty($page->description) ? $page->description : ($isEn ? 'Stay updated with exclusive logistics seminars, B2B trade promotion conferences, and supply chain networking events by TOP BEST GLOBAL.' : 'Cập nhật lịch hội thảo chuyên đề B2B, sự kiện kết nối giao thương xuất nhập khẩu và các chương trình xúc tiến chuỗi cung ứng của TOP BEST GLOBAL.'),
-            'keywords'    => !empty($page->keywords) ? $page->keywords : 'sự kiện logistics, hội thảo xuất nhập khẩu, kết nối giao thương b2b, hội nghị chuỗi cung ứng, xúc tiến thương mại',
+            'title'       => !empty($page->title) ? $page->title : ($isEn ? 'National Awards Gala & Press Events | TOP BEST GLOBAL' : 'Sự Kiện, Họp Báo & Đêm Gala Trao Cúp Vàng Quốc Gia'),
+            'description' => !empty($page->description) ? $page->description : ($isEn ? 'Stay updated with official awards press conferences, jury evaluation forums, and the Gala Ceremony by TOP BEST GLOBAL.' : 'Cập nhật lịch họp báo công bố mùa giải, tọa đàm chuyên gia thẩm định và Đêm Gala trao Cúp Vàng TOP BEST GLOBAL 2026.'),
+            'keywords'    => !empty($page->keywords) ? $page->keywords : 'lịch sự kiện gala, đêm vinh danh trao giải, họp báo mùa giải, tọa đàm chuyên gia, top best global',
             'page'        => $page,
             'userSession' => getUserSession(),
             'posts'       => $this->postModel->getPosts($this->activeLang->id, 10),
@@ -180,9 +180,9 @@ class HomeController extends BaseController
         $pageModel = new PageModel();
         $page = $pageModel->getPageByLang('contact', $this->activeLang->id);
         $data = [
-            'title'       => !empty($page->title) ? $page->title : ($isEn ? 'Contact TOP BEST GLOBAL - Request a Quote & Logistics Consultation' : 'Liên Hệ TOP BEST GLOBAL - Nhận Tư Vấn & Báo Giá Vận Tải Nhanh Chóng'),
-            'description' => !empty($page->description) ? $page->description : ($isEn ? 'Contact TOP BEST GLOBAL Corporation for 24/7 logistics consultation, freight rate estimation, and customized supply chain solutions.' : 'Liên hệ ngay với TOP BEST GLOBAL Corporation để nhận tư vấn giải pháp vận tải tối ưu và báo giá nhanh chóng (RFQ) cho mọi tuyến hàng quốc tế và nội địa.'),
-            'keywords'    => !empty($page->keywords) ? $page->keywords : 'liên hệ top best global, báo giá cước vận tải, tư vấn logistics, hotline top best global, rfq logistics',
+            'title'       => !empty($page->title) ? $page->title : ($isEn ? 'Contact Awards Secretariat | TOP BEST GLOBAL' : 'Liên Hệ Ban Thư Ký & Ban Tổ Chức TOP BEST GLOBAL'),
+            'description' => !empty($page->description) ? $page->description : ($isEn ? 'Contact TOP BEST GLOBAL Awards Secretariat for nomination guidance, voting inquiries, and sponsorship opportunities.' : 'Liên hệ với Ban Thư ký Giải thưởng TOP BEST GLOBAL để nhận hướng dẫn nộp hồ sơ đề cử, quy chế bình chọn và tài trợ mùa giải 2026.'),
+            'keywords'    => !empty($page->keywords) ? $page->keywords : 'liên hệ ban thư ký, ban tổ chức giải thưởng, hotline top best global, hồ sơ đề cử',
             'page'        => $page,
             'userSession' => getUserSession(),
         ];
