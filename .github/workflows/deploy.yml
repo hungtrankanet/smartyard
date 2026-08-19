@@ -94,6 +94,7 @@ jobs:
               echo "==> Initializing .env configuration..."
               cp .env.example .env
             fi
+            sed -i 's/your_secure_database_password_here/topbestglobal_password/g' .env 2>/dev/null || true
 
             chmod -R 777 writable uploads 2>/dev/null || true
 

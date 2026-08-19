@@ -5,7 +5,7 @@ namespace Config;
 use CodeIgniter\Database\Config;
 
 /**
- * Database Configuration
+ * Database Configuration - TOP BEST GLOBAL
  */
 class Database extends Config
 {
@@ -26,10 +26,10 @@ class Database extends Config
      */
     public array $default = [
         'DSN'          => '',
-        'hostname' => 'localhost',
-        'username' => '',
-        'password' => '',
-        'database' => '',
+        'hostname'     => 'topbestglobal_db',
+        'username'     => 'topbestglobal_user',
+        'password'     => 'topbestglobal_password',
+        'database'     => 'topbestglobal_db',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
         'pConnect'     => false,
@@ -54,11 +54,11 @@ class Database extends Config
     {
         parent::__construct();
 
-        if (empty($this->default['database']) || empty($this->default['username'])) {
-            $root = (isset($_SERVER['HTTPS']) ? "https://" : "http://") . $_SERVER['HTTP_HOST'];
-            $root .= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
-            header('Location: ' . $root . 'install/welcome.php');
-            exit();
-        }
+        // Override from environment or .env if present
+        $this->default['hostname'] = env('database.default.hostname', $this->default['hostname'] ?: 'topbestglobal_db');
+        $this->default['database'] = env('database.default.database', $this->default['database'] ?: 'topbestglobal_db');
+        $this->default['username'] = env('database.default.username', $this->default['username'] ?: 'topbestglobal_user');
+        $this->default['password'] = env('database.default.password', $this->default['password'] ?: 'topbestglobal_password');
+        $this->default['port']     = (int) env('database.default.port', $this->default['port'] ?: 3306);
     }
 }

@@ -16,6 +16,12 @@ services:
       - APACHE_RUN_GROUP=www-data
       - CI_ENVIRONMENT=production
       - MEDIA_STORAGE_DRIVER=local
+      - database.default.hostname=topbestglobal_db
+      - database.default.database=topbestglobal_db
+      - database.default.username=topbestglobal_user
+      - database.default.password=topbestglobal_password
+      - database.default.DBDriver=MySQLi
+      - database.default.port=3306
     depends_on:
       db:
         condition: service_healthy
