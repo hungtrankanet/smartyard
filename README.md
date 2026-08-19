@@ -42,18 +42,44 @@ Kiểm tra trạng thái container:
 docker compose ps
 ```
 
-- **Web Application**: `http://<YOUR_VPS_IP>:8080`
-- **phpMyAdmin**: `http://<YOUR_VPS_IP>:8081`
+- **Web Application (Container Proxy)**: `http://<YOUR_VPS_IP>:3210`
+- **phpMyAdmin**: `http://<YOUR_VPS_IP>:8001`
+
+---
+
+## 🌐 Cấu Hình Nginx Reverse Proxy (Khuyên Dùng cho Production)
+Để chạy domain chính thức kèm SSL (HTTPS), bạn cấu hình Nginx trên VPS như sau:
+
+```nginx
+server {
+    listen 80;
+    server_name yourdomain.com www.yourdomain.com;
+
+    location / {
+        proxy_pass http://127.0.0.1:3210;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        client_max_body_size 100M;
+    }
+}
+```
+
+Cài đặt chứng chỉ SSL miễn phí với Certbot:
+```bash
+sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
+```
 
 ---
 
 ## 🗄️ Khởi Tạo Cơ Sở Dữ Liệu (Database Initialization)
-1. Truy cập phpMyAdmin tại cổng `8081` hoặc kết nối MySQL CLI.
+1. Truy cập phpMyAdmin tại cổng `8001` hoặc kết nối MySQL CLI.
 2. Import file database khởi tạo:
    - `install/sql/install_varient.sql` (Schema và dữ liệu nền tảng).
    - `migrate_members.sql` (Cấu trúc B2B Member Portal & Business Verification).
 3. Reset hoặc thiết lập tài khoản Admin đầu tiên bằng lệnh:
-   `GET http://<YOUR_DOMAIN>:8080/resetAdminCredentials?key=topbestglobal_secret_reset_2026`
+   `GET http://<YOUR_DOMAIN_OR_IP>:3210/resetAdminCredentials?key=topbestglobal_secret_reset_2026`
 
 ---
 
@@ -65,7 +91,7 @@ crontab -e
 ```
 Thêm dòng sau:
 ```cron
-0 0 1 * * curl -s "http://127.0.0.1:8080/cron/verify-members?token=topbestglobal_cron_verify_token_2026" > /dev/null 2>&1
+0 0 1 * * curl -s "http://127.0.0.1:3210/cron/verify-members?token=topbestglobal_cron_verify_token_2026" > /dev/null 2>&1
 ```
 
 ---
