@@ -55,7 +55,7 @@ Kiểm tra trạng thái container:
 docker compose ps
 ```
 
-- **Web Application (Container Proxy)**: `http://<YOUR_VPS_IP>:3210`
+- **Web Application (Container Proxy)**: `http://<YOUR_VPS_IP>:3240`
 - **phpMyAdmin**: `http://<YOUR_VPS_IP>:8001`
 
 ---
@@ -69,7 +69,7 @@ server {
     server_name yourdomain.com www.yourdomain.com;
 
     location / {
-        proxy_pass http://127.0.0.1:3210;
+        proxy_pass http://127.0.0.1:3240;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -93,11 +93,11 @@ Khi chạy `docker compose up -d`, Docker MySQL Container sẽ **tự động n�
 3. `init_db.sql` (Kích hoạt Theme TOP BEST GLOBAL & tạo tài khoản Super Admin).
 
 ### 🔑 Thông Tin Đăng Nhập Mặc Định:
-- **Đường dẫn đăng nhập Admin**: `http://<YOUR_DOMAIN_OR_IP>:3210/admin/login`
+- **Đường dẫn đăng nhập Admin**: `http://<YOUR_DOMAIN_OR_IP>:3240/admin/login`
 - **Email**: `admin@topbestglobal.com` (hoặc `admin@gmail.com`)
 - **Mật khẩu**: `TopBestGlobal@2026`
 
-*(Nếu cần reset mật khẩu nhanh từ xa, truy cập: `http://<YOUR_DOMAIN_OR_IP>:3210/resetAdminCredentials?key=topbestglobal_secret_reset_2026`)*
+*(Nếu cần reset mật khẩu nhanh từ xa, truy cập: `http://<YOUR_DOMAIN_OR_IP>:3240/resetAdminCredentials?key=topbestglobal_secret_reset_2026`)*
 
 ---
 
@@ -109,7 +109,7 @@ crontab -e
 ```
 Thêm dòng sau:
 ```cron
-0 0 1 * * curl -s "http://127.0.0.1:3210/cron/verify-members?token=topbestglobal_cron_verify_token_2026" > /dev/null 2>&1
+0 0 1 * * curl -s "http://127.0.0.1:3240/cron/verify-members?token=topbestglobal_cron_verify_token_2026" > /dev/null 2>&1
 ```
 
 ---

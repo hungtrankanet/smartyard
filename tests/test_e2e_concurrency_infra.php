@@ -198,15 +198,15 @@ class TestE2EConcurrencyInfra extends E2ETestCase {
         });
 
         // ==========================================
-        // F19: Docker Containerization on Port 3210
+        // F19: Docker Containerization on Port 3240
         // ==========================================
-        $this->addTest('F19-T1-01: Docker Compose Port 3210:80 Mapping Validation', function() {
+        $this->addTest('F19-T1-01: Docker Compose Port 3240:80 Mapping Validation', function() {
             $composeFile = dirname(__DIR__) . '/docker-compose.yml';
             if (file_exists($composeFile)) {
                 $content = file_get_contents($composeFile);
-                Assert::assertContains('3210', $content);
+                Assert::assertContains('3240', $content);
             } else {
-                Assert::assertEquals('3210:80', '3210:80');
+                Assert::assertEquals('3240:80', '3240:80');
             }
         });
 
@@ -235,15 +235,15 @@ class TestE2EConcurrencyInfra extends E2ETestCase {
             $env = [
                 'CI_ENVIRONMENT' => 'production',
                 'database.default.port' => 3306,
-                'app.baseURL' => 'http://localhost:3210/'
+                'app.baseURL' => 'http://localhost:3240/'
             ];
             Assert::assertEquals('production', $env['CI_ENVIRONMENT']);
             Assert::assertEquals(3306, $env['database.default.port']);
         });
 
         // F19 Tier 2: Boundary / Edge Cases
-        $this->addTest('F19-T2-01: Port Collision on Non-3210 Port Rejection', function() {
-            $targetPort = 3210;
+        $this->addTest('F19-T2-01: Port Collision on Non-3240 Port Rejection', function() {
+            $targetPort = 3240;
             $candidatePort = 8080;
             $matchesStandard = ($candidatePort === $targetPort);
             Assert::assertFalse($matchesStandard);

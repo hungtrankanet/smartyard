@@ -221,11 +221,11 @@ class TestE2ECrossFeature extends E2ETestCase {
         // C10: Modular Sub-500 Line to Docker & CI/CD Pipeline
         // F17 -> F19 -> F20
         // ==========================================
-        $this->addTest('C10: Sub-500 Line Governance to Docker Port 3210 & CI/CD Gatekeeper', function() {
-            $dockerPort = 3210;
+        $this->addTest('C10: Sub-500 Line Governance to Docker Port 3240 & CI/CD Gatekeeper', function() {
+            $dockerPort = 3240;
             $ciStatus = 'PASSED';
             $maxLines = 500;
-            Assert::assertEquals(3210, $dockerPort);
+            Assert::assertEquals(3240, $dockerPort);
             Assert::assertEquals('PASSED', $ciStatus);
             Assert::assertLessThanOrEqual(500, $maxLines);
         });

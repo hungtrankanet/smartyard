@@ -19,7 +19,7 @@ if (!function_exists('env')) {
 }
 if (!function_exists('base_url')) {
     function base_url($path = '') {
-        return 'http://localhost:3210/' . ltrim($path, '/');
+        return 'http://localhost:3240/' . ltrim($path, '/');
     }
 }
 
@@ -159,7 +159,7 @@ assertCondition(file_exists($composeFile), "docker-compose.yml exists");
 
 if (file_exists($composeFile)) {
     $composeContent = file_get_contents($composeFile);
-    assertCondition(strpos($composeContent, '"3210:80"') !== false, "Port 3210:80 proxy mapping configured in docker-compose.yml");
+    assertCondition(strpos($composeContent, '3240:80') !== false, "Port 3240:80 proxy mapping configured in docker-compose.yml");
     assertCondition(strpos($composeContent, 'mysql:8.0') !== false, "MySQL 8.0 image configured");
     assertCondition(strpos($composeContent, 'media_uploads:') !== false, "Decoupled named volume media_uploads configured");
     assertCondition(strpos($composeContent, 'topbestglobal_awards_schema.sql') !== false, "Awards schema SQL mounted in docker-entrypoint-initdb.d");

@@ -229,14 +229,14 @@ class TestE2ERealWorld extends E2ETestCase {
         // ==========================================
         // S10: Production Docker Deployment & CI/CD Gatekeeper
         // ==========================================
-        $this->addTest('S10: Production Docker Port 3210 & CI/CD Gatekeeper Verification', function() {
+        $this->addTest('S10: Production Docker Port 3240 & CI/CD Gatekeeper Verification', function() {
             $dockerConfig = [
-                'port_binding' => '3210:80',
+                'port_binding' => '3240:80',
                 'storage_volume' => 'uploads_data',
                 'db_volume' => 'mysql_data',
                 'gatekeeper_max_lines' => 500
             ];
-            Assert::assertEquals('3210:80', $dockerConfig['port_binding']);
+            Assert::assertEquals('3240:80', $dockerConfig['port_binding']);
             Assert::assertEquals(500, $dockerConfig['gatekeeper_max_lines']);
             Assert::assertNotNull($dockerConfig['storage_volume']);
         });
