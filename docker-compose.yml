@@ -70,8 +70,8 @@ services:
     environment:
       - PMA_ARBITRARY=1
       - PMA_HOST=db
-      - PMA_USER: tbglobal_user
-      - PMA_PASSWORD: TpaLASHNb3Yw4GeC
+      - PMA_USER=tbglobal_user
+      - PMA_PASSWORD=TpaLASHNb3Yw4GeC
     depends_on:
       db:
         condition: service_healthy
