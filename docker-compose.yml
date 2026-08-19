@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     container_name: topbestglobal_web
     ports:
-      - "3210:80"
+      - "${WEB_PORT:-3210}:80"
     volumes:
       - .:/var/www/html
       - media_uploads:/var/www/html/uploads

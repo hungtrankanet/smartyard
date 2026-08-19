@@ -97,8 +97,12 @@ jobs:
 
             chmod -R 777 writable uploads 2>/dev/null || true
 
+            echo "==> Stopping any previous containers and freeing ports..."
+            docker compose down --remove-orphans 2>/dev/null || true
+            docker rm -f topbestglobal_web topbestglobal_pma topbestglobal_db 2>/dev/null || true
+            sleep 3
+
             echo "==> Building and starting Docker containers..."
-            docker compose down 2>/dev/null || true
             docker compose up -d --build
 
             echo "==> Container Status on Port 3210:"
