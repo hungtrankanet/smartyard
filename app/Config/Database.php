@@ -27,8 +27,8 @@ class Database extends Config
     public array $default = [
         'DSN'          => '',
         'hostname'     => 'topbestglobal_db',
-        'username'     => 'topbestglobal_user',
-        'password'     => 'topbestglobal_password',
+        'username'     => 'tbglobal_user',
+        'password'     => 'TpaLASHNb3Yw4GeC',
         'database'     => 'topbestglobal_db',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
@@ -57,8 +57,8 @@ class Database extends Config
         // Override from environment or .env if present
         $this->default['hostname'] = env('database.default.hostname', $this->default['hostname'] ?: 'topbestglobal_db');
         $this->default['database'] = env('database.default.database', $this->default['database'] ?: 'topbestglobal_db');
-        $this->default['username'] = env('database.default.username', $this->default['username'] ?: 'topbestglobal_user');
-        $this->default['password'] = env('database.default.password', $this->default['password'] ?: 'topbestglobal_password');
+        $this->default['username'] = env('database.default.username', $this->default['username'] ?: 'tbglobal_user');
+        $this->default['password'] = env('database.default.password', $this->default['password'] ?: 'TpaLASHNb3Yw4GeC');
         $this->default['port']     = (int) env('database.default.port', $this->default['port'] ?: 3306);
     }
 }

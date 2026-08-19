@@ -18,8 +18,8 @@ services:
       - MEDIA_STORAGE_DRIVER=local
       - database.default.hostname=topbestglobal_db
       - database.default.database=topbestglobal_db
-      - database.default.username=topbestglobal_user
-      - database.default.password=topbestglobal_password
+      - database.default.username=tbglobal_user
+      - database.default.password=TpaLASHNb3Yw4GeC
       - database.default.DBDriver=MySQLi
       - database.default.port=3306
     depends_on:
@@ -44,8 +44,8 @@ services:
       - "3306"
     environment:
       MYSQL_DATABASE: topbestglobal_db
-      MYSQL_USER: topbestglobal_user
-      MYSQL_PASSWORD: topbestglobal_password
+      MYSQL_USER: tbglobal_user
+      MYSQL_PASSWORD: TpaLASHNb3Yw4GeC
       MYSQL_ROOT_PASSWORD: root_password
     volumes:
       - db_data:/var/lib/mysql
@@ -70,8 +70,8 @@ services:
     environment:
       - PMA_ARBITRARY=1
       - PMA_HOST=db
-      - PMA_USER=topbestglobal_user
-      - PMA_PASSWORD=topbestglobal_password
+      - PMA_USER: tbglobal_user
+      - PMA_PASSWORD: TpaLASHNb3Yw4GeC
     depends_on:
       db:
         condition: service_healthy
