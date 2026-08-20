@@ -25,10 +25,32 @@ class Globals extends BaseConfig
 
     public static function setGlobals()
     {
-        self::$db = \Config\Database::connect();
-        $session = \Config\Services::session();
-        //set general settings
-        self::$generalSettings = self::$db->table('general_settings')->where('id', 1)->get()->getRow();
+        try {
+            self::$db = \Config\Database::connect();
+            $session = \Config\Services::session();
+
+            // If database tables do not exist, redirect to installer
+            if (!self::$db->tableExists('general_settings')) {
+                $root = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https://" : "http://") . ($_SERVER['HTTP_HOST'] ?? 'localhost');
+                $root .= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
+                header('Location: ' . rtrim($root, '/') . '/install/welcome.php');
+                exit();
+            }
+
+            //set general settings
+            self::$generalSettings = self::$db->table('general_settings')->where('id', 1)->get()->getRow();
+            if (empty(self::$generalSettings)) {
+                $root = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https://" : "http://") . ($_SERVER['HTTP_HOST'] ?? 'localhost');
+                $root .= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
+                header('Location: ' . rtrim($root, '/') . '/install/welcome.php');
+                exit();
+            }
+        } catch (\Throwable $e) {
+            $root = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https://" : "http://") . ($_SERVER['HTTP_HOST'] ?? 'localhost');
+            $root .= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
+            header('Location: ' . rtrim($root, '/') . '/install/welcome.php');
+            exit();
+        }
         //set themes
         self::$themes = self::getThemes();
         //set routes

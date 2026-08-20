@@ -24,7 +24,21 @@ if (isset($_POST["btn_install"])) {
         'db_name' => $_POST['db_name']
     ];
     try {
-        $mysqli = @new mysqli($data['db_host'], $data['db_user'], $data['db_password'], $data['db_name']);
+        $host = $data['db_host'];
+        $mysqli = @new mysqli($host, $data['db_user'], $data['db_password'], $data['db_name']);
+        if ($mysqli->connect_error && ($host === 'localhost' || $host === '127.0.0.1')) {
+            // If running inside container, auto-fallback to host.docker.internal or 172.17.0.1
+            $mysqli = @new mysqli('host.docker.internal', $data['db_user'], $data['db_password'], $data['db_name']);
+            if ($mysqli->connect_error) {
+                $mysqli = @new mysqli('172.17.0.1', $data['db_user'], $data['db_password'], $data['db_name']);
+                if (!$mysqli->connect_error) {
+                    $data['db_host'] = '172.17.0.1';
+                }
+            } else {
+                $data['db_host'] = 'host.docker.internal';
+            }
+        }
+
         if ($mysqli->connect_error) {
             $error = "Kết nối Database thất bại: " . $mysqli->connect_error . " (Vui lòng kiểm tra lại Host, Username, Password, Database Name trong MariaDB/MySQL)";
         } else {
