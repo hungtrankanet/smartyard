@@ -104,4 +104,37 @@ jobs:
 
             echo "==> Container Status on Port 3240:"
             docker compose ps
+
+            echo "==> Configuring Nginx Reverse Proxy for topbestglobal.com..."
+            if command -v nginx >/dev/null 2>&1; then
+              cat << 'EOF' > /tmp/topbestglobal_nginx.conf
+server {
+    listen 80;
+    server_name topbestglobal.com www.topbestglobal.com;
+
+    location / {
+        proxy_pass http://127.0.0.1:3240;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        client_max_body_size 100M;
+    }
+}
+EOF
+              if [ -d "/etc/nginx/sites-available" ]; then
+                cp /tmp/topbestglobal_nginx.conf /etc/nginx/sites-available/topbestglobal.conf
+                ln -sf /etc/nginx/sites-available/topbestglobal.conf /etc/nginx/sites-enabled/topbestglobal.conf
+              fi
+              if [ -d "/etc/nginx/conf.d" ]; then
+                cp /tmp/topbestglobal_nginx.conf /etc/nginx/conf.d/topbestglobal.conf
+              fi
+              rm -f /tmp/topbestglobal_nginx.conf
+
+              nginx -t 2>/dev/null && (systemctl reload nginx 2>/dev/null || systemctl restart nginx 2>/dev/null || nginx -s reload 2>/dev/null || true)
+              echo "==> Nginx Reverse Proxy Configured & Reloaded Successfully!"
+            else
+              echo "==> Nginx not found on host. Web accessible directly on port 3240."
+            fi
+
             echo "==> TOP BEST GLOBAL Deployment Finished Successfully!"
