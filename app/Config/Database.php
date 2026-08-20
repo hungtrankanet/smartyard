@@ -26,7 +26,7 @@ class Database extends Config
      */
     public array $default = [
         'DSN'          => '',
-        'hostname'     => 'topbestglobal_db',
+        'hostname'     => 'localhost',
         'username'     => 'tbglobal_user',
         'password'     => 'TpaLASHNb3Yw4GeC',
         'database'     => 'topbestglobal_db',
@@ -55,7 +55,7 @@ class Database extends Config
         parent::__construct();
 
         // Override from environment or .env if present
-        $this->default['hostname'] = env('database.default.hostname', $this->default['hostname'] ?: 'topbestglobal_db');
+        $this->default['hostname'] = env('database.default.hostname', $this->default['hostname'] ?: 'localhost');
         $this->default['database'] = env('database.default.database', $this->default['database'] ?: 'topbestglobal_db');
         $this->default['username'] = env('database.default.username', $this->default['username'] ?: 'tbglobal_user');
         $this->default['password'] = env('database.default.password', $this->default['password'] ?: 'TpaLASHNb3Yw4GeC');

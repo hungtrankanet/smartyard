@@ -1,32 +1,29 @@
 version: '3.8'
 
 services:
-  web:
+  topbest:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: topbestglobal_web
+    container_name: topbest
     ports:
       - "3240:80"
     volumes:
       - .:/var/www/html
       - media_uploads:/var/www/html/uploads
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     environment:
       - APACHE_RUN_USER=www-data
       - APACHE_RUN_GROUP=www-data
       - CI_ENVIRONMENT=production
       - MEDIA_STORAGE_DRIVER=local
-      - database.default.hostname=topbestglobal_db
+      - database.default.hostname=host.docker.internal
       - database.default.database=topbestglobal_db
       - database.default.username=tbglobal_user
       - database.default.password=TpaLASHNb3Yw4GeC
       - database.default.DBDriver=MySQLi
       - database.default.port=3306
-    depends_on:
-      db:
-        condition: service_healthy
-    networks:
-      - topbestglobal_net
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:80/ || exit 1"]
@@ -35,56 +32,6 @@ services:
       retries: 3
       start_period: 15s
 
-  db:
-    image: mysql:8.0
-    container_name: topbestglobal_db
-    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max_connections=2000
-    restart: always
-    expose:
-      - "3306"
-    environment:
-      MYSQL_DATABASE: topbestglobal_db
-      MYSQL_USER: tbglobal_user
-      MYSQL_PASSWORD: TpaLASHNb3Yw4GeC
-      MYSQL_ROOT_PASSWORD: root_password
-    volumes:
-      - db_data:/var/lib/mysql
-      - ./install/sql/install_varient.sql:/docker-entrypoint-initdb.d/01_install_varient.sql:ro
-      - ./migrate_members.sql:/docker-entrypoint-initdb.d/02_migrate_members.sql:ro
-      - ./topbestglobal_awards_schema.sql:/docker-entrypoint-initdb.d/03_topbestglobal_awards_schema.sql:ro
-      - ./init_db.sql:/docker-entrypoint-initdb.d/04_init_db.sql:ro
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot_password"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
-    networks:
-      - topbestglobal_net
-
-  phpmyadmin:
-    image: phpmyadmin:latest
-    container_name: topbestglobal_pma
-    ports:
-      - "8001:80"
-    environment:
-      - PMA_ARBITRARY=1
-      - PMA_HOST=db
-      - PMA_USER=tbglobal_user
-      - PMA_PASSWORD=TpaLASHNb3Yw4GeC
-    depends_on:
-      db:
-        condition: service_healthy
-    networks:
-      - topbestglobal_net
-    restart: unless-stopped
-
 volumes:
-  db_data:
-    driver: local
   media_uploads:
     driver: local
-
-networks:
-  topbestglobal_net:
-    driver: bridge

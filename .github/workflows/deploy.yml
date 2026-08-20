@@ -72,7 +72,7 @@ jobs:
           port: ${{ secrets.SERVER_PORT || secrets.VPS_PORT || 22 }}
           script_stop: true
           script: |
-            TARGET_DIR="${{ secrets.SERVER_TARGET_DIR || secrets.VPS_TARGET_DIR || '/var/www/topbestglobal' }}"
+            TARGET_DIR="${{ secrets.SERVER_TARGET_DIR || secrets.VPS_TARGET_DIR || '/www/wwwroot/topbestglobal' }}"
             REPO_AUTH_URL="https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
 
             echo "==> Deploying TOP BEST GLOBAL to: $TARGET_DIR"
@@ -80,7 +80,7 @@ jobs:
             if [ ! -d "$TARGET_DIR/.git" ]; then
               echo "==> Fresh cloning repository with auth token..."
               rm -rf "$TARGET_DIR"
-              mkdir -p "$(dirname "$TARGET_DIR")"
+              mkdir -p "$TARGET_DIR"
               git clone "$REPO_AUTH_URL" "$TARGET_DIR"
             fi
 
@@ -96,10 +96,10 @@ jobs:
 
             echo "==> Stopping any previous containers and freeing ports..."
             docker compose down --remove-orphans 2>/dev/null || true
-            docker rm -f topbestglobal_web topbestglobal_pma topbestglobal_db 2>/dev/null || true
+            docker rm -f topbest topbestglobal_web topbestglobal_pma topbestglobal_db 2>/dev/null || true
             sleep 3
 
-            echo "==> Building and starting Docker containers..."
+            echo "==> Building and starting single topbest container..."
             docker compose up -d --build
 
             echo "==> Container Status on Port 3240:"
