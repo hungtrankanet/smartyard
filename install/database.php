@@ -24,18 +24,20 @@ if (isset($_POST["btn_install"])) {
         'db_name' => $_POST['db_name']
     ];
     try {
-        $mysqli = new mysqli($data['db_host'], $data['db_user'], $data['db_password'], $data['db_name']);
+        $mysqli = @new mysqli($data['db_host'], $data['db_user'], $data['db_password'], $data['db_name']);
         if ($mysqli->connect_error) {
-            $error = "The database could not be created, please check your database credentials!";
+            $error = "Kết nối Database thất bại: " . $mysqli->connect_error . " (Vui lòng kiểm tra lại Host, Username, Password, Database Name trong MariaDB/MySQL)";
         } else {
+            $mysqli->set_charset("utf8mb4");
             //create tables
             $sqlFile = file_get_contents('sql/install_varient.sql');
             if (!$mysqli->multi_query($sqlFile)) {
-                $error = "The database could not be created, please check your database credentials!";
+                $error = "Lỗi thực thi SQL: " . $mysqli->error;
             } else {
+                while ($mysqli->more_results() && $mysqli->next_result());
                 //write config
                 if (!write_config($data)) {
-                    $error = "The database configuration file could not be written, please change the file permission of the app/Config/Database.php file to 755.";
+                    $error = "Không thể ghi file cấu hình app/Config/Database.php, vui lòng phân quyền thư mục hoặc file 777.";
                 } else {
                     $installing = true;
                 }
@@ -44,7 +46,7 @@ if (isset($_POST["btn_install"])) {
             $mysqli->close();
         }
     } catch (Exception $e) {
-        $error = "The database could not be created, please check your database credentials!";
+        $error = "Lỗi Database: " . $e->getMessage();
     }
 } else {
     $licenseCode = $_GET["license_code"];
@@ -164,20 +166,21 @@ if (isset($_POST["btn_install"])) {
                                         <div class="tab_1">
                                             <h1 class="step-title">Database</h1>
                                             <div class="form-group">
-                                                <label for="email">Host</label>
+                                                <label for="email">Host (MariaDB / MySQL)</label>
                                                 <input type="text" class="form-control form-input" name="db_host" placeholder="Host" value="<?= !empty($data['db_host']) ? $data['db_host'] : 'localhost'; ?>" required>
+                                                <small class="text-muted">Nhập <code>localhost</code> hoặc <code>127.0.0.1</code> hoặc <code>topbestglobal_db</code> (nếu chạy trong docker network).</small>
                                             </div>
                                             <div class="form-group">
                                                 <label for="email">Database Name</label>
-                                                <input type="text" class="form-control form-input" name="db_name" placeholder="Database Name" value="<?= !empty($data['db_name']) ? $data['db_name'] : ''; ?>" required>
+                                                <input type="text" class="form-control form-input" name="db_name" placeholder="Database Name" value="<?= !empty($data['db_name']) ? $data['db_name'] : 'topbestglobal_db'; ?>" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="email">Username</label>
-                                                <input type="text" class="form-control form-input" name="db_user" placeholder="Username" value="<?= !empty($data['db_user']) ? $data['db_user'] : ''; ?>" required>
+                                                <input type="text" class="form-control form-input" name="db_user" placeholder="Username" value="<?= !empty($data['db_user']) ? $data['db_user'] : 'tbglobal_user'; ?>" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="email">Password</label>
-                                                <input type="text" class="form-control form-input" name="db_password" placeholder="Password" value="<?= !empty($data['db_password']) ? $data['db_password'] : ''; ?>">
+                                                <input type="text" class="form-control form-input" name="db_password" placeholder="Password" value="<?= !empty($data['db_password']) ? $data['db_password'] : 'TpaLASHNb3Yw4GeC'; ?>">
                                             </div>
                                         </div>
                                     </div>

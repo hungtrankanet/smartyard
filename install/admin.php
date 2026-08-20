@@ -51,14 +51,18 @@ if (isset($_POST["btn_admin"])) {
         $token = uniqid("", TRUE);
         $token = str_replace(".", "-", $token) . "-" . rand(10000000, 99999999);
 
-        $stmt = $connection->prepare("INSERT INTO users (`id`, `username`, `slug`, `email`, `email_status`, `token`, `password`, `role_id`, `user_type`, `status`, `show_email_on_profile`, `show_rss_feeds`) 
+        $stmt = $connection->prepare("REPLACE INTO users (`id`, `username`, `slug`, `email`, `email_status`, `token`, `password`, `role_id`, `user_type`, `status`, `show_email_on_profile`, `show_rss_feeds`) 
 VALUES (1, ?, ?, ?, 1, ?, ?, 1, 'registered', 1, 1, 1)");
         $stmt->bind_param("sssss", $adminUsername, $slug, $adminEmail, $token, $adminPasswordHash);
         $stmt->execute();
 
-        $stmt= $connection->prepare("UPDATE general_settings SET timezone= ? WHERE id= 1");
+        $stmt = $connection->prepare("UPDATE general_settings SET timezone = ?, application_name = 'TOP BEST GLOBAL', site_title = 'TOP BEST GLOBAL' WHERE id = 1");
         $stmt->bind_param("s", $timezone);
         $stmt->execute();
+
+        // Ensure theme is set to suntransco
+        $connection->query("UPDATE general_settings SET active_theme = 'suntransco' WHERE id = 1");
+        $connection->query("INSERT IGNORE INTO themes (name, theme_folder, is_active) VALUES ('TOP BEST GLOBAL Theme', 'suntransco', 1)");
 
         /* close connection */
         mysqli_close($connection);
@@ -71,7 +75,18 @@ CI_ENVIRONMENT = production
 #--------------------------------------------------------------------
 # APP
 #--------------------------------------------------------------------
-app.baseURL = " . trim($baseUrl) . "
+app.baseURL = '" . rtrim(trim($baseUrl), '/') . "/'
+app.forceGlobalSecureRequests = false
+
+#--------------------------------------------------------------------
+# DATABASE
+#--------------------------------------------------------------------
+database.default.hostname = " . trim($dbArray['db_host']) . "
+database.default.database = " . trim($dbArray['db_name']) . "
+database.default.username = " . trim($dbArray['db_user']) . "
+database.default.password = " . trim($dbArray['db_password']) . "
+database.default.DBDriver = MySQLi
+database.default.port = 3306
 
 #--------------------------------------------------------------------
 # LICENSE

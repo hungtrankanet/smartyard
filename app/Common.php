@@ -133,6 +133,16 @@ if (!function_exists('loadView')) {
     }
 }
 
+//load theme view with header and footer
+if (!function_exists('loadThemeView')) {
+    function loadThemeView($view, $data = null)
+    {
+        return loadView('partials/_header', $data)
+            . loadView($view, $data)
+            . loadView('partials/_footer', $data);
+    }
+}
+
 //language base URL
 if (!function_exists('langBaseUrl')) {
     function langBaseUrl($route = null)

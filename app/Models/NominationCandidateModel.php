@@ -219,6 +219,79 @@ class NominationCandidateModel extends BaseModel
         return $this->builder->where('id', $id)->update($updateData);
     }
 
+    public function updateAverageJuryScore(int $candidateId): bool
+    {
+        $id = clrNum($candidateId);
+        $juryEvalModel = new \App\Models\JuryEvaluationModel();
+        $avgData = $juryEvalModel->getCandidateJuryAverage($id);
+        $avgScore = (float)($avgData['avg_score'] ?? 0.00);
+
+        $candidate = $this->getCandidate($id);
+        if (!$candidate) {
+            return false;
+        }
+
+        $juryWeight = isset($candidate->jury_weight) ? (float)$candidate->jury_weight : 70.00;
+        $compositeScore = round(($avgScore * ($juryWeight / 100)), 2);
+
+        return $this->builder
+            ->where('id', $id)
+            ->update([
+                'jury_score_avg'  => $avgScore,
+                'composite_score' => $compositeScore,
+                'updated_at'      => date('Y-m-d H:i:s'),
+            ]);
+    }
+
+    public function countCandidatesFiltered(array $filters = []): int
+    {
+        $builder = $this->db->table('tb_nomination_candidates c');
+        $this->applyFilters($builder, $filters);
+        return $builder->countAllResults();
+    }
+
+    public function getCandidatesFiltered(array $filters = [], int $perPage = 20, int $offset = 0): array
+    {
+        $builder = $this->db->table('tb_nomination_candidates c')
+            ->select('c.*, cat.name AS category_name, cat.slug AS category_slug, cat.industry_sector, s.title AS season_title, s.theme_year')
+            ->join('tb_award_categories cat', 'cat.id = c.category_id', 'left')
+            ->join('tb_award_seasons s', 's.id = c.season_id', 'left');
+
+        $this->applyFilters($builder, $filters);
+
+        return $builder
+            ->orderBy('c.id', 'DESC')
+            ->limit($perPage, $offset)
+            ->get()
+            ->getResult();
+    }
+
+    private function applyFilters(&$builder, array $filters): void
+    {
+        if (!empty($filters['season_id'])) {
+            $builder->where('c.season_id', clrNum($filters['season_id']));
+        }
+        if (!empty($filters['category_id'])) {
+            $builder->where('c.category_id', clrNum($filters['category_id']));
+        }
+        if (!empty($filters['stage'])) {
+            $builder->where('c.stage', cleanStr($filters['stage']));
+        }
+        if (!empty($filters['status'])) {
+            $builder->where('c.status', cleanStr($filters['status']));
+        }
+        if (!empty($filters['q'])) {
+            $q = cleanStr($filters['q']);
+            $builder->groupStart()
+                ->like('c.name', $q)
+                ->orLike('c.organization_name', $q)
+                ->orLike('c.candidate_code', $q)
+                ->orLike('c.tax_code', $q)
+                ->orLike('c.contact_email', $q)
+                ->groupEnd();
+        }
+    }
+
     public function deleteCandidate($id): bool
     {
         $id = clrNum($id);

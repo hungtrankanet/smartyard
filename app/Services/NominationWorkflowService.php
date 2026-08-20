@@ -89,22 +89,27 @@ class NominationWorkflowService
         $trackingCode = $this->generateTrackingCode((int) date('Y'));
 
         $insertData = [
-            'tracking_code'     => $trackingCode,
-            'season_id'         => $seasonId,
-            'category_id'       => (int) $data['category_id'],
-            'organization_name' => trim($data['organization_name']),
-            'brand_name'        => trim($data['brand_name'] ?? $data['organization_name']),
-            'representative'    => trim($data['representative'] ?? ''),
-            'tax_code'          => trim($data['tax_code'] ?? ''),
-            'industry_sector'   => trim($data['industry_sector'] ?? ''),
-            'contact_email'     => trim($data['contact_email']),
-            'contact_phone'     => trim($data['contact_phone'] ?? ''),
-            'address'           => trim($data['address'] ?? ''),
+            'candidate_code'       => $trackingCode,
+            'tracking_code'        => $trackingCode,
+            'season_id'            => $seasonId,
+            'category_id'          => (int) $data['category_id'],
+            'name'                 => trim($data['brand_name'] ?? $data['organization_name']),
+            'organization_name'    => trim($data['organization_name']),
+            'brand_name'           => trim($data['brand_name'] ?? $data['organization_name']),
+            'contact_person'       => trim($data['representative'] ?? ''),
+            'representative'       => trim($data['representative'] ?? ''),
+            'tax_code'             => trim($data['tax_code'] ?? ''),
+            'industry_sector'      => trim($data['industry_sector'] ?? ''),
+            'contact_email'        => trim($data['contact_email']),
+            'contact_phone'        => trim($data['contact_phone'] ?? ''),
+            'address'              => trim($data['address'] ?? ''),
+            'bio_summary'          => $data['achievements_summary'] ?? '',
             'achievements_summary' => $data['achievements_summary'] ?? '',
+            'dossier_content'      => json_encode($data['dossier_files'] ?? []),
             'dossier_files_json'   => json_encode($data['dossier_files'] ?? []),
-            'stage'             => self::STAGE_SO_KHAO,
-            'status'            => 'active',
-            'created_at'        => date('Y-m-d H:i:s'),
+            'stage'                => self::STAGE_SO_KHAO,
+            'status'               => 'approved',
+            'created_at'           => date('Y-m-d H:i:s'),
         ];
 
         try {
@@ -178,21 +183,27 @@ class NominationWorkflowService
      */
     public function getStatusByTrackingCode(string $code): ?array
     {
-        $candidate = $this->candidateModel->where('tracking_code', trim($code))->first();
+        $clean = trim($code);
+        $candidate = $this->candidateModel->where('candidate_code', $clean)
+                                          ->orWhere('tracking_code', $clean)
+                                          ->first();
         if (empty($candidate)) {
             return null;
         }
 
+        $orgName = $candidate->organization_name ?? ($candidate->name ?? 'N/A');
+        $brandName = $candidate->brand_name ?? ($candidate->name ?? $orgName);
+
         return [
-            'tracking_code'     => $candidate->tracking_code,
-            'organization_name' => $candidate->organization_name,
-            'brand_name'        => $candidate->brand_name,
-            'stage'             => $candidate->stage,
-            'stage_label'       => $this->getStageLabel($candidate->stage),
-            'stage_order'       => $this->stageOrder[$candidate->stage] ?? 1,
-            'status'            => $candidate->status,
-            'created_at'        => $candidate->created_at,
-            'updated_at'        => $candidate->updated_at,
+            'tracking_code'     => $candidate->candidate_code ?? ($candidate->tracking_code ?? $clean),
+            'organization_name' => $orgName,
+            'brand_name'        => $brandName,
+            'stage'             => $candidate->stage ?? self::STAGE_SO_KHAO,
+            'stage_label'       => $this->getStageLabel($candidate->stage ?? self::STAGE_SO_KHAO),
+            'stage_order'       => $this->stageOrder[$candidate->stage ?? self::STAGE_SO_KHAO] ?? 1,
+            'status'            => $candidate->status ?? 'active',
+            'created_at'        => $candidate->created_at ?? date('Y-m-d H:i:s'),
+            'updated_at'        => $candidate->updated_at ?? null,
         ];
     }
 
