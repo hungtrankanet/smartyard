@@ -1,8 +1,68 @@
-<!-- Main Home: 5-Column News & Media Portal -->
+<!-- Main Home: Hero Banner & 5-Column News Portal -->
 <div class="py-4" style="background-color: #F8FAFC; min-height: 85vh;">
     <div class="container-fluid px-lg-4">
         
-        <!-- 5-Column Master Layout Container -->
+        <!-- KHỐI HERO BANNER: TIN NỔI BẬT (HERO DẠNG TIN SPLIT) -->
+        <div class="row mb-5">
+            <!-- Tin Lớn Bên Trái -->
+            <div class="col-lg-8 mb-4 mb-lg-0">
+                <?php if (!empty($featuredNews)): ?>
+                    <div class="card border-0 shadow-sm overflow-hidden h-100" style="border-radius: 16px; background: #ffffff;">
+                        <div style="position: relative; height: 360px; background: url('<?= base_url($featuredNews['image']); ?>') center center / cover no-repeat;">
+                            <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,25,47,0.15) 0%, rgba(10,25,47,0.9) 100%);"></div>
+                            <div style="position: absolute; top: 20px; left: 20px;">
+                                <span class="badge badge-warning px-3 py-2 font-weight-bold" style="background: #D9A441; color: #0A192F; font-size: 0.8rem; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
+                                    <i class="fa-solid fa-crown mr-1"></i> TIÊU ĐIỂM VINH DANH MÙA GIẢI 2026
+                                </span>
+                            </div>
+                            <div style="position: absolute; bottom: 25px; left: 25px; right: 25px; color: #ffffff;">
+                                <div class="mb-2" style="font-size: 0.82rem; color: #F3E5AB;">
+                                    <i class="fa-regular fa-calendar mr-1"></i> <?= esc($featuredNews['created_at']); ?> • <span class="text-uppercase"><?= esc($featuredNews['category']); ?></span>
+                                </div>
+                                <h2 class="font-serif text-white mb-2" style="font-size: 1.65rem; line-height: 1.35; text-shadow: 0 2px 8px rgba(0,0,0,0.5);">
+                                    <a href="<?= langBaseUrl('top-best-la-gi'); ?>" style="color: #ffffff; text-decoration: none;">
+                                        <?= esc($featuredNews['title']); ?>
+                                    </a>
+                                </h2>
+                                <p style="font-size: 0.9rem; color: #E2E8F0; line-height: 1.5; margin-bottom: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                                    <?= esc($featuredNews['summary']); ?>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </div>
+
+            <!-- 3 Tin Nhỏ Xếp Dọc Bên Phải -->
+            <div class="col-lg-4">
+                <div class="d-flex flex-column justify-content-between h-100" style="gap: 12px;">
+                    <?php if (!empty($secondaryNews)): ?>
+                        <?php foreach ($secondaryNews as $item): ?>
+                            <div class="card border-0 shadow-sm p-3 flex-fill" style="border-radius: 12px; background: #ffffff; transition: transform 0.2s ease;">
+                                <div class="d-flex align-items-center mb-1">
+                                    <span class="badge badge-light px-2 py-1 mr-2 font-weight-bold" style="font-size: 0.7rem; color: #1A4C96; background: #EFF6FF;">
+                                        <?= esc($item['category']); ?>
+                                    </span>
+                                    <small class="text-muted" style="font-size: 0.72rem;">
+                                        <i class="fa-regular fa-clock mr-1"></i> <?= esc($item['created_at']); ?>
+                                    </small>
+                                </div>
+                                <h6 class="font-serif mb-1" style="font-size: 0.9rem; line-height: 1.4;">
+                                    <a href="<?= langBaseUrl('top-best-la-gi'); ?>" style="color: #0F172A; text-decoration: none;">
+                                        <?= esc($item['title']); ?>
+                                    </a>
+                                </h6>
+                                <p class="text-muted mb-0 small" style="line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                                    <?= esc($item['summary']); ?>
+                                </p>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5-COLUMN MASTER LAYOUT CONTAINER (3 CỘT CHUYÊN MỤC + 2 CỘT SIDEBAR) -->
         <div class="tbg-master-grid">
             
             <!-- LEFT 3 COLUMNS: Chuyên Mục Tin Tức (Mỗi Cụm 4 Bài: 2 Cột Bài Lớn + 1 Cột 3 Bài Nhỏ) -->
