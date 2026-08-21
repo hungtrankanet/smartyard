@@ -61,13 +61,18 @@ VALUES (1, ?, ?, ?, 1, ?, ?, 1, 'registered', 1, 1, 1)");
         $stmt->bind_param("sssss", $adminUsername, $slug, $adminEmail, $token, $adminPasswordHash);
         $stmt->execute();
 
-        $stmt = $connection->prepare("UPDATE general_settings SET timezone = ?, application_name = 'TOP BEST GLOBAL', site_title = 'TOP BEST GLOBAL' WHERE id = 1");
-        $stmt->bind_param("s", $timezone);
-        $stmt->execute();
+        $stmt = $connection->prepare("UPDATE general_settings SET timezone = ? WHERE id = 1");
+        if ($stmt) {
+            $stmt->bind_param("s", $timezone);
+            $stmt->execute();
+        }
+
+        // Update application name and site title in settings table
+        $connection->query("UPDATE settings SET application_name = 'TOP BEST GLOBAL', site_title = 'TOP BEST GLOBAL' WHERE id = 1");
 
         // Ensure theme is set to suntransco
-        $connection->query("UPDATE general_settings SET active_theme = 'suntransco' WHERE id = 1");
-        $connection->query("INSERT IGNORE INTO themes (name, theme_folder, is_active) VALUES ('TOP BEST GLOBAL Theme', 'suntransco', 1)");
+        $connection->query("UPDATE themes SET is_active = 1 WHERE theme = 'suntransco' OR theme_folder = 'suntransco'");
+        $connection->query("INSERT IGNORE INTO themes (name, theme, theme_folder, is_active) VALUES ('TOP BEST GLOBAL Theme', 'suntransco', 'suntransco', 1)");
 
         /* close connection */
         mysqli_close($connection);
