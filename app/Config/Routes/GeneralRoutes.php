@@ -5,18 +5,38 @@
  * @var \CodeIgniter\Router\RouteCollection $routes
  */
 
-$routes->get('/', 'HomeController::index');
-$routes->get('index.php', 'HomeController::index');
-$routes->get('index.html', 'HomeController::index');
-$routes->get('index', 'HomeController::index');
-$routes->get('about', 'HomeController::about');
-$routes->get('about.html', 'HomeController::about');
-$routes->get('services', 'HomeController::services');
-$routes->get('services.html', 'HomeController::services');
-$routes->get('contact', 'HomeController::contactPage');
-$routes->get('contact.html', 'HomeController::contactPage');
-$routes->get('news', 'HomeController::posts');
-$routes->get('news.html', 'HomeController::posts');
+$routes->get('/', 'TopBestPortalController::index');
+$routes->get('index.php', 'TopBestPortalController::index');
+$routes->get('index.html', 'TopBestPortalController::index');
+$routes->get('index', 'TopBestPortalController::index');
+
+$routes->get('top-best-la-gi', 'TopBestPortalController::aboutTopBest');
+$routes->get('bang-xep-hang', 'TopBestDirectoryController::index');
+$routes->get('directory', 'TopBestDirectoryController::index');
+$routes->get('ho-so/(:any)', 'TopBestDirectoryController::detail/$1');
+$routes->get('directory/(:any)', 'TopBestDirectoryController::detail/$1');
+$routes->get('badge/embed/(:any)', 'TopBestDirectoryController::embedBadge/$1');
+
+$routes->get('doanh-nghiep/dang-ky', 'TopBestRegistrationController::businessRegister');
+$routes->post('doanh-nghiep/gui-dang-ky', 'TopBestRegistrationController::submitBusiness');
+$routes->get('nomination/apply', 'TopBestRegistrationController::businessRegister');
+
+$routes->get('dai-ly', 'TopBestRegistrationController::agency');
+$routes->get('agency', 'TopBestRegistrationController::agency');
+$routes->post('dai-ly/dang-ky', 'TopBestRegistrationController::submitAgency');
+
+$routes->get('xac-minh', 'TopBestVerificationController::index');
+$routes->get('verify', 'TopBestVerificationController::index');
+$routes->get('verify/(:any)', 'TopBestVerificationController::verifyCode/$1');
+
+$routes->get('su-kien', 'TopBestPortalController::events');
+$routes->get('events', 'TopBestPortalController::events');
+$routes->get('ve-chung-toi', 'TopBestPortalController::aboutUs');
+$routes->get('about-us', 'TopBestPortalController::aboutUs');
+$routes->get('about', 'TopBestPortalController::aboutUs');
+$routes->get('lien-he', 'TopBestPortalController::contact');
+$routes->get('contact', 'TopBestPortalController::contact');
+$routes->get('news', 'TopBestPortalController::index');
 $routes->get('switch-lang/(:any)', 'HomeController::switchLang/$1');
 
 $routes->get('cron/update-feeds', 'CronController::checkFeedPosts');

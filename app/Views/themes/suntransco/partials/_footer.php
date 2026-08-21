@@ -1,84 +1,87 @@
-    <!-- Footer -->
-    <footer class="footer" style="background: #050a18; padding-top: 60px; padding-bottom: 30px;">
-        <div class="container grid grid-4">
-            <div class="footer-col">
-                <a href="<?= langBaseUrl(); ?>" class="logo footer-logo" style="display:flex;align-items:center;gap:10px;margin-bottom:14px;text-decoration:none;">
-                    <img src="<?= base_url('assets/themes/suntransco/logo.png'); ?>" alt="TOP BEST GLOBAL Logo" style="height:35px;width:auto;filter:brightness(0) invert(1);">
-                    <span class="logo-sun" style="color:var(--white);font-weight:900;letter-spacing:0.5px;">TOP BEST</span> <span class="logo-trans" style="color:var(--white);font-weight:900;letter-spacing:0.5px;">GLOBAL</span>
-                </a>
-                <p style="color:rgba(255,255,255,0.65);font-size:0.83rem;line-height:1.6;">
-                    <span class="lang-vi">Nền tảng logistics & kết nối thương mại toàn cầu tin cậy của cộng đồng doanh nghiệp.</span>
-                    <span class="lang-en">Trusted global logistics & enterprise networking platform for businesses.</span>
+<!-- Footer Component -->
+<footer style="background-color: #0A192F; color: #94A3B8; border-top: 3px solid #D9A441; padding: 60px 0 30px; font-size: 0.9rem;">
+    <div class="container">
+        <div class="row mb-5">
+            <!-- Col 1: Về TOP BEST -->
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="mr-2 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; border-radius: 6px; background: #D9A441; color: #0A192F; font-weight: 900;">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <span style="color: #ffffff; font-weight: 800; font-size: 1.05rem;">TOP BEST GLOBAL</span>
+                </div>
+                <p style="font-size: 0.85rem; line-height: 1.6; color: #CBD5E1;">
+                    Cổng thông tin chính thức của chương trình TOP BEST — hạng mục giải thưởng thuộc Hội Kỷ lục Việt Nam (VietKings), thành viên Liên minh Kỷ lục Thế giới (WORLDKINGS), uỷ thác cho TOLUCK và GAA triển khai.
+                </p>
+                <div class="mt-3">
+                    <span class="badge badge-pill badge-dark px-3 py-2" style="background: rgba(217,164,65,0.15); border: 1px solid #D9A441; color: #F3E5AB;">
+                        <i class="fa-solid fa-award mr-1"></i> QĐ 959/QĐ-BNV 2013
+                    </span>
+                </div>
+            </div>
+
+            <!-- Col 2: Dành cho Doanh nghiệp -->
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h5 class="text-white font-serif mb-3" style="font-size: 1rem; border-bottom: 2px solid #1A4C96; padding-bottom: 8px;">Dành Cho Doanh Nghiệp</h5>
+                <ul class="list-unstyled" style="line-height: 2;">
+                    <li><a href="<?= langBaseUrl('doanh-nghiep/dang-ky'); ?>" style="color: #CBD5E1;"><i class="fa-solid fa-angle-right mr-2 text-warning"></i> Đăng Ký Đề Cử Mới</a></li>
+                    <li><a href="<?= langBaseUrl('top-best-la-gi#co-che'); ?>" style="color: #CBD5E1;"><i class="fa-solid fa-angle-right mr-2 text-warning"></i> Cơ Chế Xét Duyệt TOP / BEST</a></li>
+                    <li><a href="<?= langBaseUrl('top-best-la-gi#quy-trinh'); ?>" style="color: #CBD5E1;"><i class="fa-solid fa-angle-right mr-2 text-warning"></i> Quy Trình Thẩm Định 12 Bước</a></li>
+                    <li><a href="<?= langBaseUrl('bang-xep-hang'); ?>" style="color: #CBD5E1;"><i class="fa-solid fa-angle-right mr-2 text-warning"></i> Tra Cứu Bảng Xếp Hạng</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 3: Dành cho Đại lý -->
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h5 class="text-white font-serif mb-3" style="font-size: 1rem; border-bottom: 2px solid #1A4C96; padding-bottom: 8px;">Dành Cho Đại Lý</h5>
+                <ul class="list-unstyled" style="line-height: 2;">
+                    <li><a href="<?= langBaseUrl('dai-ly'); ?>" style="color: #CBD5E1;"><i class="fa-solid fa-angle-right mr-2 text-warning"></i> Chính Sách & Quyền Lợi Đại Lý</a></li>
+                    <li><a href="<?= langBaseUrl('dai-ly#dang-ky'); ?>" style="color: #CBD5E1;"><i class="fa-solid fa-angle-right mr-2 text-warning"></i> Đăng Ký Mạng Lưới Đối Tác</a></li>
+                    <li><a href="<?= langBaseUrl('top-best-la-gi#lo-trinh'); ?>" style="color: #CBD5E1;"><i class="fa-solid fa-angle-right mr-2 text-warning"></i> Kế Hoạch Workshop Toàn Quốc</a></li>
+                    <li><a href="<?= langBaseUrl('verify'); ?>" style="color: #CBD5E1;"><i class="fa-solid fa-angle-right mr-2 text-warning"></i> Cổng Xác Minh Mã Hồ Sơ</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 4: Liên hệ -->
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h5 class="text-white font-serif mb-3" style="font-size: 1rem; border-bottom: 2px solid #1A4C96; padding-bottom: 8px;">Ban Thư Ký Chương Trình</h5>
+                <p style="font-size: 0.85rem; color: #CBD5E1; margin-bottom: 8px;">
+                    <i class="fa-solid fa-phone text-warning mr-2"></i> <strong>Hotline GAA:</strong> 0909 123 456
+                </p>
+                <p style="font-size: 0.85rem; color: #CBD5E1; margin-bottom: 8px;">
+                    <i class="fa-solid fa-envelope text-warning mr-2"></i> <strong>Email:</strong> contact@topbestglobal.com
+                </p>
+                <p style="font-size: 0.85rem; color: #CBD5E1; margin-bottom: 8px;">
+                    <i class="fa-solid fa-location-dot text-warning mr-2"></i> <strong>Địa chỉ:</strong> Toà nhà TOLUCK, TP. Hồ Chí Minh & Hà Nội
                 </p>
             </div>
-            <div class="footer-col">
-                <h4 style="color:var(--white);font-size:0.95rem;margin-bottom:16px;">
-                    <span class="lang-vi">Dịch Vụ</span>
-                    <span class="lang-en">Services</span>
-                </h4>
-                <ul style="list-style:none;">
-                    <li style="margin-bottom:8px;"><a href="<?= langBaseUrl('services'); ?>?tab=air-freight" style="color:rgba(255,255,255,0.65);font-size:0.83rem;"><i class="fa-solid fa-plane fa-xs" style="margin-right:6px;color:var(--primary);"></i>Air Freight</a></li>
-                    <li style="margin-bottom:8px;"><a href="<?= langBaseUrl('services'); ?>?tab=sea-freight" style="color:rgba(255,255,255,0.65);font-size:0.83rem;"><i class="fa-solid fa-ship fa-xs" style="margin-right:6px;color:var(--primary);"></i>Sea Freight</a></li>
-                    <li style="margin-bottom:8px;"><a href="<?= langBaseUrl('services'); ?>?tab=inland-freight" style="color:rgba(255,255,255,0.65);font-size:0.83rem;"><i class="fa-solid fa-truck fa-xs" style="margin-right:6px;color:var(--primary);"></i>Inland Freight</a></li>
-                    <li style="margin-bottom:8px;"><a href="<?= langBaseUrl('services'); ?>?tab=warehousing" style="color:rgba(255,255,255,0.65);font-size:0.83rem;"><i class="fa-solid fa-warehouse fa-xs" style="margin-right:6px;color:var(--primary);"></i>Warehousing</a></li>
-                    <li style="margin-bottom:8px;"><a href="<?= langBaseUrl('services'); ?>?tab=customs-clearance" style="color:rgba(255,255,255,0.65);font-size:0.83rem;"><i class="fa-solid fa-file-invoice fa-xs" style="margin-right:6px;color:var(--primary);"></i>Customs Clearance</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4 style="color:var(--white);font-size:0.95rem;margin-bottom:16px;">
-                    <span class="lang-vi">Đối Tác</span>
-                    <span class="lang-en">Partners</span>
-                </h4>
-                <ul style="list-style:none;">
-                    <li style="margin-bottom:8px;"><a href="<?= langBaseUrl('partners'); ?>" style="color:rgba(255,255,255,0.65);font-size:0.83rem;"><span class="lang-vi">Mạng lưới đối tác</span><span class="lang-en">Partner Network</span></a></li>
-                    <li style="margin-bottom:8px;"><a href="<?= langBaseUrl('events'); ?>" style="color:rgba(255,255,255,0.65);font-size:0.83rem;"><span class="lang-vi">Sự kiện & Hội thảo</span><span class="lang-en">Events & Seminars</span></a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4 style="color:var(--white);font-size:0.95rem;margin-bottom:16px;">
-                    <span class="lang-vi">Văn Phòng Liên Hệ</span>
-                    <span class="lang-en">Contact Office</span>
-                </h4>
-                <p style="font-size: 0.82rem; margin-bottom: 8px; line-height: 1.4; color:rgba(255,255,255,0.65);"><i class="fa-solid fa-location-dot text-primary"></i> <?= !empty($baseSettings->contact_address) ? esc($baseSettings->contact_address) : '20 Đường Hoàng Minh Giám, Phường Đúc Nhuận, TP.HCM'; ?></p>
-                <p style="font-size: 0.82rem; margin-bottom: 12px; color:rgba(255,255,255,0.65);"><i class="fa-solid fa-phone text-primary"></i> <?= !empty($baseSettings->contact_phone) ? esc($baseSettings->contact_phone) : '+84.28.39971199'; ?></p>
-                <form action="<?= base_url('api/newsletter'); ?>" method="post" onsubmit="event.preventDefault(); alert('Cảm ơn bạn! Chúng tôi đã ghi nhận thông tin liên hệ.'); this.reset();" style="display:flex; gap:6px;">
-                    <?= csrf_field(); ?>
-                    <input type="text" name="email" placeholder="Phone or Email..." required style="flex:1; padding: 8px 12px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); color: var(--white); border-radius: var(--radius-xs); font-size: 0.78rem;">
-                    <button type="submit" class="btn btn-primary btn-sm" style="padding:8px 12px; font-size:0.75rem;">
-                        <span class="lang-vi">Gửi</span>
-                        <span class="lang-en">Send</span>
-                    </button>
-                </form>
-            </div>
         </div>
 
-        <div class="footer-bottom text-center" style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 0.78rem; color: rgba(255,255,255,0.45);">
-            <p>
-                <?= !empty($baseSettings->copyright) ? esc($baseSettings->copyright) : '&copy; ' . date('Y') . ' TOP BEST GLOBAL Corporation. All rights reserved.'; ?>
-            </p>
+        <hr style="border-color: rgba(255,255,255,0.1);">
+
+        <!-- Bottom Ecosystem Line: VietKings always before GAA -->
+        <div class="row align-items-center pt-3">
+            <div class="col-md-7 text-center text-md-left mb-3 mb-md-0">
+                <div style="color: #F3E5AB; font-weight: 700; font-size: 0.95rem; margin-bottom: 4px;">
+                    TOLUCK × Hội Kỷ lục Việt Nam (VietKings) × GAA
+                </div>
+                <div style="color: #64748B; font-size: 0.78rem;">
+                    Bản quyền thuộc về TOLUCK & Hội Kỷ lục Việt Nam. Thành viên Liên minh Kỷ lục Thế giới (WORLDKINGS).
+                </div>
+            </div>
+            <div class="col-md-5 text-center text-md-right">
+                <div class="d-inline-flex align-items-center gap-2">
+                    <span class="badge badge-light px-3 py-1 mr-2" style="font-size: 0.75rem; font-weight: 700;">VietKings</span>
+                    <span class="badge badge-light px-3 py-1 mr-2" style="font-size: 0.75rem; font-weight: 700;">WORLDKINGS</span>
+                    <span class="badge badge-light px-3 py-1 mr-2" style="font-size: 0.75rem; font-weight: 700;">GAA</span>
+                    <span class="badge badge-warning px-3 py-1" style="font-size: 0.75rem; font-weight: 800; background: #D9A441; color: #0A192F;">TOLUCK</span>
+                </div>
+            </div>
         </div>
-    </footer>
-
-    <!-- Floating Contact Bubbles: Zalo OA & Fanpage -->
-    <div class="floating-contact-bubbles" id="floatingContactBubbles">
-        <!-- Zalo OA Bubble -->
-        <a href="https://zalo.me/<?= preg_replace('/[^0-9]/', '', !empty($baseSettings->contact_phone) ? $baseSettings->contact_phone : '02839971199'); ?>" target="_blank" rel="noopener noreferrer" class="bubble-btn bubble-zalo" title="Zalo Official Account">
-            <div class="bubble-icon">
-                <span style="font-size: 0.82rem; font-weight: 900; letter-spacing: -0.5px;">Zalo</span>
-            </div>
-            <span class="bubble-label">Zalo OA</span>
-        </a>
-
-        <!-- Fanpage Bubble -->
-        <a href="<?= !empty($baseSettings->facebook_url) ? esc($baseSettings->facebook_url) : 'https://facebook.com/topbestglobal'; ?>" target="_blank" rel="noopener noreferrer" class="bubble-btn bubble-facebook" title="Facebook Fanpage">
-            <div class="bubble-icon">
-                <i class="fa-brands fa-facebook-f"></i>
-            </div>
-            <span class="bubble-label">Fanpage</span>
-        </a>
     </div>
+</footer>
 
-    <?= loadView('partials/_modals'); ?>
-    <script src="<?= base_url('assets/themes/suntransco/app.js?v=2.2'); ?>"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

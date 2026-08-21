@@ -1,121 +1,72 @@
-    <!-- Page Banner -->
-    <section class="page-banner" style="background: linear-gradient(135deg, #070e1f 0%, #0b1329 100%); padding: 80px 0 60px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.08);">
-        <div class="container">
-            <span class="badge hero-badge-futuristic" style="margin-bottom:12px;"><i class="fa-solid fa-headset"></i> 24/7 Support Desk</span>
-            <h1 class="hero-title-white" style="font-size: 2.2rem; font-weight: 900; margin-bottom: 12px;">
-                <span class="lang-vi">Liên Hệ Văn Phòng</span>
-                <span class="lang-en">Contact Our Offices</span>
-            </h1>
-            <p style="color: rgba(255,255,255,0.7); max-width: 600px; margin: 0 auto; font-size: 0.9rem;">
-                <span class="lang-vi">Chúng tôi sẵn sàng tư vấn và giải đáp mọi yêu cầu logistics của doanh nghiệp 24/7.</span>
-                <span class="lang-en">We are ready to advise and solve all corporate logistics requests 24/7.</span>
+<!-- Contact Page -->
+<div class="py-5" style="background-color: #F8FAFC;">
+    <div class="container" style="max-width: 900px;">
+        
+        <div class="text-center mb-5">
+            <span class="badge badge-warning px-3 py-1 font-weight-bold mb-2" style="background: #D9A441; color: #0A192F;">
+                BAN THƯ KÝ CHƯƠNG TRÌNH
+            </span>
+            <h1 class="font-serif text-primary mb-2" style="font-size: 2.1rem;">Liên Hệ TOP BEST GLOBAL</h1>
+            <p class="text-muted" style="font-size: 0.95rem;">
+                Hệ sinh thái triển khai bởi <strong>TOLUCK</strong> uỷ thác từ <strong>Hội Kỷ lục Việt Nam (VietKings)</strong> và <strong>GAA</strong>.
             </p>
         </div>
-    </section>
 
-    <!-- Contact Form & Info -->
-    <section class="section" style="padding: 70px 0;">
-        <div class="container grid grid-2 gap-lg">
-            <div>
-                <span class="section-tag" data-i18n="nav_contact">
-                    <span class="lang-vi">Gửi Yêu Cầu Tư Vấn</span>
-                    <span class="lang-en">Submit Consultation Request</span>
-                </span>
-                <h2 class="section-title">
-                    <span class="lang-vi">Kết Nối Với Chuyên Gia TOP BEST GLOBAL</span>
-                    <span class="lang-en">Connect With TOP BEST GLOBAL Experts</span>
-                </h2>
-                <p style="color: var(--text-muted); line-height: 1.7; margin-bottom: 24px;">
-                    <span class="lang-vi">Điền thông tin vào biểu mẫu bên dưới, chuyên viên tư vấn chuỗi cung ứng của chúng tôi sẽ liên hệ lại trong vòng 15 phút.</span>
-                    <span class="lang-en">Fill out the form below and our supply chain advisors will contact you within 15 minutes.</span>
-                </p>
-                <form action="<?= base_url('api/contact'); ?>" method="post" onsubmit="event.preventDefault(); alert('Cảm ơn bạn! Thông tin liên hệ đã được gửi thành công.'); this.reset();" class="card-corporate" style="padding: 30px;">
-                    <?= csrf_field(); ?>
-                    <div class="form-group" style="margin-bottom: 16px;">
-                        <label style="display: block; font-weight: 700; font-size: 0.8rem; margin-bottom: 6px;">
-                            <span class="lang-vi">Họ và tên *</span>
-                            <span class="lang-en">Full Name *</span>
-                        </label>
-                        <input type="text" name="name" placeholder="Nguyễn Văn A" required style="width: 100%; height: 44px; padding: 0 14px; border: 1px solid var(--border); border-radius: 8px;">
+        <div class="row">
+            <div class="col-md-5 mb-4">
+                <div class="card border-0 shadow-sm p-4 h-100" style="border-radius: 14px; background: #ffffff;">
+                    <h5 class="font-serif text-primary mb-3">Thông Tin Ban Thư Ký</h5>
+                    
+                    <div class="mb-3">
+                        <small class="text-muted d-block">Hotline Hỗ Trợ GAA:</small>
+                        <strong style="color: #0A192F; font-size: 1.05rem;"><i class="fa-solid fa-phone text-warning mr-2"></i> 0909 123 456</strong>
                     </div>
-                    <div class="grid grid-2 gap-md" style="margin-bottom: 16px;">
-                        <div class="form-group">
-                            <label style="display: block; font-weight: 700; font-size: 0.8rem; margin-bottom: 6px;">
-                                <span class="lang-vi">Email *</span>
-                                <span class="lang-en">Email Address *</span>
-                            </label>
-                            <input type="email" name="email" placeholder="email@congty.com" required style="width: 100%; height: 44px; padding: 0 14px; border: 1px solid var(--border); border-radius: 8px;">
-                        </div>
-                        <div class="form-group">
-                            <label style="display: block; font-weight: 700; font-size: 0.8rem; margin-bottom: 6px;">
-                                <span class="lang-vi">Số điện thoại *</span>
-                                <span class="lang-en">Phone Number *</span>
-                            </label>
-                            <input type="text" name="phone" placeholder="0901234567" required style="width: 100%; height: 44px; padding: 0 14px; border: 1px solid var(--border); border-radius: 8px;">
-                        </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted d-block">Email Tiếp Nhận Hồ Sơ:</small>
+                        <strong style="color: #0A192F;"><i class="fa-solid fa-envelope text-warning mr-2"></i> contact@topbestglobal.com</strong>
                     </div>
-                    <div class="form-group" style="margin-bottom: 20px;">
-                        <label style="display: block; font-weight: 700; font-size: 0.8rem; margin-bottom: 6px;">
-                            <span class="lang-vi">Nội dung yêu cầu *</span>
-                            <span class="lang-en">Inquiry Message *</span>
-                        </label>
-                        <textarea name="message" rows="4" placeholder="Nhập nội dung cần tư vấn báo giá hoặc hợp tác..." required style="width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; font-size: 0.85rem;"></textarea>
+
+                    <div class="mb-3">
+                        <small class="text-muted d-block">Văn Phòng Điều Hành TOLUCK:</small>
+                        <strong style="color: #0A192F;"><i class="fa-solid fa-building text-warning mr-2"></i> TP. Hồ Chí Minh & Hà Nội</strong>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
-                        <span class="lang-vi">Gửi Liên Hệ Tư Vấn</span>
-                        <span class="lang-en">Submit Consultation Request</span>
-                    </button>
-                </form>
-            </div>
-            <div>
-                <span class="section-tag">
-                    <span class="lang-vi">Trụ Sở Chính</span>
-                    <span class="lang-en">Head Office</span>
-                </span>
-                <h2 class="section-title">
-                    <span class="lang-vi">Thông Tin Liên Lạc</span>
-                    <span class="lang-en">Contact Details</span>
-                </h2>
-                <div class="card-corporate" style="padding: 30px; margin-top: 24px; display: flex; flex-direction: column; gap: 20px;">
-                    <div style="display: flex; gap: 16px; align-items: flex-start;">
-                        <div style="background: rgba(29,78,216,0.1); width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.2rem; flex-shrink: 0;">
-                            <i class="fa-solid fa-location-dot"></i>
-                        </div>
-                        <div>
-                            <strong style="display: block; font-size: 0.95rem; margin-bottom: 4px;">
-                                <span class="lang-vi">Địa Chỉ Trụ Sở</span>
-                                <span class="lang-en">Headquarters Address</span>
-                            </strong>
-                            <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
-                                <?= !empty($baseSettings->contact_address) ? esc($baseSettings->contact_address) : '20 Đường Hoàng Minh Giám, Phường Đúc Nhuận, TP. Hồ Chí Minh, Việt Nam'; ?>
-                            </p>
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 16px; align-items: flex-start;">
-                        <div style="background: rgba(225,29,72,0.1); width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 1.2rem; flex-shrink: 0;">
-                            <i class="fa-solid fa-phone"></i>
-                        </div>
-                        <div>
-                            <strong style="display: block; font-size: 0.95rem; margin-bottom: 4px;">
-                                <span class="lang-vi">Điện Thoại Hotline</span>
-                                <span class="lang-en">Hotline Phone</span>
-                            </strong>
-                            <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;"><?= !empty($baseSettings->contact_phone) ? esc($baseSettings->contact_phone) : '+84.28.39971199'; ?> (24/7 Support)</p>
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 16px; align-items: flex-start;">
-                        <div style="background: rgba(16,185,129,0.1); width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--success); font-size: 1.2rem; flex-shrink: 0;">
-                            <i class="fa-solid fa-envelope"></i>
-                        </div>
-                        <div>
-                            <strong style="display: block; font-size: 0.95rem; margin-bottom: 4px;">
-                                <span class="lang-vi">Email Hỗ Trợ</span>
-                                <span class="lang-en">Support Email</span>
-                            </strong>
-                            <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;"><?= !empty($baseSettings->contact_email) ? esc($baseSettings->contact_email) : 'contact@topbestglobal.com'; ?></p>
-                        </div>
+
+                    <hr>
+
+                    <div class="small text-muted" style="line-height: 1.6;">
+                        <i class="fa-solid fa-circle-info text-primary mr-1"></i> Thời gian làm việc: 8:00 – 17:30 (Thứ 2 đến Thứ 6). Hỗ trợ trực tuyến 24/7.
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-7 mb-4">
+                <div class="card border-0 shadow-sm p-4" style="border-radius: 14px; background: #ffffff;">
+                    <h5 class="font-serif text-primary mb-3">Gửi Thắc Mắc & Yêu Cầu Hỗ Trợ</h5>
+                    <form action="#" method="post" onsubmit="event.preventDefault(); alert('Cảm ơn bạn đã gửi tin nhắn! Ban Thư ký sẽ phản hồi qua email trong vòng 12h.');">
+                        <div class="form-group mb-3">
+                            <label class="small font-weight-bold">Họ và Tên *</label>
+                            <input type="text" class="form-control" required placeholder="Họ và tên của bạn">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="small font-weight-bold">Số Điện Thoại *</label>
+                            <input type="tel" class="form-control" required placeholder="0909 xxx xxx">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="small font-weight-bold">Email Liên Hệ *</label>
+                            <input type="email" class="form-control" required placeholder="email@domain.com">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="small font-weight-bold">Nội Dung Cần Tư Vấn *</label>
+                            <textarea class="form-control" rows="4" required placeholder="Nhập nội dung câu hỏi hoặc yêu cầu hỗ trợ..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-tbg-cta btn-block py-2 font-weight-bold">
+                            <i class="fa-solid fa-paper-plane mr-1"></i> Gửi Tin Nhắn
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
-    </section>
+
+    </div>
+</div>

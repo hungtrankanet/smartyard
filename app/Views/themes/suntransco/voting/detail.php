@@ -40,7 +40,7 @@ $rank = (int)($scoreData["category_rank"] ?? 0);
                 </p>
 
                 <div class="d-flex flex-wrap align-items-center" style="gap: 12px;">
-                    <button type="button" class="btn btn-warning font-weight-bold text-dark px-4 py-3" onclick="openVotingModal(<?= $candidate->id; ?>, \"<?= addslashes($candidate->name); ?>\", \"<?= addslashes($category->name ?? \"\"); ?>\", \"<?= $avatar; ?>\")" style="background: linear-gradient(135deg, #D4AF37 0%, #F3E5AB 50%, #AA771C 100%); border: none; border-radius: 10px; font-size: 15px; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(212,175,55,0.4);">
+                    <button type="button" class="btn btn-warning font-weight-bold text-dark px-4 py-3" onclick="openVotingModal(<?= (int)$candidate->id; ?>, '<?= esc(addslashes($candidate->name)); ?>', '<?= esc(addslashes($category->name ?? '')); ?>', '<?= esc($avatar); ?>')" style="background: linear-gradient(135deg, #D4AF37 0%, #F3E5AB 50%, #AA771C 100%); border: none; border-radius: 10px; font-size: 15px; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(212,175,55,0.4);">
                         <i class="fa fa-check-circle mr-1"></i> BÌNH CHỌN CHO ỨNG VIÊN
                     </button>
                     <a href="<?= langBaseUrl("voting/leaderboard/" . ($category->slug ?? "")); ?>" class="btn btn-outline-light px-4 py-3 font-weight-bold" style="border-radius: 10px; font-size: 14px;">
@@ -179,7 +179,7 @@ $rank = (int)($scoreData["category_rank"] ?? 0);
                     <p class="small text-light mb-3" style="opacity: 0.85;">
                         Mỗi lá phiếu của bạn góp phần vinh danh những giá trị xuất sắc nhất Việt Nam.
                     </p>
-                    <button type="button" class="btn btn-warning font-weight-bold text-dark btn-block py-3" onclick="openVotingModal(<?= $candidate->id; ?>, \"<?= addslashes($candidate->name); ?>\", \"<?= addslashes($category->name ?? \"\"); ?>\", \"<?= $avatar; ?>\")" style="background: linear-gradient(135deg, #D4AF37 0%, #AA771C 100%); border: none; border-radius: 8px;">
+                    <button type="button" class="btn btn-warning font-weight-bold text-dark btn-block py-3" onclick="openVotingModal(<?= (int)$candidate->id; ?>, '<?= esc(addslashes($candidate->name)); ?>', '<?= esc(addslashes($category->name ?? '')); ?>', '<?= esc($avatar); ?>')" style="background: linear-gradient(135deg, #D4AF37 0%, #AA771C 100%); border: none; border-radius: 8px;">
                         <i class="fa fa-check-circle mr-1"></i> BÌNH CHỌN NGAY
                     </button>
                 </div>

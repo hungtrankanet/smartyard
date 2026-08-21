@@ -143,7 +143,7 @@
                             </div>
 
                             <div class="d-flex gap-2">
-                                <button type="button" class="btn btn-warning flex-grow-1 font-weight-bold text-dark" onclick="openVotingModal(<?= $candidate->id; ?>, \"<?= addslashes($candidate->name); ?>\", \"<?= addslashes($candidate->category_name ?? \"\"); ?>\", \"<?= $avatar; ?>\")" style="background: linear-gradient(135deg, #D4AF37 0%, #F3E5AB 50%, #AA771C 100%); border: none; border-radius: 8px; font-size: 13px; padding: 8px;">
+                                <button type="button" class="btn btn-warning flex-grow-1 font-weight-bold text-dark" onclick="openVotingModal(<?= (int)$candidate->id; ?>, '<?= esc(addslashes($candidate->name)); ?>', '<?= esc(addslashes($candidate->category_name ?? '')); ?>', '<?= esc($avatar); ?>')" style="background: linear-gradient(135deg, #D4AF37 0%, #F3E5AB 50%, #AA771C 100%); border: none; border-radius: 8px; font-size: 13px; padding: 8px;">
                                     <i class="fa fa-check-circle mr-1"></i> BÌNH CHỌN
                                 </button>
                                 <a href="<?= langBaseUrl("voting/candidate/" . $candidate->slug); ?>" class="btn btn-outline-secondary font-weight-bold px-3" style="border-radius: 8px; font-size: 13px; padding: 8px;">
