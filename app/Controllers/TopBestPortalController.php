@@ -15,6 +15,11 @@ class TopBestPortalController extends BaseController
         $secondaryNews = array_slice($newsList, 1, 3);
         $directoryPreviews = array_slice(TopBestData::getDirectoryProfiles(), 0, 5);
 
+        $categoryClusters = TopBestData::getCategoryClusters();
+        $announcements = TopBestData::getOfficialAnnouncements();
+        $interactivePoll = TopBestData::getInteractivePoll();
+        $adSpaces = TopBestData::getAdSpaces();
+
         $data = [
             'title'             => $isEn ? 'TOP BEST GLOBAL — Official National Honors & Verification Portal' : 'TOP BEST GLOBAL — Cổng Thông Tin & Xác Minh Huy Hiệu Quốc Gia',
             'description'       => 'Cổng thông tin chính thức chương trình TOP BEST thuộc Hội Kỷ lục Việt Nam (VietKings) & GAA uỷ thác cho TOLUCK triển khai.',
@@ -22,6 +27,10 @@ class TopBestPortalController extends BaseController
             'featuredNews'      => $featuredNews,
             'secondaryNews'     => $secondaryNews,
             'allNews'           => $newsList,
+            'categoryClusters'  => $categoryClusters,
+            'announcements'     => $announcements,
+            'interactivePoll'   => $interactivePoll,
+            'adSpaces'          => $adSpaces,
             'directoryPreviews' => $directoryPreviews,
             'industries'        => TopBestData::getIndustries(),
             'provinces'         => TopBestData::getProvinces(),

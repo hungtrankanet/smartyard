@@ -41,11 +41,19 @@
             z-index: 1050;
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         }
+        .tbg-navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: nowrap;
+        }
         .tbg-navbar .nav-link {
             color: #E2E8F0 !important;
-            font-size: 0.88rem;
+            font-size: 0.84rem;
             font-weight: 600;
-            padding: 12px 14px !important;
+            padding: 8px 10px !important;
+            white-space: nowrap;
+            letter-spacing: 0.2px;
             transition: all 0.2s ease;
         }
         .tbg-navbar .nav-link:hover, .tbg-navbar .nav-link.active {
@@ -56,21 +64,23 @@
             color: var(--tbg-navy-dark) !important;
             font-weight: 800;
             border-radius: 8px;
-            padding: 8px 18px;
-            font-size: 0.86rem;
+            padding: 7px 16px;
+            font-size: 0.82rem;
             border: none;
+            white-space: nowrap;
             box-shadow: 0 2px 8px rgba(217,164,65,0.3);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.4px;
         }
         .btn-tbg-verify {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.08);
             color: #ffffff !important;
             border: 1px solid var(--tbg-gold-primary);
             border-radius: 8px;
-            padding: 7px 15px;
-            font-size: 0.85rem;
+            padding: 6px 14px;
+            font-size: 0.82rem;
             font-weight: 700;
+            white-space: nowrap;
             margin-right: 8px;
         }
         .btn-tbg-verify:hover { background: rgba(217,164,65,0.2); }
@@ -104,36 +114,36 @@
 <!-- Header Sticky -->
 <header class="tbg-header">
     <div class="container-fluid px-lg-4">
-        <nav class="navbar navbar-expand-lg navbar-dark tbg-navbar py-2">
+        <nav class="navbar navbar-expand-lg navbar-dark tbg-navbar py-2 px-0">
             <!-- Logo -->
-            <a class="navbar-brand d-flex align-items-center" href="<?= langBaseUrl(); ?>">
-                <div class="mr-2 d-flex align-items-center justify-content-center" style="width: 38px; height: 38px; border-radius: 8px; background: linear-gradient(135deg, #D9A441, #B8860B); color: #0A192F; font-weight: 900; font-size: 18px;">
+            <a class="navbar-brand d-flex align-items-center mr-lg-3 mr-auto" href="<?= langBaseUrl(); ?>" style="white-space: nowrap;">
+                <div class="mr-2 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, #D9A441, #B8860B); color: #0A192F; font-weight: 900; font-size: 16px;">
                     <i class="fa-solid fa-trophy"></i>
                 </div>
-                <div>
-                    <div style="color: #ffffff; font-weight: 900; font-size: 1.1rem; line-height: 1.1; letter-spacing: 0.5px;">TOP BEST GLOBAL</div>
-                    <div style="color: var(--tbg-gold-light); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.8px;">VIETKINGS × GAA × TOLUCK</div>
+                <div class="d-inline-block">
+                    <div style="color: #ffffff; font-weight: 900; font-size: 1.05rem; line-height: 1.1; letter-spacing: 0.5px;">TOP BEST GLOBAL</div>
+                    <div style="color: var(--tbg-gold-light); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.7px;">VIETKINGS × GAA × TOLUCK</div>
                 </div>
             </a>
 
-            <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#tbgNav">
+            <button class="navbar-toggler border-0 ml-2" type="button" data-toggle="collapse" data-target="#tbgNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <!-- Menu -->
+            <!-- Menu On Single Straight Row -->
             <div class="collapse navbar-collapse" id="tbgNav">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item"><a class="nav-link" href="<?= langBaseUrl(); ?>"><i class="fa-regular fa-newspaper mr-1"></i> Tin Tức</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?= langBaseUrl('top-best-la-gi'); ?>"><i class="fa-solid fa-circle-info mr-1"></i> TOP BEST Là Gì</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?= langBaseUrl('bang-xep-hang'); ?>"><i class="fa-solid fa-ranking-star mr-1"></i> Bảng Xếp Hạng</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?= langBaseUrl('doanh-nghiep/dang-ky'); ?>"><i class="fa-solid fa-building mr-1"></i> Doanh Nghiệp</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?= langBaseUrl('dai-ly'); ?>"><i class="fa-solid fa-handshake mr-1"></i> Đại Lý</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?= langBaseUrl('su-kien'); ?>"><i class="fa-solid fa-calendar-check mr-1"></i> Sự Kiện</a></li>
+                <ul class="navbar-nav mx-auto d-flex align-items-center flex-row flex-wrap flex-lg-nowrap justify-content-center" style="gap: 2px;">
+                    <li class="nav-item"><a class="nav-link" href="<?= langBaseUrl(); ?>"><i class="fa-regular fa-newspaper mr-1 text-warning"></i> Tin Tức</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?= langBaseUrl('top-best-la-gi'); ?>"><i class="fa-solid fa-circle-info mr-1 text-warning"></i> TOP BEST Là Gì</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?= langBaseUrl('bang-xep-hang'); ?>"><i class="fa-solid fa-ranking-star mr-1 text-warning"></i> Bảng Xếp Hạng</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?= langBaseUrl('doanh-nghiep/dang-ky'); ?>"><i class="fa-solid fa-building mr-1 text-warning"></i> Doanh Nghiệp</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?= langBaseUrl('dai-ly'); ?>"><i class="fa-solid fa-handshake mr-1 text-warning"></i> Đại Lý</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?= langBaseUrl('su-kien'); ?>"><i class="fa-solid fa-calendar-check mr-1 text-warning"></i> Sự Kiện</a></li>
                 </ul>
 
                 <!-- Right Actions -->
-                <div class="d-flex align-items-center">
-                    <a href="<?= langBaseUrl('verify'); ?>" class="btn btn-tbg-verify d-none d-md-inline-flex align-items-center">
+                <div class="d-flex align-items-center flex-nowrap ml-lg-2">
+                    <a href="<?= langBaseUrl('verify'); ?>" class="btn btn-tbg-verify d-none d-xl-inline-flex align-items-center">
                         <i class="fa-solid fa-shield-halved mr-1 text-warning"></i> Tra Cứu Huy Hiệu
                     </a>
                     <a href="<?= langBaseUrl('doanh-nghiep/dang-ky'); ?>" class="btn btn-tbg-cta">
@@ -142,7 +152,6 @@
                 </div>
             </div>
         </nav>
-    </div>
 </header>
 
 <!-- Mobile Sticky Bottom Bar -->
