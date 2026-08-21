@@ -91,7 +91,7 @@ app.forceGlobalSecureRequests = false
 #--------------------------------------------------------------------
 # DATABASE
 #--------------------------------------------------------------------
-database.default.hostname = " . trim($dbArray['db_host']) . "
+database.default.hostname = " . (trim($dbArray['db_host']) === '127.0.0.1' || trim($dbArray['db_host']) === 'localhost' ? 'host.docker.internal' : trim($dbArray['db_host'])) . "
 database.default.database = " . trim($dbArray['db_name']) . "
 database.default.username = " . trim($dbArray['db_user']) . "
 database.default.password = " . trim($dbArray['db_password']) . "

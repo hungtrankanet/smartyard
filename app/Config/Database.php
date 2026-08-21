@@ -55,10 +55,45 @@ class Database extends Config
         parent::__construct();
 
         // Override from environment or .env if present
-        $this->default['hostname'] = env('database.default.hostname', $this->default['hostname'] ?: 'localhost');
+        $configuredHost = env('database.default.hostname', $this->default['hostname'] ?: 'localhost');
+
+        // If inside Docker container and host is localhost/127.0.0.1, prioritize host.docker.internal
+        if (($configuredHost === 'localhost' || $configuredHost === '127.0.0.1') && file_exists('/.dockerenv')) {
+            $configuredHost = 'host.docker.internal';
+        }
+
+        $this->default['hostname'] = $configuredHost;
         $this->default['database'] = env('database.default.database', $this->default['database'] ?: 'topbestglobal_db');
         $this->default['username'] = env('database.default.username', $this->default['username'] ?: 'tbglobal_user');
         $this->default['password'] = env('database.default.password', $this->default['password'] ?: 'TpaLASHNb3Yw4GeC');
         $this->default['port']     = (int) env('database.default.port', $this->default['port'] ?: 3306);
+
+        // Automatic connection failovers for hybrid Docker/Host environments
+        $this->default['failover'] = [
+            [
+                'hostname' => 'host.docker.internal',
+                'username' => $this->default['username'],
+                'password' => $this->default['password'],
+                'database' => $this->default['database'],
+                'DBDriver' => 'MySQLi',
+                'port'     => 3306,
+            ],
+            [
+                'hostname' => '172.17.0.1',
+                'username' => $this->default['username'],
+                'password' => $this->default['password'],
+                'database' => $this->default['database'],
+                'DBDriver' => 'MySQLi',
+                'port'     => 3306,
+            ],
+            [
+                'hostname' => '127.0.0.1',
+                'username' => $this->default['username'],
+                'password' => $this->default['password'],
+                'database' => $this->default['database'],
+                'DBDriver' => 'MySQLi',
+                'port'     => 3306,
+            ]
+        ];
     }
 }
