@@ -44,7 +44,7 @@ class HomeController extends BaseController
     public function index()
     {
         $isEn = ($this->activeLang->short_form ?? 'vi') == 'en';
-        $latestPosts = $this->postModel->getLatestPosts($this->activeLang->id ?? 1, 6, 0);
+        $latestPosts = $this->postModel->getLatestPosts($this->activeLang->id ?? 1, 6, 0) ?: [];
         $data = [
             'title'       => $isEn ? 'National Honors & Awards Portal | Season 2026' : 'Cổng Thông Tin & Bảng Vàng Vinh Danh Quốc Gia',
             'description' => $isEn 
@@ -53,15 +53,20 @@ class HomeController extends BaseController
             'keywords'    => 'top best global, bảng vàng vinh danh, giải thưởng quốc gia, bình chọn thương hiệu, đề cử doanh nghiệp, cúp vàng thương hiệu, gala vinh danh 2026',
             'homeTitle'   => $this->settings->home_title ?? 'TOP BEST GLOBAL National Honors Portal',
             'latestPosts' => $latestPosts,
-            'recentPosts' => $latestPosts
+            'recentPosts' => $latestPosts,
+            'userSession' => getUserSession(),
         ];
         //slider posts
         $data['sliderPosts'] = $data['latestPosts'];
-        if ($this->generalSettings->show_latest_posts_on_slider != 1) {
-            $data['sliderPosts'] = $this->postModel->getSliderPosts();
+        if (!empty($this->generalSettings->show_latest_posts_on_slider) && $this->generalSettings->show_latest_posts_on_slider != 1) {
+            $slider = $this->postModel->getSliderPosts($this->activeLang->id ?? 1);
+            if (!empty($slider)) {
+                $data['sliderPosts'] = $slider;
+            }
         }
         //featured posts
-        $data['featuredPosts'] = $this->postModel->getFeaturedPosts();
+        $featured = $this->postModel->getFeaturedPosts($this->activeLang->id ?? 1);
+        $data['featuredPosts'] = !empty($featured) ? $featured : $data['latestPosts'];
 
         return loadView('partials/_header', $data)
             . loadView('index', $data)

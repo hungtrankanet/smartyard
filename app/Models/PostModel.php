@@ -89,6 +89,30 @@ class PostModel extends BaseModel
         });
     }
 
+    public function getSliderPosts($langId = null)
+    {
+        $langId = $langId ?: (Globals::$activeLang->id ?? 1);
+        return getOrSetCache('posts_slider_lang_' . $langId, function () use ($langId) {
+            $this->buildQuery($langId);
+            return $this->builder->join('post_selections', 'posts.id = post_selections.post_id')
+                ->where('post_selections.selection_type', 'slider')
+                ->orderBy('posts.created_at DESC')
+                ->get()->getResult();
+        });
+    }
+
+    public function getFeaturedPosts($langId = null)
+    {
+        $langId = $langId ?: (Globals::$activeLang->id ?? 1);
+        return getOrSetCache('posts_featured_lang_' . $langId, function () use ($langId) {
+            $this->buildQuery($langId);
+            return $this->builder->join('post_selections', 'posts.id = post_selections.post_id')
+                ->where('post_selections.selection_type', 'featured')
+                ->orderBy('posts.created_at DESC')
+                ->get()->getResult();
+        });
+    }
+
     //get popular posts
     public function getPopularPosts($langId)
     {
