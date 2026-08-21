@@ -40,12 +40,17 @@ if (isset($_POST["btn_admin"])) {
     $slug = str_slug($adminUsername);
 
     /* Connect */
-    $connection = mysqli_connect($dbArray['db_host'], $dbArray['db_user'], $dbArray['db_password'], $dbArray['db_name']);
-    $connection->query("SET CHARACTER SET utf8mb4");
-    $connection->query("SET NAMES utf8mb4");
+    try {
+        $workingHost = $dbArray['db_host'];
+        $connection = connect_database($dbArray['db_host'], $dbArray['db_user'], $dbArray['db_password'], $dbArray['db_name'], $workingHost);
+        $dbArray['db_host'] = $workingHost;
+    } catch (\Throwable $e) {
+        $connection = false;
+        $error = 0;
+    }
 
     /* check connection */
-    if (mysqli_connect_errno()) {
+    if (!$connection) {
         $error = 0;
     } else {
         $token = uniqid("", TRUE);

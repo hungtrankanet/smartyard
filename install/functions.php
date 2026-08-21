@@ -19,6 +19,40 @@ function verify_license($license_code, $current_url)
     return $obj;
 }
 
+function connect_database($host, $user, $password, $name, &$workingHost = null)
+{
+    if (function_exists('mysqli_report')) {
+        @mysqli_report(MYSQLI_REPORT_OFF);
+    }
+    $trimmedHost = trim($host);
+    $hostsToTry = array_unique([
+        $trimmedHost,
+        ($trimmedHost === 'localhost' ? '127.0.0.1' : $trimmedHost),
+        '127.0.0.1',
+        'host.docker.internal',
+        '172.17.0.1',
+        'localhost'
+    ]);
+
+    $lastError = '';
+    foreach ($hostsToTry as $h) {
+        if (empty($h)) continue;
+        try {
+            $conn = @new mysqli($h, $user, $password, $name, 3306);
+            if ($conn && empty($conn->connect_error)) {
+                $workingHost = $h;
+                $conn->set_charset("utf8mb4");
+                return $conn;
+            }
+            $lastError = $conn ? $conn->connect_error : 'Connection failed';
+        } catch (\Throwable $e) {
+            $lastError = $e->getMessage();
+        }
+    }
+
+    throw new \Exception($lastError ?: 'Không thể kết nối đến máy chủ cơ sở dữ liệu.');
+}
+
 // Function to write the config file
 function write_config($data) {
 

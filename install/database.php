@@ -24,43 +24,27 @@ if (isset($_POST["btn_install"])) {
         'db_name' => $_POST['db_name']
     ];
     try {
-        $host = $data['db_host'];
-        $mysqli = @new mysqli($host, $data['db_user'], $data['db_password'], $data['db_name']);
-        if ($mysqli->connect_error && ($host === 'localhost' || $host === '127.0.0.1')) {
-            // If running inside container, auto-fallback to host.docker.internal or 172.17.0.1
-            $mysqli = @new mysqli('host.docker.internal', $data['db_user'], $data['db_password'], $data['db_name']);
-            if ($mysqli->connect_error) {
-                $mysqli = @new mysqli('172.17.0.1', $data['db_user'], $data['db_password'], $data['db_name']);
-                if (!$mysqli->connect_error) {
-                    $data['db_host'] = '172.17.0.1';
-                }
-            } else {
-                $data['db_host'] = 'host.docker.internal';
-            }
-        }
+        $workingHost = $data['db_host'];
+        $mysqli = connect_database($data['db_host'], $data['db_user'], $data['db_password'], $data['db_name'], $workingHost);
+        $data['db_host'] = $workingHost;
 
-        if ($mysqli->connect_error) {
-            $error = "Kết nối Database thất bại: " . $mysqli->connect_error . " (Vui lòng kiểm tra lại Host, Username, Password, Database Name trong MariaDB/MySQL)";
+        //create tables
+        $sqlFile = file_get_contents('sql/install_varient.sql');
+        if (!$mysqli->multi_query($sqlFile)) {
+            $error = "Lỗi thực thi SQL: " . $mysqli->error;
         } else {
-            $mysqli->set_charset("utf8mb4");
-            //create tables
-            $sqlFile = file_get_contents('sql/install_varient.sql');
-            if (!$mysqli->multi_query($sqlFile)) {
-                $error = "Lỗi thực thi SQL: " . $mysqli->error;
+            while ($mysqli->more_results() && $mysqli->next_result());
+            //write config
+            if (!write_config($data)) {
+                $error = "Không thể ghi file cấu hình app/Config/Database.php, vui lòng phân quyền thư mục hoặc file 777.";
             } else {
-                while ($mysqli->more_results() && $mysqli->next_result());
-                //write config
-                if (!write_config($data)) {
-                    $error = "Không thể ghi file cấu hình app/Config/Database.php, vui lòng phân quyền thư mục hoặc file 777.";
-                } else {
-                    $installing = true;
-                }
+                $installing = true;
             }
-            //close connection
-            $mysqli->close();
         }
-    } catch (Exception $e) {
-        $error = "Lỗi Database: " . $e->getMessage();
+        //close connection
+        $mysqli->close();
+    } catch (\Throwable $e) {
+        $error = "Lỗi Database: " . $e->getMessage() . " (Gợi ý: Hãy nhập Host là 127.0.0.1 hoặc host.docker.internal)";
     }
 } else {
     $licenseCode = $_GET["license_code"];
@@ -181,8 +165,8 @@ if (isset($_POST["btn_install"])) {
                                             <h1 class="step-title">Database</h1>
                                             <div class="form-group">
                                                 <label for="email">Host (MariaDB / MySQL)</label>
-                                                <input type="text" class="form-control form-input" name="db_host" placeholder="Host" value="<?= !empty($data['db_host']) ? $data['db_host'] : 'localhost'; ?>" required>
-                                                <small class="text-muted">Nhập <code>localhost</code> hoặc <code>127.0.0.1</code> hoặc <code>topbestglobal_db</code> (nếu chạy trong docker network).</small>
+                                                <input type="text" class="form-control form-input" name="db_host" placeholder="Host" value="<?= !empty($data['db_host']) ? $data['db_host'] : '127.0.0.1'; ?>" required>
+                                                <small class="text-muted">Nhập <code>127.0.0.1</code> hoặc <code>host.docker.internal</code> (nếu chạy qua Docker) hoặc <code>localhost</code>.</small>
                                             </div>
                                             <div class="form-group">
                                                 <label for="email">Database Name</label>
