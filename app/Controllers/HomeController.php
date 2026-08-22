@@ -225,7 +225,25 @@ class HomeController extends BaseController
     {
         $slug = cleanSlug($slug);
         if (empty($slug) || $slug == 'index' || $slug == 'index.php' || $slug == 'index.html') {
-            return $this->index();
+            return (new TopBestPortalController())->index();
+        }
+        if ($slug == 'top-best-la-gi' || $slug == 'topbest-la-gi') {
+            return (new TopBestPortalController())->aboutTopBest();
+        }
+        if ($slug == 'bang-xep-hang' || $slug == 'directory') {
+            return (new TopBestDirectoryController())->index();
+        }
+        if ($slug == 'dai-ly' || $slug == 'agency') {
+            return (new TopBestRegistrationController())->agency();
+        }
+        if ($slug == 'su-kien' || $slug == 'events') {
+            return (new TopBestPortalController())->events();
+        }
+        if ($slug == 've-chung-toi' || $slug == 'about-us') {
+            return (new TopBestPortalController())->aboutUs();
+        }
+        if ($slug == 'lien-he' || $slug == 'contact') {
+            return (new TopBestPortalController())->contact();
         }
         $pageModel = new PageModel();
         $data['userSession'] = getUserSession();

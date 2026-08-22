@@ -162,12 +162,43 @@ class TopBestPortalController extends BaseController
     public function aboutTopBest()
     {
         $isEn = ($this->activeLang->short_form ?? 'vi') == 'en';
+        
+        $directoryPreviews = [];
+        try {
+            $db = \Config\Database::connect();
+            if ($db->tableExists('members')) {
+                $dbMembers = $db->table('members')
+                    ->where('status', 1)
+                    ->orderBy('id', 'DESC')
+                    ->limit(6)
+                    ->get()->getResultArray();
+                if (!empty($dbMembers)) {
+                    foreach ($dbMembers as $m) {
+                        $directoryPreviews[] = [
+                            'code'          => $m['member_code'] ?? ('TBG-VN-2026-' . str_pad($m['id'], 3, '0', STR_PAD_LEFT)),
+                            'name'          => $m['company_name'] ?? $m['name'],
+                            'rank_tier'     => ($m['membership_tier'] ?? 'Diamond') == 'Diamond' ? 'BEST' : 'TOP',
+                            'rank_number'   => $m['id'],
+                            'category_name' => $m['business_sector'] ?? 'Đa ngành',
+                            'province'      => $m['province'] ?? 'Toàn quốc'
+                        ];
+                    }
+                }
+            }
+        } catch (\Throwable $e) {
+            // DB fallback
+        }
+
+        if (empty($directoryPreviews)) {
+            $directoryPreviews = array_slice(TopBestData::getDirectoryProfiles(), 0, 6);
+        }
+
         $data = [
             'title'             => $isEn ? 'What is TOP BEST? — Complete Program Guide & Regulations' : 'TOP BEST Là Gì? — Toàn Bộ Định Nghĩa, Cơ Chế & Quy Chuẩn Pháp Lý',
-            'description'       => 'Tìm hiểu chi tiết về chương trình TOP BEST: 4 ví dụ quốc tế, 8 nhóm ngành, cơ chế TOP/BEST, hệ sinh thái VietKings x GAA x TOLUCK và lộ trình 12 tháng.',
-            'keywords'          => 'top best la gi, quy che top best, vietkings, gaa, toluck, tran kim hung, tieu chuan ky luc',
+            'description'       => !empty($this->settings->site_description) ? esc($this->settings->site_description) : 'Tìm hiểu chi tiết về chương trình TOP BEST: 4 ví dụ quốc tế, 8 nhóm ngành, cơ chế TOP/BEST, hệ sinh thái VietKings x GAA x TOLUCK và lộ trình 12 tháng.',
+            'keywords'          => !empty($this->settings->keywords) ? esc($this->settings->keywords) : 'top best la gi, quy che top best, vietkings, gaa, toluck, tran kim hung, tieu chuan ky luc',
             'industries'        => TopBestData::getIndustries(),
-            'directoryPreviews' => array_slice(TopBestData::getDirectoryProfiles(), 0, 6),
+            'directoryPreviews' => $directoryPreviews,
             'faqs'              => TopBestData::getFaqs(),
             'generalSettings'   => $this->generalSettings,
             'baseSettings'      => $this->settings,
