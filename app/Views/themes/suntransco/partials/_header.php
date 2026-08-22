@@ -158,6 +158,7 @@
                 </div>
             </div>
         </nav>
+    </div>
 </header>
 
 <!-- Mobile Sticky Bottom Bar -->

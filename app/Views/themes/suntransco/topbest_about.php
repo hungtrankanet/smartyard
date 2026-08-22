@@ -185,20 +185,22 @@
                         <a href="<?= langBaseUrl('bang-xep-hang'); ?>" class="btn btn-sm btn-outline-primary font-weight-bold">Xem Toàn Bộ <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
                     <div class="row">
-                        <?php foreach ($directoryPreviews as $p): ?>
-                            <div class="col-md-6 mb-3">
-                                <div class="p-3 border rounded d-flex align-items-center justify-content-between bg-white <?= $p['rank_tier'] === 'BEST' ? 'card-best' : ''; ?>">
-                                    <div>
-                                        <span class="badge <?= $p['rank_tier'] === 'BEST' ? 'badge-warning' : 'badge-primary'; ?> mb-1">
-                                            <?= $p['rank_tier']; ?> #<?= $p['rank_number']; ?>
-                                        </span>
-                                        <h6 class="font-weight-bold mb-0" style="font-size: 0.88rem;"><?= esc($p['name']); ?></h6>
-                                        <small class="text-muted"><?= esc($p['province']); ?> • <?= esc($p['category_name']); ?></small>
+                        <?php if (!empty($directoryPreviews)): ?>
+                            <?php foreach ($directoryPreviews as $p): ?>
+                                <div class="col-md-6 mb-3">
+                                    <div class="p-3 border rounded d-flex align-items-center justify-content-between bg-white <?= (!empty($p['rank_tier']) && $p['rank_tier'] === 'BEST') ? 'card-best' : ''; ?>">
+                                        <div>
+                                            <span class="badge <?= (!empty($p['rank_tier']) && $p['rank_tier'] === 'BEST') ? 'badge-warning' : 'badge-primary'; ?> mb-1">
+                                                <?= esc($p['rank_tier'] ?? 'TOP'); ?> #<?= esc($p['rank_number'] ?? '1'); ?>
+                                            </span>
+                                            <h6 class="font-weight-bold mb-0" style="font-size: 0.88rem;"><?= esc($p['name'] ?? ''); ?></h6>
+                                            <small class="text-muted"><?= esc($p['province'] ?? 'Toàn quốc'); ?> • <?= esc($p['category_name'] ?? 'Đa ngành'); ?></small>
+                                        </div>
+                                        <a href="<?= langBaseUrl('ho-so/' . ($p['code'] ?? '')); ?>" class="btn btn-sm btn-light">Hồ sơ</a>
                                     </div>
-                                    <a href="<?= langBaseUrl('ho-so/' . $p['code']); ?>" class="btn btn-sm btn-light">Hồ sơ</a>
                                 </div>
-                            </div>
-                        <?php endforeach; ?>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
                 </section>
 
