@@ -3065,3 +3065,22 @@ VALUES
 (4, 1, 'Top Thương Hiệu Giáo Dục & Đào Tạo Tiêu Biểu', 'thuong-hieu-giao-duc-dao-tao', 'Education', 'Vinh danh các tổ chức giáo dục kiến tạo nguồn nhân lực chất lượng cao', 'fa fa-graduation-cap', 4, 70.00, 30.00, 'active', NOW(), NOW()),
 (5, 1, 'Top Lãnh Đạo Đổi Mới Sáng Tạo Của Năm', 'lanh-dao-doi-moi-sang-tao', 'Leadership', 'Giải thưởng cá nhân dành cho CEO, Nhà sáng lập xuất sắc dẫn dắt tổ chức đột phá', 'fa fa-user-tie', 5, 70.00, 30.00, 'active', NOW(), NOW())
 ON DUPLICATE KEY UPDATE `name` = VALUES(`name`), `industry_sector` = VALUES(`industry_sector`);
+
+-- Default Official News Categories
+INSERT INTO `categories` (`id`, `lang_id`, `name`, `slug`, `parent_id`, `description`, `keywords`, `color`, `block_type`, `category_order`, `show_on_homepage`, `show_on_menu`, `category_status`, `created_at`)
+VALUES
+(1, 1, 'Doanh Nghiệp & Thương Hiệu Vinh Danh', 'doanh-nghiep-vinh-danh', 0, 'Tôn vinh các doanh nghiệp, thương hiệu và sản phẩm đạt chuẩn kỷ lục TOP / BEST trên 34 tỉnh thành.', 'doanh nghiep vinh danh, thuong hieu ky luc, top best', '#D9A441', 'fa-award', 1, 1, 1, 1, NOW()),
+(2, 1, 'Tin Tức Hoạt Động & Sự Kiện', 'tin-chuong-trinh', 0, 'Thông báo chính thức từ Hội Kỷ lục Việt Nam (VietKings), GAA và ban điều hành TOLUCK.', 'tin chuong trinh, su kien vietkings, gaa, toluck', '#1A4C96', 'fa-bullhorn', 2, 1, 1, 1, NOW()),
+(3, 1, 'Xu Hướng Ngành & Hội Nhập Xuất Khẩu', 'xu-huong-nganh', 0, 'Định hướng xuất khẩu, tiêu chuẩn quốc tế và câu chuyện di sản bản địa vươn tầm thế giới.', 'xu huong nganh, hoi nhap quoc te, xuat khau nong san', '#16A34A', 'fa-arrow-trend-up', 3, 1, 1, 1, NOW()),
+(4, 1, 'Câu Chuyện Nghệ Nhân & Di Sản', 'cau-chuyen-nghe-nhan', 0, 'Hành trình gìn giữ tinh hoa làng nghề và bí quyết di sản truyền thống Việt Nam.', 'nghe nhan, lang nghe truyen thong, di san', '#9B111E', 'fa-hands-holding', 4, 1, 1, 1, NOW())
+ON DUPLICATE KEY UPDATE `name` = VALUES(`name`), `description` = VALUES(`description`);
+
+-- Default Official News Posts
+INSERT INTO `posts` (`id`, `lang_id`, `title`, `slug`, `summary`, `content`, `category_id`, `image_url`, `user_id`, `status`, `visibility`, `slider_order`, `featured_order`, `pageviews`, `post_type`, `created_at`)
+VALUES
+(1, 1, 'Trầm Hương Khánh Hòa Đạt Danh Hiệu BEST Mùa Giải 2026: Hành Trình Chinh Phục 20+ Thị Trường Quốc Tế', 'tram-huong-khanh-hoa-dat-hang-best-2026', 'Hội đồng Giám khảo VietKings và GAA chính thức thẩm định và trao chứng nhận BEST cho Trầm Hương Khánh Hòa với chuỗi giá trị xuất khẩu toàn cầu sang 20+ quốc gia.', '<p>Chương trình TOP BEST GLOBAL vừa chính thức công bố kết quả thẩm định hồ sơ của Trầm Hương Khánh Hòa ở phân hạng BEST (Hạng 1).</p>', 1, 'assets/themes/suntransco/hero_bg.jpg', 1, 1, 1, 1, 1, 3420, 'post', NOW()),
+(2, 1, 'TOLUCK Ký Kết Hợp Tác Chiến Lược Cùng Hội Kỷ Lục Việt Nam (VietKings) Và GAA', 'toluck-ky-ket-hop-tac-chien-luoc-cung-vietkings', 'VietKings và GAA chính thức uỷ thác toàn diện cho TOLUCK triển khai cổng số hoá và mạng lưới Bảng vàng TOP BEST GLOBAL trên 34 tỉnh thành toàn quốc.', '<p>Lễ ký kết hợp tác chiến lược giữa TOLUCK, Hội Kỷ lục Việt Nam (VietKings) và Global American Academy (GAA) đã diễn ra thành công tốt đẹp.</p>', 2, 'assets/themes/suntransco/hero_bg.jpg', 1, 1, 1, 2, 2, 2190, 'post', NOW()),
+(3, 1, 'Gốm Sứ Bát Tràng Di Sản: Giữ Vững Tinh Hoa Men Lam Thăng Long Vươn Tầm Toàn Cầu', 'gom-su-bat-trang-di-san', 'Dòng men lam cổ truyền Bát Tràng vượt qua các tiêu chuẩn khắt khe, đạt thứ hạng BEST #2 trong bảng vinh danh mỹ thuật & làng nghề truyền thống.', '<p>Làng gốm Bát Tràng ghi dấu ấn mạnh mẽ tại mùa giải TOP BEST GLOBAL 2026 với danh hiệu BEST #2.</p>', 1, 'assets/themes/suntransco/hero_bg.jpg', 1, 1, 1, 3, 3, 1850, 'post', NOW()),
+(4, 1, 'Cà Phê Robusta Honey Đắk Lắk: Nâng Cao Giá Trị Nông Sản Di Sản Bằng Chế Biến Sâu', 'ca-phe-robusta-honey-dak-lak', 'Quy trình sơ chế Honey lên men tự nhiên đạt chuẩn xuất khẩu quốc tế giúp cà phê Đắk Lắk đạt chứng nhận BEST #3 ngành Nông sản.', '<p>Hợp tác xã Nông nghiệp Đắk Lắk xuất sắc được Hội đồng Chuyên môn VietKings vinh danh với sản phẩm Cà phê Robusta Honey.</p>', 1, 'assets/themes/suntransco/hero_bg.jpg', 1, 1, 1, 4, 4, 1420, 'post', NOW())
+ON DUPLICATE KEY UPDATE `title` = VALUES(`title`), `summary` = VALUES(`summary`);
+

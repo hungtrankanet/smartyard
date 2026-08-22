@@ -6,11 +6,15 @@ use Config\TopBestData;
 use App\Models\CategoryModel;
 use App\Models\PostModel;
 use App\Models\PageModel;
+use App\Services\TopBestNewsSyncService;
 
 class TopBestPortalController extends BaseController
 {
     public function index()
     {
+        // Auto-sync official categories and articles into DB if not present
+        TopBestNewsSyncService::syncDefaultContent();
+
         $isEn = ($this->activeLang->short_form ?? 'vi') == 'en';
         $langId = $this->activeLang->id ?? 1;
 
