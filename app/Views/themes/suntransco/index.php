@@ -81,7 +81,7 @@
                                         <?= esc($cluster['name']); ?>
                                     </h4>
                                 </div>
-                                <a href="<?= langBaseUrl('top-best-la-gi'); ?>" class="btn btn-sm btn-outline-primary font-weight-bold" style="border-radius: 20px; font-size: 0.75rem; padding: 4px 12px;">
+                                <a href="<?= esc($cluster['url'] ?? langBaseUrl('top-best-la-gi')); ?>" class="btn btn-sm btn-outline-primary font-weight-bold" style="border-radius: 20px; font-size: 0.75rem; padding: 4px 12px;">
                                     Xem Thêm <i class="fa-solid fa-angle-right ml-1"></i>
                                 </a>
                             </div>
@@ -104,7 +104,7 @@
                                                         <i class="fa-regular fa-calendar mr-1"></i> <?= esc($feat['date']); ?>
                                                     </small>
                                                     <h5 class="font-serif mb-2" style="font-size: 1.05rem; line-height: 1.4; color: #0F172A;">
-                                                        <a href="<?= langBaseUrl('top-best-la-gi'); ?>" style="color: #0F172A; text-decoration: none;">
+                                                        <a href="<?= esc($feat['url'] ?? langBaseUrl('top-best-la-gi')); ?>" style="color: #0F172A; text-decoration: none;">
                                                             <?= esc($feat['title']); ?>
                                                         </a>
                                                     </h5>
@@ -113,7 +113,7 @@
                                                     </p>
                                                 </div>
                                                 <div class="pt-3 mt-2 border-top">
-                                                    <a href="<?= langBaseUrl('top-best-la-gi'); ?>" class="text-primary font-weight-bold" style="font-size: 0.8rem;">
+                                                    <a href="<?= esc($feat['url'] ?? langBaseUrl('top-best-la-gi')); ?>" class="text-primary font-weight-bold" style="font-size: 0.8rem;">
                                                         Đọc toàn bộ bài viết <i class="fa-solid fa-arrow-right ml-1"></i>
                                                     </a>
                                                 </div>
@@ -137,7 +137,7 @@
                                                         </small>
                                                     </div>
                                                     <h6 class="font-serif mb-0" style="font-size: 0.84rem; line-height: 1.35;">
-                                                        <a href="<?= langBaseUrl('top-best-la-gi'); ?>" style="color: #0F172A; text-decoration: none;">
+                                                        <a href="<?= esc($sub['url'] ?? langBaseUrl('top-best-la-gi')); ?>" style="color: #0F172A; text-decoration: none;">
                                                             <?= esc($sub['title']); ?>
                                                         </a>
                                                     </h6>

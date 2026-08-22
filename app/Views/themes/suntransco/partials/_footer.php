@@ -5,13 +5,19 @@
             <!-- Col 1: Về TOP BEST -->
             <div class="col-lg-3 col-md-6 mb-4">
                 <div class="d-flex align-items-center mb-3">
-                    <div class="mr-2 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; border-radius: 6px; background: #D9A441; color: #0A192F; font-weight: 900;">
-                        <i class="fa-solid fa-trophy"></i>
-                    </div>
-                    <span style="color: #ffffff; font-weight: 800; font-size: 1.05rem;">TOP BEST GLOBAL</span>
+                    <?php if (!empty($generalSettings->logo_footer) && file_exists(FCPATH . $generalSettings->logo_footer)): ?>
+                        <img src="<?= getLogoFooter(); ?>" alt="<?= esc($baseSettings->application_name ?? 'TOP BEST GLOBAL'); ?>" style="max-height: 34px; width: auto;" class="mr-2">
+                    <?php else: ?>
+                        <div class="mr-2 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 32px; height: 32px; border-radius: 6px; background: #D9A441; color: #0A192F; font-weight: 900;">
+                            <i class="fa-solid fa-trophy"></i>
+                        </div>
+                    <?php endif; ?>
+                    <span style="color: #ffffff; font-weight: 800; font-size: 1.05rem;">
+                        <?= esc($baseSettings->application_name ?? 'TOP BEST GLOBAL'); ?>
+                    </span>
                 </div>
                 <p style="font-size: 0.85rem; line-height: 1.6; color: #CBD5E1;">
-                    Cổng thông tin chính thức của chương trình TOP BEST — hạng mục giải thưởng thuộc Hội Kỷ lục Việt Nam (VietKings), thành viên Liên minh Kỷ lục Thế giới (WORLDKINGS), uỷ thác cho TOLUCK và GAA triển khai.
+                    <?= !empty($baseSettings->about_footer) ? esc($baseSettings->about_footer) : 'Cổng thông tin chính thức của chương trình TOP BEST — hạng mục giải thưởng thuộc Hội Kỷ lục Việt Nam (VietKings), thành viên Liên minh Kỷ lục Thế giới (WORLDKINGS), uỷ thác cho TOLUCK và GAA triển khai.'; ?>
                 </p>
                 <div class="mt-3">
                     <span class="badge badge-pill badge-dark px-3 py-2" style="background: rgba(217,164,65,0.15); border: 1px solid #D9A441; color: #F3E5AB;">
@@ -46,13 +52,13 @@
             <div class="col-lg-3 col-md-6 mb-4">
                 <h5 class="text-white font-serif mb-3" style="font-size: 1rem; border-bottom: 2px solid #1A4C96; padding-bottom: 8px;">Ban Thư Ký Chương Trình</h5>
                 <p style="font-size: 0.85rem; color: #CBD5E1; margin-bottom: 8px;">
-                    <i class="fa-solid fa-phone text-warning mr-2"></i> <strong>Hotline GAA:</strong> 0909 123 456
+                    <i class="fa-solid fa-phone text-warning mr-2"></i> <strong>Hotline:</strong> <?= esc(!empty($baseSettings->contact_phone) ? $baseSettings->contact_phone : '0909 123 456'); ?>
                 </p>
                 <p style="font-size: 0.85rem; color: #CBD5E1; margin-bottom: 8px;">
-                    <i class="fa-solid fa-envelope text-warning mr-2"></i> <strong>Email:</strong> contact@topbestglobal.com
+                    <i class="fa-solid fa-envelope text-warning mr-2"></i> <strong>Email:</strong> <?= esc(!empty($baseSettings->contact_email) ? $baseSettings->contact_email : (!empty($generalSettings->mail_reply_to) ? $generalSettings->mail_reply_to : 'contact@topbestglobal.com')); ?>
                 </p>
                 <p style="font-size: 0.85rem; color: #CBD5E1; margin-bottom: 8px;">
-                    <i class="fa-solid fa-location-dot text-warning mr-2"></i> <strong>Địa chỉ:</strong> Toà nhà TOLUCK, TP. Hồ Chí Minh & Hà Nội
+                    <i class="fa-solid fa-location-dot text-warning mr-2"></i> <strong>Địa chỉ:</strong> <?= esc(!empty($baseSettings->contact_address) ? $baseSettings->contact_address : 'Toà nhà TOLUCK, TP. Hồ Chí Minh & Hà Nội'); ?>
                 </p>
             </div>
         </div>
@@ -66,7 +72,7 @@
                     TOLUCK × Hội Kỷ lục Việt Nam (VietKings) × GAA
                 </div>
                 <div style="color: #64748B; font-size: 0.78rem;">
-                    Bản quyền thuộc về TOLUCK & Hội Kỷ lục Việt Nam. Thành viên Liên minh Kỷ lục Thế giới (WORLDKINGS).
+                    <?= esc(!empty($baseSettings->copyright) ? $baseSettings->copyright : 'Bản quyền thuộc về TOLUCK & Hội Kỷ lục Việt Nam. Thành viên Liên minh Kỷ lục Thế giới (WORLDKINGS).'); ?>
                 </div>
             </div>
             <div class="col-md-5 text-center text-md-right">

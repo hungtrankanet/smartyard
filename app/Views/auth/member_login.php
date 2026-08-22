@@ -1,55 +1,65 @@
-<div id="wrapper">
-    <div class="container" style="max-width: 480px; margin: 50px auto; padding: 0 15px;">
-        <div class="page-content" style="background: #ffffff; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.08); padding: 35px 30px; border: 1px solid #eef2f6;">
-            <div class="text-center" style="margin-bottom: 25px;">
-                <span class="label label-primary" style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; padding: 4px 10px; border-radius: 20px;">B2B Logistics Portal</span>
-                <h2 style="font-size: 24px; font-weight: 700; color: #1e293b; margin-top: 10px; margin-bottom: 6px;">Đăng Nhập Thành Viên</h2>
-                <p style="color: #64748b; font-size: 13px; margin: 0;">Truy cập Cổng Thành Viên TOP BEST GLOBAL & kết nối đối tác</p>
+<!-- Member Login View -->
+<div class="py-5" style="background: linear-gradient(135deg, #0A192F 0%, #1A4C96 100%); min-height: 80vh; display: flex; align-items: center;">
+    <div class="container" style="max-width: 480px;">
+        
+        <div class="card border-0 shadow-lg p-4 p-md-5" style="border-radius: 16px; background: #ffffff; border-top: 4px solid #D9A441 !important;">
+            <div class="text-center mb-4">
+                <div class="d-inline-flex align-items-center justify-content-center mb-2" style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #D9A441, #B8860B); color: #0A192F; font-size: 22px;">
+                    <i class="fa-solid fa-building-user"></i>
+                </div>
+                <h2 class="font-serif text-primary mb-1" style="font-size: 1.5rem; font-weight: 800;">Đăng Nhập Thành Viên</h2>
+                <p class="text-muted small mb-0">Cổng Quản Trị Hồ Sơ Doanh Nghiệp TOP BEST GLOBAL</p>
             </div>
 
             <?php if (session()->getFlashdata('error')): ?>
-                <div class="alert alert-danger" style="border-radius: 6px; font-size: 13px; padding: 10px 15px;">
-                    <i class="fa fa-exclamation-circle"></i> <?= session()->getFlashdata('error'); ?>
+                <div class="alert alert-danger rounded py-2 px-3 small mb-3">
+                    <i class="fa-solid fa-circle-exclamation mr-1"></i> <?= session()->getFlashdata('error'); ?>
                 </div>
             <?php endif; ?>
 
             <?php if (session()->getFlashdata('success')): ?>
-                <div class="alert alert-success" style="border-radius: 6px; font-size: 13px; padding: 10px 15px;">
-                    <i class="fa fa-check-circle"></i> <?= session()->getFlashdata('success'); ?>
+                <div class="alert alert-success rounded py-2 px-3 small mb-3">
+                    <i class="fa-solid fa-circle-check mr-1"></i> <?= session()->getFlashdata('success'); ?>
                 </div>
             <?php endif; ?>
 
             <form action="<?= langBaseUrl('member/login-post'); ?>" method="POST">
                 <?= csrf_field(); ?>
-                <div class="form-group">
-                    <label style="font-weight: 600; font-size: 13px; color: #334155;">Email Đăng Nhập</label>
+                
+                <div class="form-group mb-3">
+                    <label class="font-weight-bold small text-muted mb-1">Email Đăng Ký Doanh Nghiệp *</label>
                     <div class="input-group">
-                        <span class="input-group-addon" style="background: #f8fafc; border-color: #cbd5e1;"><i class="fa fa-envelope-o text-muted"></i></span>
-                        <input type="email" name="email" class="form-control input-lg" placeholder="email@domain.com" value="<?= old('email'); ?>" required style="font-size: 14px; border-color: #cbd5e1;">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-light border-right-0 text-muted"><i class="fa-solid fa-envelope"></i></span>
+                        </div>
+                        <input type="email" name="email" class="form-control border-left-0" placeholder="email@domain.com" value="<?= old('email'); ?>" required style="height: 46px; font-size: 0.9rem;">
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <label style="font-weight: 600; font-size: 13px; color: #334155; margin-bottom: 5px;">Mật Khẩu</label>
-                    </div>
+                <div class="form-group mb-4">
+                    <label class="font-weight-bold small text-muted mb-1">Mật Khẩu *</label>
                     <div class="input-group">
-                        <span class="input-group-addon" style="background: #f8fafc; border-color: #cbd5e1;"><i class="fa fa-lock text-muted"></i></span>
-                        <input type="password" name="password" class="form-control input-lg" placeholder="••••••••" required style="font-size: 14px; border-color: #cbd5e1;">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-light border-right-0 text-muted"><i class="fa-solid fa-lock"></i></span>
+                        </div>
+                        <input type="password" name="password" class="form-control border-left-0" placeholder="••••••••" required style="height: 46px; font-size: 0.9rem;">
                     </div>
                 </div>
 
-                <div style="margin-top: 20px;">
-                    <button type="submit" class="btn btn-primary btn-block btn-lg" style="font-weight: 700; font-size: 15px; border-radius: 6px; padding: 12px;">
-                        <i class="fa fa-sign-in"></i> Đăng Nhập Vào Member Portal
-                    </button>
-                </div>
+                <button type="submit" class="btn btn-tbg-cta btn-block py-2 font-weight-bold" style="height: 46px; font-size: 0.95rem;">
+                    <i class="fa-solid fa-right-to-bracket mr-2"></i> Đăng Nhập Hệ Thống
+                </button>
             </form>
 
-            <hr style="margin: 25px 0; border-color: #f1f5f9;">
-            <div class="text-center" style="font-size: 13px; color: #64748b;">
-                Chưa có tài khoản doanh nghiệp? <a href="<?= langBaseUrl('member/register'); ?>" style="font-weight: 700; color: #3c8dbc;">Đăng ký thành viên nhận OTP</a>
+            <hr class="my-4">
+
+            <div class="text-center small text-muted">
+                Chưa có hồ sơ doanh nghiệp? 
+                <a href="<?= langBaseUrl('doanh-nghiep/dang-ky'); ?>" class="font-weight-bold text-primary">
+                    Đăng ký đề cử TOP BEST
+                </a>
             </div>
         </div>
+
     </div>
 </div>

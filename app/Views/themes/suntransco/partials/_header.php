@@ -115,13 +115,19 @@
 <header class="tbg-header">
     <div class="container-fluid px-lg-4">
         <nav class="navbar navbar-expand-lg navbar-dark tbg-navbar py-2 px-0">
-            <!-- Logo -->
+            <!-- Dynamic Logo -->
             <a class="navbar-brand d-flex align-items-center mr-lg-3 mr-auto" href="<?= langBaseUrl(); ?>" style="white-space: nowrap;">
-                <div class="mr-2 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, #D9A441, #B8860B); color: #0A192F; font-weight: 900; font-size: 16px;">
-                    <i class="fa-solid fa-trophy"></i>
-                </div>
+                <?php if (!empty($generalSettings->logo) && file_exists(FCPATH . $generalSettings->logo)): ?>
+                    <img src="<?= getLogo(); ?>" alt="<?= esc($baseSettings->application_name ?? 'TOP BEST GLOBAL'); ?>" style="max-height: 38px; width: auto;" class="mr-2">
+                <?php else: ?>
+                    <div class="mr-2 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, #D9A441, #B8860B); color: #0A192F; font-weight: 900; font-size: 16px;">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                <?php endif; ?>
                 <div class="d-inline-block">
-                    <div style="color: #ffffff; font-weight: 900; font-size: 1.05rem; line-height: 1.1; letter-spacing: 0.5px;">TOP BEST GLOBAL</div>
+                    <div style="color: #ffffff; font-weight: 900; font-size: 1.05rem; line-height: 1.1; letter-spacing: 0.5px;">
+                        <?= esc($baseSettings->application_name ?? 'TOP BEST GLOBAL'); ?>
+                    </div>
                     <div style="color: var(--tbg-gold-light); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.7px;">VIETKINGS × GAA × TOLUCK</div>
                 </div>
             </a>

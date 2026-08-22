@@ -18,18 +18,18 @@
                     <h5 class="font-serif text-primary mb-3">Thông Tin Ban Thư Ký</h5>
                     
                     <div class="mb-3">
-                        <small class="text-muted d-block">Hotline Hỗ Trợ GAA:</small>
-                        <strong style="color: #0A192F; font-size: 1.05rem;"><i class="fa-solid fa-phone text-warning mr-2"></i> 0909 123 456</strong>
+                        <small class="text-muted d-block">Hotline Hỗ Trợ:</small>
+                        <strong style="color: #0A192F; font-size: 1.05rem;"><i class="fa-solid fa-phone text-warning mr-2"></i> <?= esc(!empty($baseSettings->contact_phone) ? $baseSettings->contact_phone : '0909 123 456'); ?></strong>
                     </div>
 
                     <div class="mb-3">
                         <small class="text-muted d-block">Email Tiếp Nhận Hồ Sơ:</small>
-                        <strong style="color: #0A192F;"><i class="fa-solid fa-envelope text-warning mr-2"></i> contact@topbestglobal.com</strong>
+                        <strong style="color: #0A192F;"><i class="fa-solid fa-envelope text-warning mr-2"></i> <?= esc(!empty($baseSettings->contact_email) ? $baseSettings->contact_email : (!empty($generalSettings->mail_reply_to) ? $generalSettings->mail_reply_to : 'contact@topbestglobal.com')); ?></strong>
                     </div>
 
                     <div class="mb-3">
-                        <small class="text-muted d-block">Văn Phòng Điều Hành TOLUCK:</small>
-                        <strong style="color: #0A192F;"><i class="fa-solid fa-building text-warning mr-2"></i> TP. Hồ Chí Minh & Hà Nội</strong>
+                        <small class="text-muted d-block">Văn Phòng Điều Hành:</small>
+                        <strong style="color: #0A192F;"><i class="fa-solid fa-building text-warning mr-2"></i> <?= esc(!empty($baseSettings->contact_address) ? $baseSettings->contact_address : 'Toà nhà TOLUCK, TP. Hồ Chí Minh & Hà Nội'); ?></strong>
                     </div>
 
                     <hr>
