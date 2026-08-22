@@ -1,91 +1,100 @@
-<section class="section" style="padding: 120px 0 80px; min-height: 80vh; background: #ffffff;">
-    <div class="container" style="max-width: 920px;">
+<!-- Post Detail View: TOP BEST GLOBAL -->
+<div class="py-5" style="background-color: #F8FAFC; min-height: 85vh;">
+    <div class="container">
+        
         <?php if (!empty($post)): ?>
-            <div class="post-navigation mb-md" style="margin-bottom: 24px;">
-                <a href="<?= langBaseUrl('posts'); ?>" style="display: inline-flex; align-items: center; gap: 8px; color: #2563eb; text-decoration: none; font-size: 0.88rem; font-weight: 700; transition: color 0.2s ease;">
-                    <i class="fa-solid fa-arrow-left"></i>
-                    <span class="lang-vi">Quay lại danh sách tin tức</span>
-                    <span class="lang-en">Back to News</span>
-                </a>
+            <!-- Breadcrumb Navigation -->
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb bg-transparent p-0 small">
+                    <li class="breadcrumb-item"><a href="<?= langBaseUrl(); ?>" class="text-primary"><i class="fa-solid fa-house mr-1"></i> Trang Chủ</a></li>
+                    <li class="breadcrumb-item"><a href="<?= langBaseUrl('news'); ?>" class="text-primary">Tin Tức</a></li>
+                    <?php if (!empty($post->category_name)): ?>
+                        <li class="breadcrumb-item active text-muted"><?= esc($post->category_name); ?></li>
+                    <?php endif; ?>
+                </ol>
+            </nav>
+
+            <div class="row">
+                <!-- Main Post Content -->
+                <div class="col-lg-8 mb-5">
+                    <article class="card border-0 shadow-sm p-4 p-md-5" style="border-radius: 16px; background: #ffffff;">
+                        
+                        <!-- Category Badge -->
+                        <?php if (!empty($post->category_name)): ?>
+                            <div class="mb-2">
+                                <span class="badge badge-warning px-3 py-1 font-weight-bold" style="background: #D9A441; color: #0A192F; font-size: 0.75rem;">
+                                    <?= esc($post->category_name); ?>
+                                </span>
+                            </div>
+                        <?php endif; ?>
+
+                        <!-- Title -->
+                        <h1 class="font-serif text-primary mb-3" style="font-size: 1.85rem; line-height: 1.35; font-weight: 900;">
+                            <?= esc($post->title); ?>
+                        </h1>
+
+                        <!-- Meta Bar -->
+                        <div class="d-flex align-items-center flex-wrap text-muted small pb-3 mb-4 border-bottom" style="gap: 15px;">
+                            <span><i class="fa-regular fa-calendar text-warning mr-1"></i> <?= formattedDate($post->created_at); ?></span>
+                            <span><i class="fa-regular fa-eye text-warning mr-1"></i> <?= number_format($post->pageviews ?? 0); ?> lượt xem</span>
+                            <?php if (!empty($post->author_username)): ?>
+                                <span><i class="fa-regular fa-user text-warning mr-1"></i> <?= esc($post->author_username); ?></span>
+                            <?php endif; ?>
+                        </div>
+
+                        <!-- Featured Image -->
+                        <?php 
+                        $heroImg = getPostImage($post, 'big');
+                        if (!empty($heroImg)): ?>
+                            <div class="mb-4 overflow-hidden rounded shadow-sm" style="max-height: 420px;">
+                                <img src="<?= $heroImg; ?>" alt="<?= esc($post->title); ?>" class="img-fluid w-100" style="object-fit: cover;">
+                            </div>
+                        <?php endif; ?>
+
+                        <!-- Summary Lead -->
+                        <?php if (!empty($post->summary)): ?>
+                            <div class="p-3 mb-4 rounded" style="background: #EFF6FF; border-left: 4px solid #1A4C96; font-size: 0.95rem; font-weight: 600; color: #1E293B; line-height: 1.6;">
+                                <?= esc($post->summary); ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <!-- Content -->
+                        <div class="post-content" style="font-size: 1rem; line-height: 1.8; color: #334155;">
+                            <?= $post->content; ?>
+                        </div>
+
+                        <!-- Footer Ecosystem Assurance -->
+                        <div class="mt-5 pt-4 border-top">
+                            <div class="p-3 rounded alert-success small d-flex align-items-center justify-content-between">
+                                <div>
+                                    <i class="fa-solid fa-shield-check text-success mr-2"></i>
+                                    <strong>Chương trình TOP BEST GLOBAL</strong> — Thuộc Hội Kỷ lục Việt Nam (VietKings) & WORLDKINGS.
+                                </div>
+                                <a href="<?= langBaseUrl('top-best-la-gi'); ?>" class="btn btn-sm btn-primary font-weight-bold" style="background: #1A4C96; border-radius: 6px;">
+                                    Tìm Hiểu Thêm
+                                </a>
+                            </div>
+                        </div>
+
+                    </article>
+                </div>
+
+                <!-- Sidebar (4 Widgets) -->
+                <div class="col-lg-4">
+                    <?= loadView('partials/_sidebar_news'); ?>
+                </div>
             </div>
 
-            <article class="card-corporate post-detail-container" style="background: #ffffff; border: 2px solid #2563eb; border-radius: 18px; padding: 45px 50px; box-shadow: 0 8px 30px rgba(37,99,235,0.1);">
-                <?php if (!empty($post->category_name)): ?>
-                    <span class="category-badge" style="background: rgba(37, 99, 235, 0.1); color: #1d4ed8; border: 1.5px solid #2563eb; padding: 5px 16px; border-radius: 6px; font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block; margin-bottom: 16px;">
-                        <?= esc($post->category_name); ?>
-                    </span>
-                <?php endif; ?>
-
-                <h1 class="post-title" style="font-size: 2.2rem; font-weight: 900; color: #0f172a; line-height: 1.35; margin: 0 0 20px;">
-                    <?= esc($post->title); ?>
-                </h1>
-
-                <div class="post-meta" style="font-size: 0.84rem; color: #64748b; margin-bottom: 28px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; border-bottom: 1px solid rgba(37,99,235,0.15); padding-bottom: 18px; font-weight: 600;">
-                    <span style="display: inline-flex; align-items: center; gap: 6px;">
-                        <i class="fa-regular fa-calendar text-primary"></i>
-                        <?= formatDate($post->created_at); ?>
-                    </span>
-                    <span style="display: inline-flex; align-items: center; gap: 6px;">
-                        <i class="fa-regular fa-eye text-primary"></i>
-                        <?= esc($post->pageviews ?? 0); ?>
-                        <span class="lang-vi">lượt xem</span>
-                        <span class="lang-en">views</span>
-                    </span>
-                    <?php if (!empty($post->author_username)): ?>
-                        <span style="display: inline-flex; align-items: center; gap: 6px;">
-                            <i class="fa-regular fa-user"></i>
-                            <?= esc($post->author_username); ?>
-                        </span>
-                    <?php endif; ?>
-                </div>
-
-                <?php 
-                $heroImg = getPostImage($post, 'big');
-                if (!empty($heroImg)): ?>
-                    <div class="post-hero-image" style="margin: 0 0 32px; border-radius: 12px; overflow: hidden; border: 1.5px solid #2563eb; box-shadow: 0 4px 18px rgba(37,99,235,0.1);">
-                        <img src="<?= $heroImg; ?>" alt="<?= esc($post->title); ?>" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block;">
-                    </div>
-                <?php endif; ?>
-
-                <?php if (!empty($post->summary)): ?>
-                    <div class="post-summary-lead" style="font-size: 1.05rem; line-height: 1.7; font-weight: 600; color: #1e293b; padding: 18px 24px; background: #eff6ff; border-left: 4px solid #2563eb; border-radius: 0 10px 10px 0; margin-bottom: 30px;">
-                        <?= esc($post->summary); ?>
-                    </div>
-                <?php endif; ?>
-
-                <div class="post-body-content" style="line-height: 1.9; color: #334155; font-size: 1.05rem;">
-                    <?= $post->content; ?>
-                </div>
-
-                <div class="post-footer" style="margin-top: 48px; padding-top: 24px; border-top: 1px solid rgba(37,99,235,0.15); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-                    <a href="<?= langBaseUrl('posts'); ?>" class="btn btn-outline btn-sm" style="display: inline-flex; align-items: center; gap: 8px;">
-                        <i class="fa-solid fa-arrow-left"></i>
-                        <span class="lang-vi">Tất cả tin tức</span>
-                        <span class="lang-en">All News</span>
-                    </a>
-                    <a href="<?= langBaseUrl(); ?>" class="btn btn-primary btn-sm" style="display: inline-flex; align-items: center; gap: 8px;">
-                        <i class="fa-solid fa-house"></i>
-                        <span class="lang-vi">Trang chủ</span>
-                        <span class="lang-en">Home</span>
-                    </a>
-                </div>
-            </article>
         <?php else: ?>
-            <div class="card-corporate text-center" style="padding: 60px 20px; background: #ffffff; border: 1.5px solid #2563eb; border-radius: 14px;">
-                <i class="fa-solid fa-circle-exclamation" style="font-size: 3rem; color: #ef4444; margin-bottom: 16px;"></i>
-                <h2 style="color: #0f172a; font-size: 1.5rem; margin-bottom: 10px;">
-                    <span class="lang-vi">Bài viết không tồn tại</span>
-                    <span class="lang-en">Post Not Found</span>
-                </h2>
-                <p style="color: #475569; margin-bottom: 24px;">
-                    <span class="lang-vi">Nội dung bài viết bạn tìm kiếm không có hoặc đã bị gỡ bỏ.</span>
-                    <span class="lang-en">The post you are looking for does not exist or has been removed.</span>
-                </p>
-                <a href="<?= langBaseUrl('posts'); ?>" class="btn btn-primary">
-                    <span class="lang-vi">Xem tin tức khác</span>
-                    <span class="lang-en">Browse Other News</span>
+            <div class="card border-0 shadow-sm p-5 text-center" style="border-radius: 16px; background: #ffffff;">
+                <i class="fa-solid fa-triangle-exclamation text-warning fa-3x mb-3"></i>
+                <h3 class="font-serif text-primary">Bài Viết Không Tồn Tại Hoặc Đã Bị Gỡ Bỏ</h3>
+                <p class="text-muted small mb-4">Vui lòng kiểm tra lại đường dẫn hoặc quay về trang chủ tin tức.</p>
+                <a href="<?= langBaseUrl(); ?>" class="btn btn-tbg-cta px-4 py-2 font-weight-bold">
+                    Quay Về Trang Chủ
                 </a>
             </div>
         <?php endif; ?>
+
     </div>
-</section>
+</div>

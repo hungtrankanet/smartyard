@@ -1,18 +1,29 @@
-<!-- All Posts / News Listing Page -->
+<!-- Category Posts View: TOP BEST GLOBAL -->
 <div class="py-5" style="background-color: #F8FAFC; min-height: 85vh;">
     <div class="container">
         
-        <!-- Header Banner -->
-        <div class="text-center mb-5">
-            <span class="badge badge-warning px-3 py-1 font-weight-bold mb-2" style="background: #D9A441; color: #0A192F;">
-                CỔNG TRUYỀN THÔNG & TIN TỨC CHÍNH THỨC
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb bg-transparent p-0 small">
+                <li class="breadcrumb-item"><a href="<?= langBaseUrl(); ?>" class="text-primary"><i class="fa-solid fa-house mr-1"></i> Trang Chủ</a></li>
+                <li class="breadcrumb-item"><a href="<?= langBaseUrl('news'); ?>" class="text-primary">Tin Tức</a></li>
+                <li class="breadcrumb-item active text-muted"><?= esc($category->name ?? 'Chuyên Mục'); ?></li>
+            </ol>
+        </nav>
+
+        <!-- Category Header Banner -->
+        <div class="p-4 p-md-5 rounded-lg text-white mb-5" style="background: linear-gradient(135deg, #0A192F 0%, #1A4C96 100%); border-bottom: 3px solid #D9A441; border-radius: 16px;">
+            <span class="badge badge-warning px-3 py-1 font-weight-bold mb-2" style="background: #D9A441; color: #0A192F; font-size: 0.75rem;">
+                CHUYÊN MỤC TIN TỨC CHÍNH THỨC
             </span>
-            <h1 class="font-serif text-primary mb-2" style="font-size: 2.1rem; font-weight: 900;">
-                Tin Tức Hoạt Động & Doanh Nghiệp Vinh Danh
+            <h1 class="font-serif text-white mb-2" style="font-size: 2rem; font-weight: 900;">
+                <?= esc($category->name ?? 'Chuyên Mục Tin Tức'); ?>
             </h1>
-            <p class="text-muted mx-auto" style="max-width: 700px; font-size: 0.95rem;">
-                Cập nhật liên tục các tin tức chương trình, quyết định thẩm định kỷ lục và câu chuyện của các thương hiệu di sản xuất sắc.
-            </p>
+            <?php if (!empty($category->description)): ?>
+                <p class="mb-0" style="color: #CBD5E1; font-size: 0.95rem; max-width: 750px; line-height: 1.6;">
+                    <?= esc($category->description); ?>
+                </p>
+            <?php endif; ?>
         </div>
 
         <div class="row">
@@ -34,11 +45,9 @@
                                                 <i class="fa-solid fa-trophy"></i>
                                             </div>
                                         <?php endif; ?>
-                                        <?php if (!empty($post->category_name)): ?>
-                                            <span class="badge badge-warning" style="position: absolute; top: 10px; left: 10px; background: #D9A441; color: #0A192F; font-size: 0.7rem; font-weight: 800;">
-                                                <?= esc($post->category_name); ?>
-                                            </span>
-                                        <?php endif; ?>
+                                        <span class="badge badge-warning" style="position: absolute; top: 10px; left: 10px; background: #D9A441; color: #0A192F; font-size: 0.7rem; font-weight: 800;">
+                                            <?= esc($category->name ?? 'TOP BEST'); ?>
+                                        </span>
                                     </a>
                                     <div class="card-body p-3 d-flex flex-column justify-content-between">
                                         <div>
@@ -65,10 +74,15 @@
                         <?php endforeach; ?>
                     <?php else: ?>
                         <div class="col-12">
-                            <div class="card border-0 shadow-sm p-4 text-center" style="border-radius: 12px; background: #ffffff;">
-                                <i class="fa-solid fa-folder-open text-warning fa-3x mb-2"></i>
-                                <h5 class="font-serif text-primary">Chưa Có Bài Viết Nào Trong Mục Này</h5>
-                                <p class="text-muted small mb-0">Các bài viết mới sẽ được Ban Thư ký cập nhật sớm nhất.</p>
+                            <div class="card border-0 shadow-sm p-5 text-center" style="border-radius: 12px; background: #ffffff;">
+                                <i class="fa-solid fa-folder-open text-warning fa-3x mb-3"></i>
+                                <h5 class="font-serif text-primary">Chưa Có Bài Viết Nào Trong Chuyên Mục Này</h5>
+                                <p class="text-muted small mb-3">Các bài viết mới sẽ được cập nhật sớm nhất sau khi hoàn tất xét duyệt.</p>
+                                <div>
+                                    <a href="<?= langBaseUrl(); ?>" class="btn btn-tbg-cta btn-sm px-4 py-2 font-weight-bold">
+                                        Về Trang Chủ
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     <?php endif; ?>
