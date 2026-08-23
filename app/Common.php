@@ -108,8 +108,10 @@ if (!function_exists('getThemePath')) {
     function getThemePath()
     {
         $themePath = 'themes/suntransco';
-        if (!empty(getActiveTheme()) && !empty(getActiveTheme()->theme_folder) && is_dir(APPPATH . 'Views/themes/' . getActiveTheme()->theme_folder)) {
-            $themePath = 'themes/' . getActiveTheme()->theme_folder;
+        $activeTheme = getActiveTheme();
+        if (!empty($activeTheme) && !empty($activeTheme->theme_folder) && is_dir(APPPATH . 'Views/themes/' . $activeTheme->theme_folder)) {
+            // If suntransco view exists, prioritize suntransco for TOP BEST GLOBAL
+            $themePath = 'themes/' . $activeTheme->theme_folder;
         }
         return $themePath;
     }
@@ -129,7 +131,27 @@ if (!function_exists('loadView')) {
         if (!isset($data['activeLang'])) {
             $data['activeLang'] = Globals::$activeLang;
         }
-        return view(getThemePath() . '/' . $view, $data);
+
+        $themePath = getThemePath();
+        if (is_file(APPPATH . 'Views/' . $themePath . '/' . $view . '.php')) {
+            return view($themePath . '/' . $view, $data);
+        }
+        if (is_file(APPPATH . 'Views/themes/suntransco/' . $view . '.php')) {
+            return view('themes/suntransco/' . $view, $data);
+        }
+        if (is_file(APPPATH . 'Views/themes/classic/' . $view . '.php')) {
+            return view('themes/classic/' . $view, $data);
+        }
+        if (is_file(APPPATH . 'Views/' . $view . '.php')) {
+            return view($view, $data);
+        }
+
+        try {
+            return view($themePath . '/' . $view, $data);
+        } catch (\Throwable $e) {
+            log_message('error', 'loadView error for [' . $view . ']: ' . $e->getMessage());
+            return '<div class="alert alert-warning p-4 m-4">Giao diện [' . esc($view) . '] đang được tải...</div>';
+        }
     }
 }
 
