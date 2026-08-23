@@ -225,25 +225,39 @@ class HomeController extends BaseController
     {
         $slug = cleanSlug($slug);
         if (empty($slug) || $slug == 'index' || $slug == 'index.php' || $slug == 'index.html') {
-            return (new TopBestPortalController())->index();
+            $ctrl = new TopBestPortalController();
+            $ctrl->initController($this->request, $this->response, $this->logger);
+            return $ctrl->index();
         }
         if ($slug == 'top-best-la-gi' || $slug == 'topbest-la-gi') {
-            return (new TopBestPortalController())->aboutTopBest();
+            $ctrl = new TopBestPortalController();
+            $ctrl->initController($this->request, $this->response, $this->logger);
+            return $ctrl->aboutTopBest();
         }
         if ($slug == 'bang-xep-hang' || $slug == 'directory') {
-            return (new TopBestDirectoryController())->index();
+            $ctrl = new TopBestDirectoryController();
+            $ctrl->initController($this->request, $this->response, $this->logger);
+            return $ctrl->index();
         }
         if ($slug == 'dai-ly' || $slug == 'agency') {
-            return (new TopBestRegistrationController())->agency();
+            $ctrl = new TopBestRegistrationController();
+            $ctrl->initController($this->request, $this->response, $this->logger);
+            return $ctrl->agency();
         }
         if ($slug == 'su-kien' || $slug == 'events') {
-            return (new TopBestPortalController())->events();
+            $ctrl = new TopBestPortalController();
+            $ctrl->initController($this->request, $this->response, $this->logger);
+            return $ctrl->events();
         }
         if ($slug == 've-chung-toi' || $slug == 'about-us') {
-            return (new TopBestPortalController())->aboutUs();
+            $ctrl = new TopBestPortalController();
+            $ctrl->initController($this->request, $this->response, $this->logger);
+            return $ctrl->aboutUs();
         }
         if ($slug == 'lien-he' || $slug == 'contact') {
-            return (new TopBestPortalController())->contact();
+            $ctrl = new TopBestPortalController();
+            $ctrl->initController($this->request, $this->response, $this->logger);
+            return $ctrl->contact();
         }
         $pageModel = new PageModel();
         $data['userSession'] = getUserSession();

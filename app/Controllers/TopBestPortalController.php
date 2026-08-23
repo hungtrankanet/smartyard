@@ -10,8 +10,22 @@ use App\Services\TopBestNewsSyncService;
 
 class TopBestPortalController extends BaseController
 {
+    protected function ensureInitialized()
+    {
+        if (empty($this->generalSettings)) {
+            $this->generalSettings = \Config\Globals::$generalSettings;
+        }
+        if (empty($this->settings)) {
+            $this->settings = \Config\Globals::$settings;
+        }
+        if (empty($this->activeLang)) {
+            $this->activeLang = \Config\Globals::$activeLang;
+        }
+    }
+
     public function index()
     {
+        $this->ensureInitialized();
         // Auto-sync official categories and articles into DB if not present
         TopBestNewsSyncService::syncDefaultContent();
 
@@ -161,6 +175,7 @@ class TopBestPortalController extends BaseController
 
     public function aboutTopBest()
     {
+        $this->ensureInitialized();
         $isEn = ($this->activeLang->short_form ?? 'vi') == 'en';
         
         $directoryPreviews = [];
@@ -176,9 +191,9 @@ class TopBestPortalController extends BaseController
                     foreach ($dbMembers as $m) {
                         $directoryPreviews[] = [
                             'code'          => $m['member_code'] ?? ('TBG-VN-2026-' . str_pad($m['id'], 3, '0', STR_PAD_LEFT)),
-                            'name'          => $m['company_name'] ?? $m['name'],
+                            'name'          => $m['company_name'] ?? ($m['name'] ?? 'Doanh Nghiệp'),
                             'rank_tier'     => ($m['membership_tier'] ?? 'Diamond') == 'Diamond' ? 'BEST' : 'TOP',
-                            'rank_number'   => $m['id'],
+                            'rank_number'   => $m['id'] ?? 1,
                             'category_name' => $m['business_sector'] ?? 'Đa ngành',
                             'province'      => $m['province'] ?? 'Toàn quốc'
                         ];
@@ -193,10 +208,13 @@ class TopBestPortalController extends BaseController
             $directoryPreviews = array_slice(TopBestData::getDirectoryProfiles(), 0, 6);
         }
 
+        $siteDesc = !empty($this->settings->site_description) ? esc($this->settings->site_description) : 'Tìm hiểu chi tiết về chương trình TOP BEST: 4 ví dụ quốc tế, 8 nhóm ngành, cơ chế TOP/BEST, hệ sinh thái VietKings x GAA x TOLUCK và lộ trình 12 tháng.';
+        $keywords = !empty($this->settings->keywords) ? esc($this->settings->keywords) : 'top best la gi, quy che top best, vietkings, gaa, toluck, tran kim hung, tieu chuan ky luc';
+
         $data = [
             'title'             => $isEn ? 'What is TOP BEST? — Complete Program Guide & Regulations' : 'TOP BEST Là Gì? — Toàn Bộ Định Nghĩa, Cơ Chế & Quy Chuẩn Pháp Lý',
-            'description'       => !empty($this->settings->site_description) ? esc($this->settings->site_description) : 'Tìm hiểu chi tiết về chương trình TOP BEST: 4 ví dụ quốc tế, 8 nhóm ngành, cơ chế TOP/BEST, hệ sinh thái VietKings x GAA x TOLUCK và lộ trình 12 tháng.',
-            'keywords'          => !empty($this->settings->keywords) ? esc($this->settings->keywords) : 'top best la gi, quy che top best, vietkings, gaa, toluck, tran kim hung, tieu chuan ky luc',
+            'description'       => $siteDesc,
+            'keywords'          => $keywords,
             'industries'        => TopBestData::getIndustries(),
             'directoryPreviews' => $directoryPreviews,
             'faqs'              => TopBestData::getFaqs(),
@@ -212,6 +230,7 @@ class TopBestPortalController extends BaseController
 
     public function events()
     {
+        $this->ensureInitialized();
         $isEn = ($this->activeLang->short_form ?? 'vi') == 'en';
         $data = [
             'title'           => $isEn ? 'Events & National Award Ceremonies | TOP BEST GLOBAL' : 'Sự Kiện & Lễ Vinh Danh Quốc Gia | TOP BEST GLOBAL',
@@ -229,6 +248,7 @@ class TopBestPortalController extends BaseController
 
     public function aboutUs()
     {
+        $this->ensureInitialized();
         $isEn = ($this->activeLang->short_form ?? 'vi') == 'en';
         $data = [
             'title'           => $isEn ? 'About Us — VietKings × GAA × TOLUCK Ecosystem' : 'Về Chúng Tôi — Hệ Sinh Thái VietKings × GAA × TOLUCK',
@@ -240,17 +260,18 @@ class TopBestPortalController extends BaseController
         ];
 
         return loadView('partials/_header', $data)
-            . loadView('topbest_about', $data)
+            . loadView('about', $data)
             . loadView('partials/_footer', $data);
     }
 
     public function contact()
     {
+        $this->ensureInitialized();
         $isEn = ($this->activeLang->short_form ?? 'vi') == 'en';
         $data = [
-            'title'           => $isEn ? 'Contact TOP BEST GLOBAL Organizing Committee' : 'Liên Hệ Ban Tổ Chức TOP BEST GLOBAL',
-            'description'     => 'Thông tin liên hệ Ban Thư ký Chương trình TOP BEST GLOBAL (TOLUCK × VietKings × GAA).',
-            'keywords'        => 'lien he top best, hotline gaa, ban thu ky vietkings, van phong toluck',
+            'title'           => $isEn ? 'Contact Program Secretariat — TOP BEST GLOBAL' : 'Liên Hệ Ban Thư Ký Chương Trình — TOP BEST GLOBAL',
+            'description'     => 'Thông tin liên hệ, đường dây nóng tiếp nhận hồ sơ và hỗ trợ doanh nghiệp của Ban Thư ký TOP BEST GLOBAL.',
+            'keywords'        => 'lien he top best, hotline vietkings, ban thu ky toluck',
             'generalSettings' => $this->generalSettings,
             'baseSettings'    => $this->settings,
             'userSession'     => getUserSession()
