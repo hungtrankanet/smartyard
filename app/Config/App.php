@@ -16,7 +16,7 @@ class App extends BaseConfig
      *
      * E.g., http://example.com/
      */
-    public string $baseURL = 'http://localhost:8080/';
+    public string $baseURL = 'http://127.0.0.1:3270/';
 
     public function __construct()
     {
@@ -193,7 +193,10 @@ class App extends BaseConfig
      *
      * @var array<string, string>
      */
-    public array $proxyIPs = [];
+    public array $proxyIPs = [
+        '127.0.0.1' => 'X-Forwarded-For',
+        '::1'       => 'X-Forwarded-For',
+    ];
 
     /**
      * --------------------------------------------------------------------------

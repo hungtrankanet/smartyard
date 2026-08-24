@@ -1,11 +1,11 @@
 services:
-  topbest:
+  smartyard:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: topbest
+    container_name: smartyard
     ports:
-      - "3240:80"
+      - "3270:80"
     volumes:
       - .:/var/www/html
       - media_uploads:/var/www/html/uploads
@@ -15,11 +15,12 @@ services:
       - APACHE_RUN_USER=www-data
       - APACHE_RUN_GROUP=www-data
       - CI_ENVIRONMENT=production
+      - app.baseURL=http://127.0.0.1:3270/
       - MEDIA_STORAGE_DRIVER=local
       - database.default.hostname=host.docker.internal
-      - database.default.database=topbestglobal_db
-      - database.default.username=tbglobal_user
-      - database.default.password=TpaLASHNb3Yw4GeC
+      - database.default.database=smartyard_db
+      - database.default.username=smartyard_user
+      - database.default.password=SmartYardPetro@2026
       - database.default.DBDriver=MySQLi
       - database.default.port=3306
     restart: unless-stopped

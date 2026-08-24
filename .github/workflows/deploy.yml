@@ -102,29 +102,29 @@ jobs:
             echo "==> Building and starting single topbest container..."
             docker compose up -d --build
 
-            echo "==> Container Status on Port 3240:"
+            echo "==> Container Status on Port 3270:"
             docker compose ps
 
-            echo "==> Configuring Nginx Reverse Proxy for topbestglobal.com (if supported)..."
+            echo "==> Configuring Nginx Reverse Proxy for smartyard (if supported)..."
             (
               if command -v nginx >/dev/null 2>&1; then
-                printf 'server {\n    listen 80;\n    server_name topbestglobal.com www.topbestglobal.com;\n\n    location / {\n        proxy_pass http://127.0.0.1:3240;\n        proxy_set_header Host $host;\n        proxy_set_header X-Real-IP $remote_addr;\n        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n        proxy_set_header X-Forwarded-Proto $scheme;\n        client_max_body_size 100M;\n    }\n}\n' > /tmp/topbestglobal_nginx.conf 2>/dev/null || true
+                printf 'server {\n    listen 80;\n    server_name smartyard.local;\n\n    location / {\n        proxy_pass http://127.0.0.1:3270;\n        proxy_set_header Host $host;\n        proxy_set_header X-Real-IP $remote_addr;\n        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n        proxy_set_header X-Forwarded-Proto $scheme;\n        client_max_body_size 100M;\n    }\n}\n' > /tmp/smartyard_nginx.conf 2>/dev/null || true
 
                 if [ -d "/etc/nginx/sites-available" ]; then
-                  sudo cp /tmp/topbestglobal_nginx.conf /etc/nginx/sites-available/topbestglobal.conf 2>/dev/null || cp /tmp/topbestglobal_nginx.conf /etc/nginx/sites-available/topbestglobal.conf 2>/dev/null || true
-                  sudo ln -sf /etc/nginx/sites-available/topbestglobal.conf /etc/nginx/sites-enabled/topbestglobal.conf 2>/dev/null || ln -sf /etc/nginx/sites-available/topbestglobal.conf /etc/nginx/sites-enabled/topbestglobal.conf 2>/dev/null || true
+                  sudo cp /tmp/smartyard_nginx.conf /etc/nginx/sites-available/smartyard.conf 2>/dev/null || cp /tmp/smartyard_nginx.conf /etc/nginx/sites-available/smartyard.conf 2>/dev/null || true
+                  sudo ln -sf /etc/nginx/sites-available/smartyard.conf /etc/nginx/sites-enabled/smartyard.conf 2>/dev/null || ln -sf /etc/nginx/sites-available/smartyard.conf /etc/nginx/sites-enabled/smartyard.conf 2>/dev/null || true
                 fi
                 if [ -d "/etc/nginx/conf.d" ]; then
-                  sudo cp /tmp/topbestglobal_nginx.conf /etc/nginx/conf.d/topbestglobal.conf 2>/dev/null || cp /tmp/topbestglobal_nginx.conf /etc/nginx/conf.d/topbestglobal.conf 2>/dev/null || true
+                  sudo cp /tmp/smartyard_nginx.conf /etc/nginx/conf.d/smartyard.conf 2>/dev/null || cp /tmp/smartyard_nginx.conf /etc/nginx/conf.d/smartyard.conf 2>/dev/null || true
                 fi
-                rm -f /tmp/topbestglobal_nginx.conf 2>/dev/null || true
+                rm -f /tmp/smartyard_nginx.conf 2>/dev/null || true
 
                 (sudo nginx -t 2>/dev/null && (sudo systemctl reload nginx 2>/dev/null || sudo systemctl restart nginx 2>/dev/null || sudo nginx -s reload 2>/dev/null || true)) || (nginx -t 2>/dev/null && (systemctl reload nginx 2>/dev/null || nginx -s reload 2>/dev/null || true)) || true
                 echo "==> Nginx Reverse Proxy step completed."
               fi
             ) || true
 
-            echo "==> Testing local HTTP response on port 3240..."
-            curl -s -I http://127.0.0.1:3240/ | head -n 5 || true
+            echo "==> Testing local HTTP response on port 3270..."
+            curl -s -I http://127.0.0.1:3270/ | head -n 5 || true
 
-            echo "==> TOP BEST GLOBAL Deployment Finished Successfully!"
+            echo "==> SMART YARD PETRO Deployment Finished Successfully!"
