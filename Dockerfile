@@ -43,13 +43,25 @@ LimitRequestFieldSize 65536\n\
     && echo "ServerName localhost" >> /etc/apache2/apache2.conf \
     && echo "HttpProtocolOptions Unsafe" >> /etc/apache2/apache2.conf
 
-# PHP config for production
+# PHP config for production & development
 RUN echo "upload_max_filesize = 64M" >> /usr/local/etc/php/conf.d/uploads.ini \
     && echo "post_max_size = 64M" >> /usr/local/etc/php/conf.d/uploads.ini \
-    && echo "memory_limit = 256M" >> /usr/local/etc/php/conf.d/uploads.ini
+    && echo "memory_limit = 256M" >> /usr/local/etc/php/conf.d/uploads.ini \
+    && echo "display_errors = On" >> /usr/local/etc/php/conf.d/uploads.ini \
+    && echo "display_startup_errors = On" >> /usr/local/etc/php/conf.d/uploads.ini \
+    && echo "error_reporting = E_ALL" >> /usr/local/etc/php/conf.d/uploads.ini
 
 # Set working directory
 WORKDIR /var/www/html
+
+# Ensure writable and uploads directories exist with proper permissions
+RUN mkdir -p /var/www/html/writable/cache \
+             /var/www/html/writable/logs \
+             /var/www/html/writable/session \
+             /var/www/html/writable/uploads \
+             /var/www/html/uploads \
+    && chown -R www-data:www-data /var/www/html/writable /var/www/html/uploads \
+    && chmod -R 777 /var/www/html/writable /var/www/html/uploads
 
 # Expose port 80
 EXPOSE 80

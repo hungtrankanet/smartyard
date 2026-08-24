@@ -14,7 +14,7 @@ services:
     environment:
       - APACHE_RUN_USER=www-data
       - APACHE_RUN_GROUP=www-data
-      - CI_ENVIRONMENT=production
+      - CI_ENVIRONMENT=development
       - app.baseURL=http://127.0.0.1:3270/
       - MEDIA_STORAGE_DRIVER=local
       - database.default.hostname=host.docker.internal
