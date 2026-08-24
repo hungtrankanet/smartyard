@@ -9,6 +9,7 @@
 </div><?= isAdmin() ? trans("admin_panel") : trans("dashboard"); ?>
 </a>
 </li>
+<?php endif; ?>
 <?php if (!empty(user()->member_id) || !isAdmin()): ?>
 <li>
 <a href="<?= langBaseUrl('member/dashboard'); ?>" class="dropdown-item" style="color: #1d4ed8; font-weight: 700;">

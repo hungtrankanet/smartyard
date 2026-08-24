@@ -35,6 +35,7 @@ $routes->group($adminPrefix, ['filter' => 'auth'], function ($routes) {
     $routes->post('nomination-delete-post', 'AdminNominationController::deletePost');
 
     // Jury
+    $routes->get('jury', 'AdminJuryController::evaluations');
     $routes->get('jury-evaluations', 'AdminJuryController::evaluations');
     $routes->get('jury-scoring/(:num)', 'AdminJuryController::scoring/$1');
     $routes->post('jury-submit-score-post', 'AdminJuryController::submitScorePost');
@@ -42,6 +43,7 @@ $routes->group($adminPrefix, ['filter' => 'auth'], function ($routes) {
     $routes->post('jury-assign-candidate-post', 'AdminJuryController::assignCandidatePost');
 
     // Voting Audit
+    $routes->get('voting-audit', 'Admin\AdminVotingAuditController::logs');
     $routes->get('voting-audit-logs', 'Admin\AdminVotingAuditController::logs');
     $routes->get('voting-results-summary', 'Admin\AdminVotingAuditController::resultsSummary');
     $routes->post('voting-recalculate-ranks-post', 'Admin\AdminVotingAuditController::recalculateRanksPost');

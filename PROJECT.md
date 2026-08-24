@@ -1,100 +1,71 @@
-# Project: Suntransco CodeIgniter 4 Smart Member Management Module
+# Project: TOP BEST GLOBAL — National Honors & Voting Portal
 
 ## Architecture
-- **Framework**: CodeIgniter 4 (v4.5.7), PHP 8.1+ / Apache / MySQL 8.0 (`suntransco_db`)
-- **Controller Pattern**: Extends `BaseAdminController`, uses `view('admin/includes/_header', $data)`, `view('admin/members/...', $data)`, `view('admin/includes/_footer')`.
-- **Auth & Permissions**: Uses CodeIgniter 4 `['filter' => 'auth']` and `checkPermission('members')` or admin auth checking.
-- **Data Models**:
-  - `App\Models\IndustryTypeModel` (table: `industry_types`)
-  - `App\Models\MemberModel` (table: `members`)
-  - `App\Models\MemberCardModel` (table: `member_cards`)
-  - `App\Models\MemberVerifyLogModel` (table: `member_verify_logs`)
-- **Services & Libraries**:
-  - `App\Libraries\OcrService`: Gemini 1.5 Flash Vision API integration via cURL + base64 image + JSON mode, fallback mock stub when `GEMINI_API_KEY` is not present.
-  - `App\Libraries\BusinessVerifyService`: Pure PHP cURL + DOM parsing / regex search signals for Google Maps & Fanpage, sequential with `sleep(2)` throttling.
-- **Frontend / UX**:
-  - FilePond JS via CDN (Drag & drop, multi-file, front/back grouping selector).
-  - 2-Column Responsive Layout for OCR confirmation (zoomable image on left, editable form on right).
-  - Bootstrap 3 / AdminLTE UI matching existing Varient admin theme.
-- **Scalability & Concurrency**:
-  - Max 500 lines per file constraint strictly enforced.
-  - DB index optimization on `industry_type_id`, `verify_status`, `member_type`, `next_verify_at`, `status`.
-  - Media decoupled under `public/uploads/cards/` (docker volume ready).
+- **Framework**: Pure CodeIgniter 4 (PHP 8.1/8.2, Apache, MariaDB)
+- **Deployment Targets**: Dual-mode (aaPanel direct `/www/wwwroot/topbestglobal` + Docker container `topbest` port 3240).
+- **Database**: MariaDB (`topbestglobal_db`, `tbglobal_user`, `TpaLASHNb3Yw4GeC`) with automatic host detection (`localhost` vs `host.docker.internal`).
+- **Media & Storage**: Decoupled cloud/local media uploads directory for horizontal scaling and load balancing.
+- **Frontend Design**: Gold Luxury / Deep Blue / Modern Clean palette (`#D4AF37`, `#0A192F`, `#0F2027`), fully responsive, high-prestige National Honors Portal.
+- **Voting Engine**: 70% Jury/Expert weighted + 30% Public/Community weighted scoring, multi-tier anti-fraud (Email OTP, Captcha, Rate Limit, Device Fingerprint, Audit Logs), real-time leaderboards & charts.
+- **Nomination & Hall of Fame**: 4-stage nomination review pipeline (Sơ khảo -> Thẩm định -> Chung khảo -> Trao giải), Hall of Fame directory, dynamic SVG Digital Award Badges & Certificates.
+- **Governance**: Strict <=500 lines per PHP file rule across all custom code.
 
 ## Feature Inventory
-| # | Feature | Description | Milestone | Source | Status |
-|---|---------|-------------|-----------|--------|--------|
-| 1 | DB Migration & Seeds | 4 tables (`industry_types`, `members`, `member_cards`, `member_verify_logs`) + 15 seed industries | M1 | ORIGINAL_REQUEST §R1 | DONE |
-| 2 | Models Layer | 4 CI4 Models with validation, relationships, and helper queries | M1 | ORIGINAL_REQUEST §R1 | DONE |
-| 3 | AI OCR Service | `OcrService.php` with Gemini 1.5 Flash Vision API & JSON stub fallback | M2 | ORIGINAL_REQUEST §R2 | DONE |
-| 4 | FilePond Batch Upload UI | `upload_cards.php` with FilePond CDN, front/back selection, sequential AJAX upload | M2 | ORIGINAL_REQUEST §R2 | DONE |
-| 5 | Confirm OCR & Save Member | `confirm_ocr.php` 2-column zoom UI, industry/type dropdowns, save with next_verify_at = NOW()+6m | M3 | ORIGINAL_REQUEST §R3 | DONE |
-| 6 | Headless Business Verification | `BusinessVerifyService.php` with Google Maps & Fanpage crawler, sequential sleep(2), verify logs | M4 | ORIGINAL_REQUEST §R4 | DONE |
-| 7 | Admin CRUD Views & UI | `index.php` (20 pagination, filters, search), `form.php` (create/edit), `detail.php` (timeline & verify button) | M5 | ORIGINAL_REQUEST §R5 | DONE |
-| 8 | Routing & Sidebar Navigation | Routes in `Routes.php` with auth filter, sidebar menu in `_header.php` | M5 | ORIGINAL_REQUEST §R7 | DONE |
-| 9 | Cron Job & Email Alert | `CronController::verifyMembers()`, 6-month scheduling, closed alert email, token-secured route | M6 | ORIGINAL_REQUEST §R6 | DONE |
-| 10 | E2E Automated Test Suite | Comprehensive test suite covering all tiers and acceptance criteria | M_E2E | ORIGINAL_REQUEST §Verification | DONE |
+| # | Feature | Description | Milestone | Source |
+|---|---------|-------------|-----------|--------|
+| 1 | R1.1 National Honors Branding | Gold Luxury / Deep Blue luxury theme, header, footer, hero banners, honors navigation | M1 | ORIGINAL_REQUEST §R1 |
+| 2 | R1.2 Honors Portal Controller & Views | `/honors`, `/honors/categories`, `/honors/seasons`, `/honors/about` views & controller | M1 | ORIGINAL_REQUEST §R1 |
+| 3 | R1.3 View Syntax & UI Remediation | Fix syntax errors in `_nav_profile.php`, `voting/list.php`, `voting/detail.php` | M1 | Survey Finding |
+| 4 | R2.1 Advanced Voting Engine Core | `VotingEngineService`, `HybridScoringService` 70/30 calculation, `VotingEngineController` | Completed / M3 | ORIGINAL_REQUEST §R2 |
+| 5 | R2.2 Anti-Fraud & OTP Security | `AntiFraudSecurityService`, `OtpMailerService`, rate limiting, device fingerprinting, audit logs | Completed / M3 | ORIGINAL_REQUEST §R2 |
+| 6 | R2.3 Real-time Leaderboards & Charts | Category rankings, vote percentage bars, real-time public & jury breakdown | Completed / M1 | ORIGINAL_REQUEST §R2 |
+| 7 | R3.1 Nomination 4-Stage Workflow | `NominationWorkflowService`, `NominationController`, submission form & status tracking | Completed / M2 | ORIGINAL_REQUEST §R3 |
+| 8 | R3.2 Hall of Fame & Digital Certificates | `HallOfFameController`, `CertificateController`, `DigitalCertificateService` SVG badge generation | Completed / M1 | ORIGINAL_REQUEST §R3 |
+| 9 | R3.3 Jury Evaluation Portal | `JuryEvaluationController`, `jury/index.php`, `jury/evaluate.php` scoring interfaces | M1 | ORIGINAL_REQUEST §R3 |
+| 10 | R3.4 Admin CMS Management | Admin seasons, categories, nominations review, jury management, and sidebar menu | M2 | ORIGINAL_REQUEST §R3 |
+| 11 | R4.1 MariaDB Dual Compatibility | aaPanel `localhost` & Docker `host.docker.internal`, credentials `topbestglobal_db` | Completed / M3 | ORIGINAL_REQUEST §R4 |
+| 12 | R4.2 Bootstrapping & Auto-Detection | Auto-detect uninitialized DB in `Globals.php` and redirect to `/install/welcome.php` | Completed / M3 | ORIGINAL_REQUEST §R4 |
+| 13 | R4.3 SQL Schema Synchronization | Complete 17-table schema synchronized in `install/sql/install_varient.sql` | Completed / M3 | ORIGINAL_REQUEST §R4 |
+| 14 | R5.1 Code Governance (<=500 lines) | 100% PHP files under 500 lines enforced by automated gatekeeper | M3 | ORIGINAL_REQUEST §R5 |
+| 15 | R5.2 225/225 E2E Automated Test Suite | Comprehensive 8-suite automated test harness passing 100% | M3 | ORIGINAL_REQUEST §Acceptance |
 
 ## Milestones
 | # | Name | Scope | Dependencies | Status |
 |---|------|-------|-------------|--------|
-| 1 | M1_Database_Models | 4 Migration files, 15 Industry seeds, 4 Model classes | none | DONE |
-| 2 | M2_AI_OCR_Upload | `OcrService.php`, `upload_cards.php`, AJAX upload controller | M1 | DONE |
-| 3 | M3_Confirm_OCR_Save | `confirm_ocr.php`, Member creation/saving & card attachment | M1, M2 | DONE |
-| 4 | M4_Business_Verification | `BusinessVerifyService.php`, "Xác Minh Ngay" manual verify endpoint | M1 | DONE |
-| 5 | M5_Admin_CRUD_Nav | `MemberController.php`, `index.php`, `form.php`, `detail.php`, `Routes.php`, `_header.php` | M1, M2, M3, M4 | DONE |
-| 6 | M6_Cron_Job | `CronController::verifyMembers()`, token security, email alert | M1, M4 | DONE |
-| 7 | M_E2E_Final_Suite | Automated test suite execution, 100% pass verification | M1, M2, M3, M4, M5, M6 | DONE |
+| 1 | M1: Portal Frontend Rebranding & UI Polish | Gold Luxury theme in `_header.php`, `index.php`, `services.php`, `about.php`, `HonorsPortalController.php`, `jury/` views, fix view syntax | None | IN_PROGRESS |
+| 2 | M2: Admin CMS Modules & Navigation | `AdminAwardSeasonController`, `AdminNominationController`, `AdminJuryController`, admin views, sidebar navigation | M1 | PLANNED |
+| 3 | M3: Quality Gate, E2E Verification & Forensic Audit | Run 225/225 E2E tests, PHP syntax lint across all 500+ files, line count gatekeeper, dual Docker/aaPanel validation, Reviewer & Challenger verification, Forensic Audit | M1, M2 | PLANNED |
 
 ## Interface Contracts
-### `App\Libraries\OcrService`
-- `extractBusinessCard(string|array $imagePaths): array`
-  - Input: single image path or `['front' => string, 'back' => string]`
-  - Output: `['company_name' => '', 'tax_code' => '', 'address' => '', 'city' => '', 'website' => '', 'fanpage' => '', 'phone' => '', 'email' => '', 'representative_name' => '', 'position' => '']`
+### Public Portal ↔ Voting Engine
+- `VotingEngineController::index()`, `VotingEngineController::category($slug)`, `VotingEngineController::candidate($slug)`
+- `VotingApiController::submitVote()`: POST `{candidate_id, email, otp, captcha, fingerprint}` -> JSON `{status, message, total_votes, weighted_score}`
+- `VotingApiController::sendOtp()`: POST `{email}` -> JSON `{status, message, token_id}`
 
-### `App\Libraries\BusinessVerifyService`
-- `verifyMember(int $memberId): array`
-  - Runs Google Maps check & Fanpage check sequentially with `sleep(2)`.
-  - Logs results to `member_verify_logs`.
-  - Updates `members.verify_status` ('verified' | 'unverified' | 'failed') and `members.last_verified_at`.
-  - Returns `['status' => 'verified'|'unverified'|'failed', 'maps_result' => string, 'fanpage_result' => string, 'details' => array]`
-- `verifyBatch(array $memberIds): array`
-  - Iterates through members sequentially with `sleep(2)` between checks.
+### Nomination & Review Workflow
+- `NominationWorkflowService::submitNomination($data)` -> creates nomination record in status `submitted` (Sơ khảo)
+- `NominationWorkflowService::advanceStage($id, $nextStage)`: `submitted` -> `preliminary` -> `appraisal` -> `final` -> `awarded`
+- `JuryEvaluationService::recordScore($juryId, $nominationId, $criteriaScores, $comment)` -> updates jury weighted score (70%)
 
-### `App\Controllers\CronController::verifyMembers()`
-- Query parameter: `?token={CRON_SECRET_TOKEN}` (default fallback token configured in `.env` / app config)
-- Scans `members` where `next_verify_at <= NOW()` AND `status = 1`
-- Runs `BusinessVerifyService`, updates `next_verify_at = NOW() + 6 months`
-- Sends alert email if result indicates `closed`
+### Certificate & Hall of Fame
+- `DigitalCertificateService::generateSvgBadge($awardTitle, $winnerName, $year, $category)` -> Returns dynamic high-res SVG badge
+- `CertificateController::verify($verifyCode)` -> Renders public certificate verification page with cryptographic hash
 
 ## Code Layout
-- `app/Database/Migrations/`
-  - `2026-08-16-000001_CreateIndustryTypes.php`
-  - `2026-08-16-000002_CreateMembers.php`
-  - `2026-08-16-000003_CreateMemberCards.php`
-  - `2026-08-16-000004_CreateMemberVerifyLogs.php`
-- `app/Models/`
-  - `IndustryTypeModel.php`
-  - `MemberModel.php`
-  - `MemberCardModel.php`
-  - `MemberVerifyLogModel.php`
-- `app/Libraries/`
-  - `OcrService.php`
-  - `BusinessVerifyService.php`
-- `app/Controllers/`
-  - `MemberController.php`
-  - `CronController.php` (with `verifyMembers()`)
-- `app/Views/admin/members/`
-  - `index.php`
-  - `form.php`
-  - `upload_cards.php`
-  - `confirm_ocr.php`
-  - `detail.php`
-- `app/Views/admin/includes/`
-  - `_header.php` (sidebar navigation)
-- `app/Views/email/`
-  - `email_business_closed_alert.php`
-- `app/Config/`
-  - `Routes.php` (admin routes & cron route)
-- `tests/`
-  - `test_member_module.php`
+- `app/Controllers/HonorsPortalController.php`: Public portal controller (<500 lines).
+- `app/Controllers/VotingEngineController.php`: Public voting & candidate pages.
+- `app/Controllers/VotingApiController.php`: AJAX API for voting, OTP, leaderboard.
+- `app/Controllers/NominationController.php`: Public nomination submission & tracking.
+- `app/Controllers/HallOfFameController.php`: Hall of fame showcase & search.
+- `app/Controllers/CertificateController.php`: Digital certificate viewer & verification.
+- `app/Controllers/JuryEvaluationController.php`: Jury evaluation portal.
+- `app/Controllers/AdminAwardSeasonController.php`: Admin award season management.
+- `app/Controllers/AdminNominationController.php`: Admin nomination review & scoring.
+- `app/Controllers/AdminJuryController.php`: Admin jury judge account & assignment management.
+- `app/Services/VotingEngineService.php`: Core voting business logic.
+- `app/Services/HybridScoringService.php`: 70% Jury / 30% Public scoring algorithm.
+- `app/Services/AntiFraudSecurityService.php`: OTP, rate limit, device fingerprint security.
+- `app/Services/NominationWorkflowService.php`: 4-stage review workflow engine.
+- `app/Services/DigitalCertificateService.php`: SVG award badge & certificate generator.
+- `tests/run_all_e2e_tests.php`: 225/225 automated E2E test runner.
+- `tests/gatekeeper_500_lines.php`: 500-line limit validator.

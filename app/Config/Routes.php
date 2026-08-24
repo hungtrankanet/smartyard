@@ -19,6 +19,7 @@ $routeModules = [
     'AdminRoutes.php',       // Admin CMS (posts, categories, widgets, settings, users)
     'ApiRoutes.php',         // REST API & tracking endpoints
     'PostRoutes.php',        // Static action POST mappings
+    'SmartYardRoutes.php',   // Smart Yard Petro: 2D Map, 3D Warehouse, RBAC, Inventory, AI & Dashboard
     'DynamicRoutes.php',     // Multi-language dynamic routing & fallback catch-alls
 ];
 

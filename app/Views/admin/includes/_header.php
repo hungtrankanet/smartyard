@@ -188,8 +188,25 @@
                                 <?php endif; ?>
                             </ul>
                         </li>
-                    <?php endif;
-                    if (hasPermission('categories')): ?>
+                    <?php endif; ?>
+                    <li class="treeview<?php isAdminNavActive(['award-seasons', 'add-award-season', 'edit-award-season', 'award-categories', 'add-award-category', 'edit-award-category', 'nominations', 'nomination-dossier', 'jury-evaluations', 'jury-scoring', 'jury-members', 'jury', 'voting-audit', 'voting-audit-logs', 'voting-results-summary']); ?>">
+                        <a href="#"><i class="fa fa-trophy" style="color: #D4AF37;"></i> <span>Vinh Danh &amp; Bình Chọn (TOP BEST GLOBAL)</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                        <ul class="treeview-menu">
+                            <li class="<?= in_array(getSegmentValue(2), ['award-seasons', 'add-award-season', 'edit-award-season', 'award-categories', 'add-award-category', 'edit-award-category']) ? 'active' : ''; ?>">
+                                <a href="<?= adminUrl('award-seasons'); ?>"><i class="fa fa-calendar-check-o"></i> Mùa giải &amp; Hạng mục</a>
+                            </li>
+                            <li class="<?= in_array(getSegmentValue(2), ['nominations', 'nomination-dossier']) ? 'active' : ''; ?>">
+                                <a href="<?= adminUrl('nominations'); ?>"><i class="fa fa-file-text-o"></i> Hồ sơ Đề cử</a>
+                            </li>
+                            <li class="<?= in_array(getSegmentValue(2), ['jury', 'jury-evaluations', 'jury-scoring', 'jury-members']) ? 'active' : ''; ?>">
+                                <a href="<?= adminUrl('jury-evaluations'); ?>"><i class="fa fa-gavel"></i> Hội đồng Giám khảo</a>
+                            </li>
+                            <li class="<?= in_array(getSegmentValue(2), ['voting-audit', 'voting-audit-logs', 'voting-results-summary']) ? 'active' : ''; ?>">
+                                <a href="<?= adminUrl('voting-audit-logs'); ?>"><i class="fa fa-shield"></i> Kiểm toán &amp; Log Bình chọn</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <?php if (hasPermission('categories')): ?>
                         <li class="nav-categories"><a href="<?= adminUrl('categories'); ?>"><i class="fa fa-folder-open" aria-hidden="true"></i><span><?= trans("categories"); ?></span></a></li>
                     <?php endif;
                     if (hasPermission('widgets')): ?>

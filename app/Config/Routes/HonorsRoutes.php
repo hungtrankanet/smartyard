@@ -9,6 +9,8 @@ $routes->get('honors', 'HonorsPortalController::index');
 $routes->get('honors.html', 'HonorsPortalController::index');
 $routes->get('honors/categories', 'HonorsPortalController::categories');
 $routes->get('honors/category/(:any)', 'HonorsPortalController::categoryDetail/$1');
+$routes->get('honors/seasons', 'HonorsPortalController::seasons');
+$routes->get('honors/seasons/(:num)', 'HonorsPortalController::seasonDetail/$1');
 $routes->get('honors/about', 'HonorsPortalController::about');
 $routes->get('honors/timeline', 'HonorsPortalController::timeline');
 $routes->get('honors/press', 'HonorsPortalController::press');
