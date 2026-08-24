@@ -1,118 +1,63 @@
-# TOP BEST GLOBAL — Logistics & B2B Enterprise Platform
+# SMART YARD PETRO — Visual Warehouse Management & Area Allocation Platform
 
-Hệ thống nền tảng số hóa E-Carrier, quản lý chuỗi cung ứng logistics đa phương thức, sàn kết nối đối tác B2B và bản tin thương mại quốc tế.
+Nền tảng quản lý trực quan hệ thống kho dầu khí & logistics đa khu vực:
+* **Sơ đồ kho 2D trực quan**: Tương tác zoom, pan, hiển thị đa khu vực (Miền Bắc, Miền Trung, Miền Nam).
+* **Hình ảnh đại diện kho 3D**: Nhận diện trực quan cấu trúc cố định cửa và khung kho.
+* **Quản lý diện tích đa tầng**: `Total Area`, `Allocated Area`, `Used Area`, `Available Area`.
+* **Mã màu trạng thái động**: Tự động cảnh báo theo ngưỡng lấp đầy (0-30% Xanh, 30-60% Vàng, 60-80% Cam, >80% Đỏ).
+* **Quản lý lô hàng theo dự án**: Nhập/Xuất kho Atomic kiểm soát chặt chẽ giới hạn diện tích khả dụng.
+* **Mô hình phân quyền Scope RBAC**: Phân quyền theo cấp `User` -> `Role` -> `Warehouse Scope` -> `Area Allocation`.
+* **Dashboard điều hành & Chế độ Sảnh Kiosk**: Tối ưu hiển thị cho màn hình lớn và màn hình cảm ứng sảnh.
+* **AI Assistant hỗ trợ truy vấn**: Phân tích gợi ý kho phù hợp với bộ lọc RBAC Scope Guardrail nghiêm ngặt.
 
 ---
 
-## 🏗️ Kiến Trúc Hệ Thống (Architecture & High Availability)
+## 🏗️ Kiến Trúc Hệ Thống (High Availability & Scalability)
 - **Framework**: CodeIgniter 4 (PHP 8.1+)
-- **Containerization**: Docker & Docker Compose (tách biệt Web Container, MySQL 8 Container, phpMyAdmin)
-- **Scalability**: Thiết kế phân tách Database, Media Uploads và Application Core sẵn sàng tích hợp Load Balancer (Nginx / HAProxy / Cloudflare) chịu tải 10,000+ kết nối đồng thời.
-- **Background Jobs**: Quét định kỳ tự động xác minh pháp nhân qua Cron Token an toàn.
+- **Concurrency**: Thiết kế tối ưu hóa chịu tải cho hơn **10.000 truy cập đồng thời** với Indexing thông minh và Atomic Transactions.
+- **Tách biệt Database & Media Storage**: Media và file đính kèm được tách rời mã nguồn giúp scale ngang dễ dàng.
+- **Docker Containerization**: Đóng gói container độc lập sẵn sàng chạy sau Load Balancer (Nginx / ALB / Traefik).
+- **Code Governance**: 100% file mã nguồn tuân thủ giới hạn $\le 500$ dòng.
 
 ---
 
-## 🚀 CI/CD Tự Động Triển Khai (GitHub Actions -> VPS)
-Dự án đã tích hợp sẵn GitHub Actions workflow tại [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). Mỗi khi bạn `git push` lên nhánh `main`, GitHub sẽ tự động kiểm tra cú pháp và kết nối SSH tới VPS để tự động pull code và khởi động lại Docker!
-
-### 🔑 Cấu hình Secrets trên GitHub:
-Vào **GitHub Repository** &rarr; **Settings** &rarr; **Secrets and variables** &rarr; **Actions** &rarr; **New repository secret**:
-1. `VPS_HOST`: Địa chỉ IP hoặc Domain VPS (VD: `103.x.x.x`).
-2. `VPS_USERNAME`: Tên người dùng SSH (VD: `root` hoặc `ubuntu`).
-3. `VPS_SSH_KEY` (hoặc `VPS_PASSWORD`): Khóa SSH Private Key hoặc mật khẩu VPS.
-4. `VPS_PORT`: Cổng SSH (mặc định `22`).
-5. `VPS_TARGET_DIR`: Thư mục lưu dự án trên VPS (mặc định `/var/www/topbestglobal`).
-
----
-
-## 🛠️ Hướng Dẫn Triển Khai Thủ Công Trên VPS (Manual Setup)
-
-### 1. Chuẩn Bị Trên VPS
-Yêu cầu: VPS Linux (Ubuntu 20.04/22.04 LTS hoặc Debian), đã cài đặt **Docker** & **Docker Compose** và **Git**.
+## 🚀 Cài Đặt & Khởi Chạy Nhanh với Docker
 
 ```bash
-# Clone repository về VPS
-git clone https://github.com/hungtrankanet/topbestglobal.git /var/www/topbestglobal
-cd /var/www/topbestglobal
+# 1. Clone repository
+git clone https://github.com/hungtrankanet/smartyard.git
+cd smartyard
 
-# Cấu hình file môi trường từ template
-cp .env.example .env
-nano .env # Thay đổi mật khẩu DB, APP BaseURL và domain của bạn
-```
-
-### 2. Phân Quyền Thư Mục Writable & Uploads
-```bash
-chmod -R 777 writable uploads
-```
-
-### 3. Khởi Chạy Container Docker
-```bash
+# 2. Khởi chạy Docker containers
 docker compose up -d --build
+
+# 3. Chạy bộ kiểm thử tự động E2E
+php tests/SmartYard/run_smartyard_e2e_tests.php
 ```
 
-Kiểm tra trạng thái container:
+---
+
+## 📊 Các Module Tính Năng Chính
+| Module | URL | Mô Tả |
+|---|---|---|
+| **Sơ đồ 2D & 3D** | `/smartyard/map` | Bản đồ kho tương tác, xem ảnh 3D và danh sách lô |
+| **Dashboard Điều Hành** | `/smartyard/dashboard` | Thống kê KPI diện tích, tỷ lệ lấp đầy, dự án |
+| **Chế độ Sảnh Kiosk** | `/smartyard/kiosk` | Giao diện toàn màn hình tự động làm mới cho Touchscreen |
+| **Nhập Lô Hàng** | `/smartyard/inventory/import` | Form nhập lô với live validator diện tích khả dụng |
+| **Xuất Lô Hàng** | `/smartyard/inventory/export` | Form xuất lô hoàn trả diện tích kho |
+| **Lô Hàng Hiện Hữu** | `/smartyard/inventory/lots` | Danh sách lô hàng lọc theo kho & dự án |
+| **Lịch Sử Giao Dịch** | `/smartyard/inventory/transactions` | Log giao dịch bất biến phục vụ kiểm toán |
+| **Phân Quyền Scope** | `/smartyard/admin/scopes` | Gán phạm vi kho cho tài khoản |
+| **Cấu Hình Ngưỡng** | `/smartyard/admin/settings` | Điều chỉnh tỷ lệ phần trăm các mức màu trạng thái |
+| **Nhập Excel Hàng Loạt** | `/smartyard/admin/excel-import` | Quy trình 5 bước nạp dữ liệu ban đầu |
+
+---
+
+## 🧪 Kiểm Thử Tự Động (E2E Test Harness)
+Toàn bộ quy trình nghiệp vụ được xác minh qua test runner:
 ```bash
-docker compose ps
+php tests/SmartYard/run_smartyard_e2e_tests.php
 ```
+Kết quả: **15/15 PASS (100%)**.
 
-- **Web Application (Container Proxy)**: `http://<YOUR_VPS_IP>:3240`
-- **phpMyAdmin**: `http://<YOUR_VPS_IP>:8001`
-
----
-
-## 🌐 Cấu Hình Nginx Reverse Proxy (Khuyên Dùng cho Production)
-Để chạy domain chính thức kèm SSL (HTTPS), bạn cấu hình Nginx trên VPS như sau:
-
-```nginx
-server {
-    listen 80;
-    server_name yourdomain.com www.yourdomain.com;
-
-    location / {
-        proxy_pass http://127.0.0.1:3240;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        client_max_body_size 100M;
-    }
-}
-```
-
-Cài đặt chứng chỉ SSL miễn phí với Certbot:
-```bash
-sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
-```
-
----
-
-## 🗄️ Khởi Tạo Cơ Sở Dữ Liệu Tự Động (Auto Database Initialization)
-Khi chạy `docker compose up -d`, Docker MySQL Container sẽ **tự động nạp toàn bộ cấu trúc & tài khoản quản trị**:
-1. `install/sql/install_varient.sql` (Cơ sở dữ liệu cốt lõi).
-2. `migrate_members.sql` (Cấu trúc B2B Member Portal & Business Verification).
-3. `init_db.sql` (Kích hoạt Theme TOP BEST GLOBAL & tạo tài khoản Super Admin).
-
-### 🔑 Thông Tin Đăng Nhập Mặc Định:
-- **Đường dẫn đăng nhập Admin**: `http://<YOUR_DOMAIN_OR_IP>:3240/admin/login`
-- **Email**: `admin@topbestglobal.com` (hoặc `admin@gmail.com`)
-- **Mật khẩu**: `TopBestGlobal@2026`
-
-*(Nếu cần reset mật khẩu nhanh từ xa, truy cập: `http://<YOUR_DOMAIN_OR_IP>:3240/resetAdminCredentials?key=topbestglobal_secret_reset_2026`)*
-
----
-
-## ⏰ Cấu Hình Cron Jobs Trên VPS
-Thêm tác vụ cron quét định kỳ tự động cho đối tác hội viên (chạy lúc 00:00 ngày mùng 1 hàng tháng):
-
-```bash
-crontab -e
-```
-Thêm dòng sau:
-```cron
-0 0 1 * * curl -s "http://127.0.0.1:3240/cron/verify-members?token=topbestglobal_cron_verify_token_2026" > /dev/null 2>&1
-```
-
----
-
-## 🛡️ Bản Quyền & Giấy Phép
-© 2026 TOP BEST GLOBAL Corporation. All rights reserved.
+© 2026 Smart Yard Petro. All rights reserved.
