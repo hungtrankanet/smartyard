@@ -21,13 +21,14 @@ class App extends BaseConfig
     public function __construct()
     {
         parent::__construct();
-        if (!empty($_SERVER['HTTP_HOST'])) {
+        $host = $_SERVER['HTTP_X_FORWARDED_HOST'] ?? $_SERVER['HTTP_HOST'] ?? null;
+        if (!empty($host)) {
             $isHttps = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ||
                        (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ||
                        (isset($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] === 'on') ||
-                       (!empty($_SERVER['HTTP_HOST']) && strpos($_SERVER['HTTP_HOST'], 'toluck.com.vn') !== false);
+                       (!empty($host) && strpos($host, 'toluck.com.vn') !== false);
             $scheme = $isHttps ? 'https' : 'http';
-            $this->baseURL = $scheme . '://' . $_SERVER['HTTP_HOST'] . '/';
+            $this->baseURL = $scheme . '://' . $host . '/';
         }
     }
 

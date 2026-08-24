@@ -5,10 +5,10 @@
  * @var \CodeIgniter\Router\RouteCollection $routes
  */
 
-$routes->get('/', 'TopBestPortalController::index');
-$routes->get('index.php', 'TopBestPortalController::index');
-$routes->get('index.html', 'TopBestPortalController::index');
-$routes->get('index', 'TopBestPortalController::index');
+$routes->get('/', 'SmartYard\SmartYardMapController::index');
+$routes->get('index.php', 'SmartYard\SmartYardMapController::index');
+$routes->get('index.html', 'SmartYard\SmartYardMapController::index');
+$routes->get('index', 'SmartYard\SmartYardMapController::index');
 
 $routes->get('top-best-la-gi', 'TopBestPortalController::aboutTopBest');
 $routes->get('bang-xep-hang', 'TopBestDirectoryController::index');
