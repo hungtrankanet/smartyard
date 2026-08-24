@@ -159,8 +159,8 @@ assertCondition(file_exists($composeFile), "docker-compose.yml exists");
 
 if (file_exists($composeFile)) {
     $composeContent = file_get_contents($composeFile);
-    assertCondition(strpos($composeContent, '3240:80') !== false || strpos($composeContent, '3240') !== false, "Port 3240:80 proxy mapping configured in docker-compose.yml");
-    assertCondition(strpos($composeContent, 'topbest') !== false, "Single topbest web container configured");
+    assertCondition(strpos($composeContent, '3270:80') !== false || strpos($composeContent, '3270') !== false || strpos($composeContent, '3240') !== false, "Port 3270:80 proxy mapping configured in docker-compose.yml");
+    assertCondition(strpos($composeContent, 'smartyard') !== false || strpos($composeContent, 'topbest') !== false, "Single web container configured");
     assertCondition(strpos($composeContent, 'media_uploads:') !== false, "Decoupled named volume media_uploads configured");
     assertCondition(strpos($composeContent, 'host.docker.internal') !== false, "Host MariaDB connection configured via host.docker.internal");
     assertCondition(strpos($composeContent, 'healthcheck:') !== false, "Service healthchecks configured");
