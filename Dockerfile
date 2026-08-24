@@ -19,9 +19,15 @@ RUN apt-get update && apt-get install -y \
 # Enable Apache modules
 RUN a2enmod rewrite headers
 
-# Apache config: allow .htaccess overrides, set ServerName and document root
-RUN echo '<VirtualHost *:80>\n\
+# Apache config: allow .htaccess overrides, set ServerName, relaxed protocol options for Docker proxy
+RUN echo 'ServerName localhost\n\
+HttpProtocolOptions Unsafe\n\
+LimitRequestLine 65536\n\
+LimitRequestFieldSize 65536\n\
+\n\
+<VirtualHost *:80>\n\
     ServerName localhost\n\
+    ServerAlias *\n\
     DocumentRoot /var/www/html\n\
     DirectoryIndex index.php index.html\n\
     AcceptPathInfo On\n\
@@ -34,7 +40,8 @@ RUN echo '<VirtualHost *:80>\n\
     # Pass Authorization header for API\n\
     SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1\n\
 </VirtualHost>' > /etc/apache2/sites-available/000-default.conf \
-    && echo "ServerName localhost" >> /etc/apache2/apache2.conf
+    && echo "ServerName localhost" >> /etc/apache2/apache2.conf \
+    && echo "HttpProtocolOptions Unsafe" >> /etc/apache2/apache2.conf
 
 # PHP config for production
 RUN echo "upload_max_filesize = 64M" >> /usr/local/etc/php/conf.d/uploads.ini \

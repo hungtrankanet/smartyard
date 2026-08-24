@@ -2,14 +2,17 @@
 
 use \Config\Globals;
 
-if (strpos($_SERVER['REQUEST_URI'], '/index.php') !== false) {
-    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http';
-    $host = $_SERVER['HTTP_HOST'];
+if (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], '/index.php') !== false) {
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ||
+                (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ? 'https' : 'http';
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
     $uri = str_replace('/index.php', '', $_SERVER['REQUEST_URI']);
+    if (empty($uri)) $uri = '/';
 
     $newUrl = $protocol . '://' . $host . $uri;
+    $currentUrl = $protocol . '://' . $host . $_SERVER['REQUEST_URI'];
 
-    if ($newUrl !== ($protocol . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'])) {
+    if ($newUrl !== $currentUrl && !headers_sent()) {
         header('Location: ' . $newUrl, true, 301);
         exit();
     }
