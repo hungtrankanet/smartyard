@@ -19,17 +19,22 @@ RUN apt-get update && apt-get install -y \
 # Enable Apache modules
 RUN a2enmod rewrite headers
 
-# Apache config: allow .htaccess overrides and set document root
+# Apache config: allow .htaccess overrides, set ServerName and document root
 RUN echo '<VirtualHost *:80>\n\
+    ServerName localhost\n\
     DocumentRoot /var/www/html\n\
+    DirectoryIndex index.php index.html\n\
+    AcceptPathInfo On\n\
+    AllowEncodedSlashes On\n\
     <Directory /var/www/html>\n\
         AllowOverride All\n\
         Require all granted\n\
-        Options Indexes FollowSymLinks\n\
+        Options -Indexes +FollowSymLinks\n\
     </Directory>\n\
     # Pass Authorization header for API\n\
     SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1\n\
-</VirtualHost>' > /etc/apache2/sites-available/000-default.conf
+</VirtualHost>' > /etc/apache2/sites-available/000-default.conf \
+    && echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # PHP config for production
 RUN echo "upload_max_filesize = 64M" >> /usr/local/etc/php/conf.d/uploads.ini \

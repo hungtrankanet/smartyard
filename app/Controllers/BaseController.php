@@ -78,8 +78,15 @@ abstract class BaseController extends Controller
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
 
-        // prevent iframe & upgrade insecure requests
-        $this->response->setHeader('Content-Security-Policy', "upgrade-insecure-requests; frame-ancestors 'none';");
+        // prevent iframe & upgrade insecure requests conditionally
+        $isHttps = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ||
+                   (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ||
+                   (isset($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] === 'on');
+        $csp = "frame-ancestors 'none';";
+        if ($isHttps) {
+            $csp = "upgrade-insecure-requests; " . $csp;
+        }
+        $this->response->setHeader('Content-Security-Policy', $csp);
 
         // Preload any models, libraries, etc, here.
         $this->session = \Config\Services::session();
