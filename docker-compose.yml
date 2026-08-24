@@ -18,9 +18,9 @@ services:
       - app.baseURL=http://127.0.0.1:3270/
       - MEDIA_STORAGE_DRIVER=local
       - database.default.hostname=host.docker.internal
-      - database.default.database=smartyard_db
-      - database.default.username=smartyard_user
-      - database.default.password=SmartYardPetro@2026
+      - database.default.database=smartyard
+      - database.default.username=smartyard_admin
+      - database.default.password=RTziYhM8Rwi5fMra
       - database.default.DBDriver=MySQLi
       - database.default.port=3306
     restart: unless-stopped

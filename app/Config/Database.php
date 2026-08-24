@@ -5,7 +5,7 @@ namespace Config;
 use CodeIgniter\Database\Config;
 
 /**
- * Database Configuration - TOP BEST GLOBAL
+ * Database Configuration - SMART YARD PETRO
  */
 class Database extends Config
 {
@@ -27,9 +27,9 @@ class Database extends Config
     public array $default = [
         'DSN'          => '',
         'hostname'     => 'localhost',
-        'username'     => 'tbglobal_user',
-        'password'     => 'TpaLASHNb3Yw4GeC',
-        'database'     => 'topbestglobal_db',
+        'username'     => 'smartyard_admin',
+        'password'     => 'RTziYhM8Rwi5fMra',
+        'database'     => 'smartyard',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
         'pConnect'     => false,
@@ -63,9 +63,9 @@ class Database extends Config
         }
 
         $this->default['hostname'] = $configuredHost;
-        $this->default['database'] = env('database.default.database', $this->default['database'] ?: 'topbestglobal_db');
-        $this->default['username'] = env('database.default.username', $this->default['username'] ?: 'tbglobal_user');
-        $this->default['password'] = env('database.default.password', $this->default['password'] ?: 'TpaLASHNb3Yw4GeC');
+        $this->default['database'] = env('database.default.database', $this->default['database'] ?: 'smartyard');
+        $this->default['username'] = env('database.default.username', $this->default['username'] ?: 'smartyard_admin');
+        $this->default['password'] = env('database.default.password', $this->default['password'] ?: 'RTziYhM8Rwi5fMra');
         $this->default['port']     = (int) env('database.default.port', $this->default['port'] ?: 3306);
 
         // Automatic connection failovers for hybrid Docker/Host environments
@@ -76,15 +76,7 @@ class Database extends Config
                 'password' => $this->default['password'],
                 'database' => $this->default['database'],
                 'DBDriver' => 'MySQLi',
-                'port'     => 3306,
-            ],
-            [
-                'hostname' => '172.17.0.1',
-                'username' => $this->default['username'],
-                'password' => $this->default['password'],
-                'database' => $this->default['database'],
-                'DBDriver' => 'MySQLi',
-                'port'     => 3306,
+                'port'     => $this->default['port'],
             ],
             [
                 'hostname' => '127.0.0.1',
@@ -92,7 +84,7 @@ class Database extends Config
                 'password' => $this->default['password'],
                 'database' => $this->default['database'],
                 'DBDriver' => 'MySQLi',
-                'port'     => 3306,
+                'port'     => $this->default['port'],
             ]
         ];
     }
